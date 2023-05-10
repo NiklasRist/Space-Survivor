@@ -1,0 +1,48 @@
+import pygame
+from Spielfeld import *
+
+class Spieler1():
+
+    pygame.init()
+
+    SpielerIMG = pygame.image.load("F:\space survival\Spacesurvaival\\space.png")
+    SpielerIMG = pygame.transform.scale(SpielerIMG, (40, 40))
+
+
+
+    def Spaceship(x,y):
+     Spielfeld.Spielfeld.blit(SpielerIMG, (x,y))
+
+
+     x = (Spielfeld.Spielfeld_width * 0.45)
+     y = (Spielfeld.Spielfeld_height * 0.8)
+
+    def move():
+        for event in pygame.event.get():
+            
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_RIGHT:
+                    x_change = +10
+                
+            if event.key == pygame.K_LEFT:
+                x_change = -10
+
+            if event.type == pygame.KEYUP:
+                if event.key ==  pygame.K_RIGHT or  event.key == pygame.K_LEFT:
+                    x_change = 0
+
+            if x > Spielfeld.Spielfeld_width - 40:
+                x = 760
+            if x < 0:
+                x = 0    
+                
+
+        x_change = 0
+
+
+
+        Spielfeld.clock.tick(60)
+        Spielfeld.fill(Spielfeld.white)
+        SpielerIMG(x,y)
+        x += x_change 
+    pygame.display.update()    
