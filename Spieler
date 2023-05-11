@@ -5,7 +5,7 @@ class Spieler1():
 
     pygame.init()
 
-    SpielerIMG = pygame.image.load("F:\space survival\Spacesurvaival\\space.png")
+    SpielerIMG = pygame.image.load(r"C:\Users\LENOVO\Desktop\spacesurvivor\Bilder\\space.png")
     SpielerIMG = pygame.transform.scale(SpielerIMG, (40, 40))
 
 
@@ -45,4 +45,33 @@ class Spieler1():
         Spielfeld.fill(Spielfeld.white)
         SpielerIMG(x,y)
         x += x_change 
+
+
+
+
+    Leben = 3
+
+    
+
+    
+    lost_font_text = pygame.font.Font('Verdana',200)
+    def lost_text():
+        over_text = lost_font_text.render("You have lost", True, (255, 255, 255))
+        screen.blit(over_text, (400, 400)) 
+
+    
+    
+    def lives(x, y):
+        live = font.render("Leben : " + str(Leben), True, (255, 255, 255))
+        screen.blit(live, (Spielfeld.Spielfeld_width -100, Spielfeld.Spielfeld_height))    
+    
+    
+    
+
+    if(Leben <= 0):
+        lost_text()
+
+    
+    
+    
     pygame.display.update()    
