@@ -17,6 +17,7 @@ class Spieler():
     x = (Spielfeld.Spielfeld_width * 0.45)
     y = (Spielfeld.Spielfeld_height * 0.8)
     Leben = 3
+    punkte = 0
 
 
     def move():
