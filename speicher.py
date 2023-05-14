@@ -25,6 +25,6 @@ def loadEntries():
     cursor.execute(sqlSelectAll)
     print(cursor.fetchone())
     
-saveOneEntryInLeaderboard("Haar", 45)
-loadEntries()
+saveOneEntryInLeaderboard("ssww", 4)
+#loadEntries()
  
