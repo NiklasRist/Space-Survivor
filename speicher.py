@@ -2,7 +2,7 @@
 #https://docs.python.org/3/library/sqlite3.html#   !!!!besser!!!!
 import sqlite3
 class Speicher:
-    connection = sqlite3.connect("Speicher.db")
+    connection = sqlite3.connect("leaderboard.db")
     cursor=connection.cursor()
     
     sqlCreateTable="""CREATE TABLE leaderboard (Spieler, Punktzahl, id)"""
@@ -37,8 +37,8 @@ class Speicher:
         return Speicher.cursor.fetchall() #2-dimensionaler Array [(spieler, punktzahl),(spieler, punktzahl),...]
 
 Speicher.createTable
-Speicher.saveOneEntryInLeaderboard("Nur", 7)
-Speicher.saveOneEntryInLeaderboard("Nur", 7)
-Speicher.updateEntry("HArald", 24, 0)
-print(Speicher.loadEntries)
+#Speicher.saveOneEntryInLeaderboard("Nur", 7)
+#Speicher.saveOneEntryInLeaderboard("Nur", 7)
+#Speicher.updateEntry("HArald", 24, 0)
+#print(Speicher.loadEntries)
  
