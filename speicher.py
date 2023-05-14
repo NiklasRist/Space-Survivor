@@ -6,7 +6,7 @@ cursor=connection.cursor()
 
 sqlCreateTable="""CREATE TABLE leaderboard (Spieler, Punktzahl)"""
 sqlInsertVar="""INSERT INTO leaderboard(Spieler, Punktzahl) VALUES (?, ?)"""
-sqlSelectAll="""SELECT Spieler FROM leaderboeard"""
+sqlSelectAll="""SELECT * FROM leaderboard"""
 
 def createTable():
     cursor.execute(sqlCreateTable)
@@ -22,7 +22,9 @@ def deleteEntries():
     pass
  
 def loadEntries():
-    print(cursor.execute(sqlSelectAll))
+    cursor.execute(sqlSelectAll)
+    print(cursor.fetchone())
     
+saveOneEntryInLeaderboard("Haar", 45)
 loadEntries()
  
