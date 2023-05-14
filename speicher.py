@@ -22,7 +22,7 @@ def deleteEntries():
     pass
  
 def loadEntries():
-    print(sqlSelectAll.fetchone())
+    print(cursor.execute(sqlSelectAll))
     
 loadEntries()
  
