@@ -20,11 +20,12 @@ def updateEntries():
 
 def deleteEntries():
     pass
- 
+
+def deleteAllEntries():
+    pass
 def loadEntries():
     cursor.execute(sqlSelectAll)
-    print(cursor.fetchone())
-    
-saveOneEntryInLeaderboard("ssww", 4)
-loadEntries()
+    return cursor.fetchall() #2-dimensionaler Array [(spieler, punktzahl),(spieler, punktzahl),...]
+
+
  
