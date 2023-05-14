@@ -26,5 +26,5 @@ def loadEntries():
     print(cursor.fetchone())
     
 saveOneEntryInLeaderboard("ssww", 4)
-#loadEntries()
+loadEntries()
  
