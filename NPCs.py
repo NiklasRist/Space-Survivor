@@ -17,6 +17,7 @@ class Gegner():
     GegnerIMG = pygame.transform.scale(GegnerIMG, (30, 30))
     x = (Spielfeld.Spielfeld_width)
     y = (Spielfeld.Spielfeld_height)
+    schaden=1
     
     G_leben = 4
     def move_gegner():
