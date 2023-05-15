@@ -1,5 +1,5 @@
 import pygame
-import Spielfeld
+from Spielfeld import Feld
 
 pygame.init()
 clock = pygame.time.Clock()
@@ -14,8 +14,8 @@ clock = pygame.time.Clock()
 class Spieler():
     SpielerIMG = pygame.image.load(r"C:\Users\Mostafa Ganji\Desktop\Spiel_projekt\\space.png")
     SpielerIMG = pygame.transform.scale(SpielerIMG, (40, 40))
-    x = (Spielfeld.Spielfeld_width * 0.45)
-    y = (Spielfeld.Spielfeld_height * 0.8)
+    x = (Feld.Spielfeld_width * 0.45)
+    y = (Feld.Spielfeld_height * 0.8)
     Leben = 3
     punkte = 0
 
@@ -34,7 +34,7 @@ class Spieler():
                 if event.key ==  pygame.K_RIGHT or  event.key == pygame.K_LEFT:
                     x_change = 0
 
-            if x > Spielfeld.Spielfeld_width - 40:
+            if x > Feld.Spielfeld_width - 40:
                 x = 760
             if x < 0:
                 x = 0    
@@ -44,7 +44,7 @@ class Spieler():
 
 
 
-        Spielfeld.clock.tick(60)
+        
         
         
         x += x_change 
