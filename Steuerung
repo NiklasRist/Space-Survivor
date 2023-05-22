@@ -1,0 +1,45 @@
+import pygame, Gui , Spieler , Shop , NPCs , Gegnerspawn , Event , Spielfeld , Taste , leaderboard , speicher
+
+
+
+class Steuerung(){
+    
+    
+    clock = pygame.time.Clock()
+    Spieler_1 = Spieler()
+    Gui_1 = Gui()
+    Shop_1 = Shop()
+    NPCs_1 = NPCs()
+    Gegnerspawn_1 = Gegenrspawn()
+    Event_1 = Event()
+    Spielfeld_1 = Spieldfeld()
+    Taste_1 = Taste()
+    leaderboard_1 = leaderboard()
+    speicher_1 = speicher()
+    
+    def init():
+        pygame.init()
+
+        
+    
+    
+    end = false 
+
+    while not end:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:  
+                end = True
+                pygame.quit()
+           
+           
+           
+        
+}
+
+    
+    
+    
+
+
+
+
