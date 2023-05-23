@@ -32,7 +32,8 @@ def lives():
   livee = live.render("Leben : ", True, (255, 255, 255))
   Spiel_fenster.blit(livee, (Feld.Spielfeld_width -100, Feld.Spielfeld_height))
 
-
+def create_Spielfeld(pSpielfeld):
+  Spiel_fenster.blit(pSpielfeld.IMG, (pSpielfeld.x, pSpielfeld.y))
 
 create_Fenster()
 Creat_spieler(Spieler.x,Spieler.y)

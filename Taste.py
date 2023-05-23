@@ -17,9 +17,6 @@ class verwalter:
                     
                 if pygame.event.key == pygame.K_LEFT:
                     x_change = -10
-                    Spieler.SpielerIMG_links = Spieler.Aktuelles_bild
-                    Spieler.SpielerIMG = Spieler.SpielerIMG_links
-                    Spieler.Aktuelles_bild = Spieler.SpielerIMG
 
             if pygame.event.type == pygame.KEYUP:
                 if pygame.event.key ==  pygame.K_RIGHT or  pygame.event.key == pygame.K_LEFT:
