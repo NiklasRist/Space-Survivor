@@ -4,6 +4,8 @@ import sqlite3
 
 #leaderboard id<10 und in leaderboard soll das leaderboard gespeichert werden
 
+def __init__(self):
+    pass
 
 class Speicher:
     connection = sqlite3.connect("leaderboard.db")
