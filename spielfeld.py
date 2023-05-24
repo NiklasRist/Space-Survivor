@@ -1,6 +1,6 @@
 import pygame
 
-class Feld(px, py):
+class Feld():
   def __init__(self, px, py):
     Spielfeld_width = 800
     Spielfeld_height = 800
