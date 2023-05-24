@@ -88,13 +88,14 @@ class Steuerung():
                 Tasten freigeben
                 Gegner spawnen
             '''
+            self.spiel_start=False
         ''' #immer
                 Spieler bewegen
                 Event auslösen
                 Gegner erschaffen & bewegen
                 Projektil erschaffen & bewegen
                 Kollision->Text aktuallisieren
-        '''
+        '''        
 
     def lan_Mehrspieler(self):
         self.Gui_1.create_Spielfeld(self.Spielfeld_1)
