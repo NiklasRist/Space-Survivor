@@ -64,7 +64,7 @@ class Steuerung():
             else:
                 self.game_mode=0
             
-            self.Gui_1.Spiel_fenster.flip()
+            pygame.display.flip()
             self.clock.tick(60)     
                   
     def main_Menu(self):
