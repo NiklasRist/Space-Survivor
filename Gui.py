@@ -4,8 +4,7 @@ from Spielfeld import Feld
 import sys
 from Taste import verwalter
 
-def __init__(self):
-  pass
+
 
 
 pygame.init()
