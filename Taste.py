@@ -6,7 +6,9 @@ from Spielfeld import Feld
 
 pygame.init()
 class verwalter:
-
+    Spieler.SpielerIMG_links = Spieler.Aktuelles_bild
+    Spieler.SpielerIMG = Spieler.SpielerIMG_links
+    Spieler.Aktuelles_bild = Spieler.SpielerIMG
     def move_Spieler1():
         
         for event in pygame.event.get():
