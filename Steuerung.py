@@ -5,30 +5,32 @@ import pygame, Gui , Spieler , Shop , NPCs , Gegnerspawn , Event , Spielfeld , T
 class Steuerung(){
     
     
-    clock = pygame.time.Clock()
-    Spieler_1 = Spieler()
-    Spieler_2 = Spieler()
-    Gui_1 = Gui()
-    Shop_1 = Shop()
-    NPCs_1 = NPCs()
-    Gegnerspawn_1 = Gegenrspawn()
-    Event_1 = Event()
-    Spielfeld_1 = Spieldfeld(0,0)
-    Spielfeld_2 = Spieldfeld(800,0)
-    Taste_1 = Taste()
-    leaderboard_1 = leaderboard()
-    speicher_1 = speicher()
-    end = false 
     
     
-    def init():
-        pygame.init()
-        Gui_1.create_Fenster()
-        Gui_1.create_Spielfeld(Spielfeld_1)
-        Gui_1.create_Spielfeld(Spielfeld_2)
-        Gui_1.Creat_spieler(Spieler_1.x,Spieler_1.y)
-        Spieler_2.x+=Spielfeld_2.Spielfeld_width
-        Gui_1.Creat_spieler(Spieler_2.x,Spieler_2.y)
+    
+    def __init__(self):
+        self.pygame.init()
+        self.clock = pygame.time.Clock()
+        self.Gui_1 = Gui()
+        self.Shop_1 = Shop()
+        self.NPCs_1 = NPCs()
+        self.Gegnerspawn_1 = Gegenrspawn()
+        self.Event_1 = Event()
+        self.Spielfeld_1 = Spieldfeld(0,0)
+        self.Spielfeld_2 = Spieldfeld(800,0)
+        self.Spieler_1 = Spieler(0,0)
+        self.Spieler_2 = Spieler(Spielfeld.Spielfeld_width, 0)
+        self.Taste_1 = Taste()
+        self.leaderboard_1 = leaderboard()
+        self.speicher_1 = speicher()
+        self.end = false 
+        self.Gui_1.create_Fenster()
+        self.Gui_1.create_Spielfeld(Spielfeld_1)
+        self.Gui_1.create_Spielfeld(Spielfeld_2)
+        self.Gui_1.Create_spieler()
+        self.Gui_1.Create_spieler()
+
+        main_loop()
 
         
     
