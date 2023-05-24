@@ -68,7 +68,7 @@ class Steuerung():
             self.clock.tick(60)     
                   
     def main_Menu(self):
-        game_mode=1
+        self.game_mode=1
         '''
             3 Buttons die game_mode verändern
         '''
