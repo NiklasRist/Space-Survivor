@@ -10,10 +10,10 @@ pygame.init()
 class Gui:
   
   
-  def __init__(self):
+  def __init__(self, feld_obj):
     Gui.lost_font_text = pygame.font.SysFont('arial',200)
     Gui.lifeFont = pygame.font.SysFont('Verdana',400)
-    Gui.Spiel_fenster = pygame.display.set_mode([2*Feld.Spielfeld_width,Feld.Spielfeld_height])
+    Gui.Spiel_fenster = pygame.display.set_mode([2*feld_obj.Spielfeld_width,feld_obj.Spielfeld_height])
 
   def create_Fenster(self):
     white = (255,255,255) 

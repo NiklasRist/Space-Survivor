@@ -11,10 +11,10 @@ class Gegner:
 
     def __init__(self):
         self.G_leben = 4
-        self.GegnerIMG = pygame.image.load("gegner Bild")
+        self.GegnerIMG = pygame.image.load("images\TestImage.png")
         self.GegnerIMG = pygame.transform.scale(self.GegnerIMG, (30, 30))
-        self.x = (Feld.Spielfeld_width)
-        self.y = (Feld.Spielfeld_height)
+        self.x = 0
+        self.y = 0
         self.schaden=1
 
     def Bewegen(self):

@@ -19,15 +19,15 @@ class Steuerung():
     def __init__(self):
         pygame.init()
         self.clock = pygame.time.Clock()
-        self.Gui_1 = Gui()
+        self.Spielfeld_1 = Feld(0,0)
+        self.Spielfeld_2 = Feld(800,0)
+        self.Gui_1 = Gui(self.Spielfeld_1)
         self.Shop_1 = Shop()
         self.NPCs_1 = Gegner()
         self.Gegnerspawn_1 = GegnerSpawnen()
         self.Event_1 = Event()
-        self.Spielfeld_1 = Feld(0,0)
-        self.Spielfeld_2 = Feld(800,0)
         self.Spieler_1 = Spieler(0,0)
-        self.Spieler_2 = Spieler(Feld.Spielfeld_width, 0)
+        self.Spieler_2 = Spieler(self.Spielfeld_1.Spielfeld_width, 0)
         self.Taste_1 = verwalter()
         self.leaderboard_1 = leaderboard()
         self.speicher_1 = Speicher()
@@ -69,6 +69,9 @@ class Steuerung():
                   
     def main_Menu(self):
         game_mode=1
+        '''
+            3 Buttons die game_mode verändern
+        '''
     
     def lokaler_Mehrspieler(self):
         if self.spiel_start:
