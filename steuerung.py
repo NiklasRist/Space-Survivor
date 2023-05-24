@@ -1,40 +1,41 @@
+import sys
 import pygame
 from gegner_spawnen import GegnerSpawnen
 from gui import Gui
 from spieler import Spieler
 from shop import Shop
 from npcs import Gegner
-from event import 
-from spielfeld import
-from taste import
-from leaderboard import
-from speicher import
-from sys import
+from event import Event
+from spielfeld import Feld
+from taste import verwalter
+from leaderboard import leaderboard
+from speicher import Speicher
+
 
 
 
 class Steuerung():
-    
+    Gui_1=0
     def __init__(self):
         pygame.init()
         self.clock = pygame.time.Clock()
         self.Gui_1 = Gui()
         self.Shop_1 = Shop()
-        self.NPCs_1 = NPCs()
-        self.Gegnerspawn_1 = Gegenrspawn()
+        self.NPCs_1 = Gegner()
+        self.Gegnerspawn_1 = GegnerSpawnen()
         self.Event_1 = Event()
-        self.Spielfeld_1 = Spieldfeld(0,0)
-        self.Spielfeld_2 = Spieldfeld(800,0)
+        self.Spielfeld_1 = Feld(0,0)
+        self.Spielfeld_2 = Feld(800,0)
         self.Spieler_1 = Spieler(0,0)
-        self.Spieler_2 = Spieler(Spielfeld.Spielfeld_width, 0)
-        self.Taste_1 = Taste()
+        self.Spieler_2 = Spieler(Feld.Spielfeld_width, 0)
+        self.Taste_1 = verwalter()
         self.leaderboard_1 = leaderboard()
-        self.speicher_1 = speicher()
-        self.end = false 
+        self.speicher_1 = Speicher()
+        self.end = False 
         self.Gui_1.create_Fenster()
         self.game_mode=0 #0=Main Menu, 1=lokaler Mehrspieler, 2=LAN Mehrspieler, 3=Optionen
 
-        main_loop()
+        self.main_loop()
     
     
     
@@ -46,16 +47,16 @@ class Steuerung():
         game_mode=1
     
     def lokaler_Mehrspieler(self):
-        self.Gui_1.create_Spielfeld(Spielfeld_1)
-        self.Gui_1.create_Spielfeld(Spielfeld_2)
-        self.Gui_1.Create_spieler()
-        self.Gui_1.Create_spieler()
+        self.Gui_1.create_Spielfeld(self.Spielfeld_1)
+        self.Gui_1.create_Spielfeld(self.Spielfeld_2)
+        self.Gui_1.Create_spieler(self.Spieler_1)
+        self.Gui_1.Create_spieler(self.Spieler_2)
 
     def lan_Mehrspieler(self):
-        self.Gui_1.create_Spielfeld(Spielfeld_1)
-        self.Gui_1.create_Spielfeld(Spielfeld_2)
-        self.Gui_1.Create_spieler()
-        self.Gui_1.Create_spieler()
+        self.Gui_1.create_Spielfeld(self.Spielfeld_1)
+        self.Gui_1.create_Spielfeld(self.Spielfeld_2)
+        self.Gui_1.Create_spieler(self.Spieler_1)
+        self.Gui_1.Create_spieler(self.Spieler_2)
 
     def optionen(self):
         pass

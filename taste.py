@@ -1,6 +1,6 @@
 import pygame
-from Spieler import Spieler
-from Spielfeld import Feld
+from spieler import Spieler
+from spielfeld import Feld
  
 
 
@@ -9,7 +9,7 @@ class verwalter:
     Spieler.SpielerIMG_links = Spieler.Aktuelles_bild
     Spieler.SpielerIMG = Spieler.SpielerIMG_links
     Spieler.Aktuelles_bild = Spieler.SpielerIMG
-    def move_Spieler1():
+    def move_Spieler1(self):
         
         for event in pygame.event.get():
                     
@@ -36,7 +36,7 @@ class verwalter:
             x += x_change  
 
 
-    def move_Spieler2():
+    def move_Spieler2(self):
         for event in pygame.event.get():
                     
             if pygame.event.type == pygame.KEYDOWN:

@@ -4,8 +4,7 @@ import sqlite3
 
 #leaderboard id<10 und in leaderboard soll das leaderboard gespeichert werden
 
-def __init__(self):
-    pass
+
 
 class Speicher:
     connection = sqlite3.connect("leaderboard.db")
@@ -15,28 +14,30 @@ class Speicher:
     sqlInsertVar="""INSERT INTO leaderboard(Spieler, Punktzahl) VALUES (?, ?)"""
     sqlSelectAll="""SELECT Spieler, Punktzahl FROM leaderboard"""
     sqlUpdateOneEntry="""UPDATE leaderboard SET Spieler=?, Punktzahl=? WHERE id=?"""
+    def __init__(self):
+        pass
 
-    def createTable():
+    def createTable(self):
         Speicher.cursor.execute(Speicher.sqlCreateTable)
 
-    def saveOneEntryInLeaderboard(pSpieler, pPunktzahl): 
+    def saveOneEntryInLeaderboard(self, pSpieler, pPunktzahl): 
         Speicher.cursor.execute(Speicher.sqlInsertVar, (pSpieler, pPunktzahl))#, Speicher.row_id))
         Speicher.connection.commit()
         #Speicher.row_id+=1
         
-    def updateEntry(pSpieler, pPunktzahl, pZeile):
+    def updateEntry(self, pSpieler, pPunktzahl, pZeile):
         Speicher.cursor.execute(Speicher.sqlUpdateOneEntry,(pSpieler, pPunktzahl, pZeile))
         
-    def updateEntries():
+    def updateEntries(self):
         pass
 
-    def deleteEntries():
+    def deleteEntries(self):
         pass
 
-    def deleteAllEntries():
+    def deleteAllEntries(self):
         pass
 
-    def loadEntries():
+    def loadEntries(self):
         Speicher.cursor.execute(Speicher.sqlSelectAll)
         return Speicher.cursor.fetchall() #2-dimensionaler Array [(spieler, punktzahl),(spieler, punktzahl),...]
 

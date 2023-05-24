@@ -1,7 +1,9 @@
 class Event:
-
-    def getKosten():
+    def __init__(self):
         pass
     
-    def ausfuehren():
+    def getKosten(self):
+        pass
+    
+    def ausfuehren(self):
         pass

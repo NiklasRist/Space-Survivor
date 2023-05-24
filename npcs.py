@@ -7,7 +7,7 @@ clock = pygame.time.Clock()
 
 
 class Gegner:
-
+    '''gegnerische NPCs'''
 
     def __init__(self):
         self.G_leben = 4
