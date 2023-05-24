@@ -6,7 +6,10 @@ event3 =
 Event = [event1, event2, event3]
 
 class Shop():
-
+    
+    def __init__(self):
+        pass
+    
     def pruefenObGenugPunkte(spieler, eventNummer, SpielerObjekt):
         genugPunkte = Spieler.spielerPunkte >= Event[eventNummer].getKosten()
         if genugPunkte:
