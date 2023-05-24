@@ -34,7 +34,7 @@ class Steuerung():
         self.end = False 
         self.Gui_1.create_Fenster()
         self.game_mode=0 #0=Main Menu, 1=lokaler Mehrspieler, 2=LAN Mehrspieler, 3=Optionen
-
+        self.spiel_start=True
         self.main_loop()
     
     
@@ -43,23 +43,7 @@ class Steuerung():
 
         
     
-    def main_Menu(self):
-        game_mode=1
-    
-    def lokaler_Mehrspieler(self):
-        self.Gui_1.create_Spielfeld(self.Spielfeld_1)
-        self.Gui_1.create_Spielfeld(self.Spielfeld_2)
-        self.Gui_1.Create_spieler(self.Spieler_1)
-        self.Gui_1.Create_spieler(self.Spieler_2)
-
-    def lan_Mehrspieler(self):
-        self.Gui_1.create_Spielfeld(self.Spielfeld_1)
-        self.Gui_1.create_Spielfeld(self.Spielfeld_2)
-        self.Gui_1.Create_spieler(self.Spieler_1)
-        self.Gui_1.Create_spieler(self.Spieler_2)
-
-    def optionen(self):
-        pass
+   
 
     def main_loop(self):
 
@@ -80,31 +64,43 @@ class Steuerung():
             else:
                 self.game_mode=0
             
-            
-            
-           
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
             self.Gui_1.Spiel_fenster.flip()
             self.clock.tick(60)     
                   
-            
+    def main_Menu(self):
+        game_mode=1
+    
+    def lokaler_Mehrspieler(self):
+        if self.spiel_start:
+            self.Gui_1.create_Spielfeld(self.Spielfeld_1)
+            self.Gui_1.create_Spielfeld(self.Spielfeld_2)
+            self.Gui_1.Create_spieler(self.Spieler_1)
+            self.Gui_1.Create_spieler(self.Spieler_2)
+            ''' #nur bei Spielstart
+                Punkte darstellen
+                Leben darstellen
+                Kontostand darstellen
+                (321)
+                schießen freigeben
+                Tasten freigeben
+                Gegner spawnen
+            '''
+        ''' #immer
+                Spieler bewegen
+                Event auslösen
+                Gegner erschaffen & bewegen
+                Projektil erschaffen & bewegen
+                Kollision->Text aktuallisieren
+        '''
+
+    def lan_Mehrspieler(self):
+        self.Gui_1.create_Spielfeld(self.Spielfeld_1)
+        self.Gui_1.create_Spielfeld(self.Spielfeld_2)
+        self.Gui_1.Create_spieler(self.Spieler_1)
+        self.Gui_1.Create_spieler(self.Spieler_2)
+
+    def optionen(self):
+        pass       
     
     
     

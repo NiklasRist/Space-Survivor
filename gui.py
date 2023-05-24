@@ -20,7 +20,7 @@ class Gui:
     pygame.display.set_caption("Space survior")
     Gui.Spiel_fenster.fill(white)
 
-  def Create_spieler(self, obj):
+  def Create_spieler(self, obj): 
     self.Spiel_fenster.blit(obj.SpielerIMG, (obj.x,obj.y))
 
 
