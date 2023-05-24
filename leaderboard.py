@@ -1,7 +1,11 @@
 class leaderboard:
 	spieler=[]
 	punktzahl=[]
-
+	
+	def __init__(self):
+        	self.spieler = []
+		self.punktzahl = []
+	
 	def addToBoard(pSpieler, pPunktzahl):
 		leaderboard.spieler+=pSpieler
 		leaderboard.punktzahl+=pPunktzahl
