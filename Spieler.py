@@ -24,6 +24,12 @@ class Spieler():
     schaden=1
 
 
+    
+    SpielerIMG_links = pygame.image.load(r"C:/Users/Mostafa Ganji/Desktop/Spiel_projekt//space.png")
+    SpielerIMG_links = pygame.transform.scale(SpielerIMG_links, (40, 40))
+
+    Aktuelles_bild = pygame.transform.scale(Aktuelles_Bild, (40, 40))
+
 
 
 
