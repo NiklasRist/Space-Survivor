@@ -23,6 +23,8 @@ class Gui:
   def Create_spieler(self, obj): 
     self.spiel_fenster.blit(obj.SpielerIMG, (obj.x,obj.y))
 
+  def Create_gegner(self, obj): 
+    self.spiel_fenster.blit(obj.GegnerIMG, (obj.x,obj.y))
 
   def lost_text(self):
     over_text = self.lost_font_text.render("you lost", True, (255, 255, 255))

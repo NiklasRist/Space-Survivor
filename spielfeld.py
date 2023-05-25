@@ -1,13 +1,16 @@
 import pygame
+import tkinter
 
+root=tkinter.Tk()
 class Feld():
-  IMG = pygame.image.load(r"images\TestImage.png")
-  IMG = pygame.transform.scale(IMG, (800, 800))
+  
   def __init__(self, px, py):
-    self.Spielfeld_width = 800
-    self.Spielfeld_height = 800
+    self.Spielfeld_width = root.winfo_screenwidth()/2
+    self.Spielfeld_height = root.winfo_screenheight()/2
     self.x=px
     self.y=py
+    self.IMG = pygame.image.load(r"images\TestImage.png")
+    self.IMG = pygame.transform.scale(self.IMG, (self.Spielfeld_width, self.Spielfeld_height))
     
     #background
     #Bild von Background

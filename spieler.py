@@ -17,7 +17,7 @@ class Spieler():
     def __init__(self,x, y):
         self.x=x
         self.y=y
-        self.Leben = 3
+        self.leben = 3
         self.punkte = 0
         self.schaden=1
         self.SpielerIMG_links = pygame.image.load(r"images\TestImage.png")

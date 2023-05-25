@@ -23,7 +23,7 @@ class Steuerung():
         self.Spielfeld_2 = Feld(self.Spielfeld_1.Spielfeld_width,0)
         self.Gui_1 = Gui(self.Spielfeld_1)
         self.Shop_1 = Shop()
-        self.NPCs_1 = Gegner()
+        self.NPCs_1 = Gegner(self.Spielfeld_1)
         self.Gegnerspawn_1 = GegnerSpawnen()
         self.Event_1 = Event()
         self.Spieler_1 = Spieler((0.5*self.Spielfeld_1.Spielfeld_width), (self.Spielfeld_1.Spielfeld_height*0.9))
@@ -83,11 +83,15 @@ class Steuerung():
             self.Gui_1.Create_spieler(self.Spieler_1)
             self.Gui_1.Create_spieler(self.Spieler_2)
             #stellt den Score beider Spieler dar
-            self.Gui_1.display_text(0, 0, f"Score: {self.Spieler_1.punkte}", pygame.Color(255, 255, 255, a=255), 34)
-            self.Gui_1.display_text(self.Spielfeld_1.Spielfeld_width, 0, f"Score: {self.Spieler_2.punkte}", pygame.Color(255, 255, 255, a=255), 34)
+            self.Gui_1.display_text(0, 0, f"Score: {self.Spieler_1.punkte}", pygame.Color(255, 255, 255, a=255), int(34*(self.Spielfeld_1.Spielfeld_width/800)))
+            self.Gui_1.display_text(self.Spielfeld_1.Spielfeld_width, 0, f"Score: {self.Spieler_2.punkte}", pygame.Color(255, 255, 255, a=255), int(34*(self.Spielfeld_1.Spielfeld_width/800)))
+            #stellt Leben beider Spieler dar
+            self.Gui_1.display_text(self.Spielfeld_1.Spielfeld_width*0.4, 0, f"Leben: {self.Spieler_1.leben}", pygame.Color(255, 255, 255, a=255), int(34*(self.Spielfeld_1.Spielfeld_width/800)))
+            self.Gui_1.display_text(self.Spielfeld_1.Spielfeld_width*1.4, 0, f"Leben: {self.Spieler_2.leben}", pygame.Color(255, 255, 255, a=255), int(34*(self.Spielfeld_1.Spielfeld_width/800)))
+            #stellt Eventpunkte Spieler dar
+            self.Gui_1.display_text(self.Spielfeld_1.Spielfeld_width*0.8, 0, f"Punkte: {self.Spieler_1.punkte}", pygame.Color(255, 255, 255, a=255), int(34*(self.Spielfeld_1.Spielfeld_width/800)))
+            self.Gui_1.display_text(self.Spielfeld_1.Spielfeld_width*1.8, 0, f"Punkte: {self.Spieler_2.punkte}", pygame.Color(255, 255, 255, a=255), int(34*(self.Spielfeld_1.Spielfeld_width/800)))
             ''' #nur bei Spielstart
-                Leben darstellen
-                Kontostand darstellen
                 (321)
                 schießen freigeben
                 Tasten freigeben
