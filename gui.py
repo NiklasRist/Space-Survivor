@@ -13,30 +13,32 @@ class Gui:
   def __init__(self, feld_obj):
     Gui.lost_font_text = pygame.font.SysFont('arial',200)
     Gui.lifeFont = pygame.font.SysFont('Verdana',400)
-    Gui.Spiel_fenster = pygame.display.set_mode([2*feld_obj.Spielfeld_width,feld_obj.Spielfeld_height])
+    Gui.spiel_fenster = pygame.display.set_mode([2*feld_obj.Spielfeld_width,feld_obj.Spielfeld_height])
 
   def create_Fenster(self):
     white = (255,255,255) 
     pygame.display.set_caption("Space survior")
-    Gui.Spiel_fenster.fill(white)
+    Gui.spiel_fenster.fill(white)
 
   def Create_spieler(self, obj): 
-    self.Spiel_fenster.blit(obj.SpielerIMG, (obj.x,obj.y))
+    self.spiel_fenster.blit(obj.SpielerIMG, (obj.x,obj.y))
 
 
   def lost_text(self):
     over_text = self.lost_font_text.render("you lost", True, (255, 255, 255))
-    self.Spiel_fenster.blit(over_text, (400, 400)) 
+    self.spiel_fenster.blit(over_text, (400, 400)) 
 
       
   def display_lifes(self, feld_obj):
     lifeText = self.lifeFont.render("Leben : ", True, (255, 255, 255))
-    self.Spiel_fenster.blit(lifeText, (feld_obj.Spielfeld_width -100, feld_obj.Spielfeld_height))
+    self.spiel_fenster.blit(lifeText, (feld_obj.Spielfeld_width -100, feld_obj.Spielfeld_height))
 
   def create_Spielfeld(self, pSpielfeld):
-    self.Spiel_fenster.blit(pSpielfeld.IMG, (pSpielfeld.x, pSpielfeld.y))
+    self.spiel_fenster.blit(pSpielfeld.IMG, (pSpielfeld.x, pSpielfeld.y))
 
-  def display_text(self, px, py, text, color, feld_obj):
-    pass
+  def display_text(self, px, py, text, color, size):
+    font = pygame.font.SysFont(None, size)
+    img = font.render(text, True, color)
+    self.spiel_fenster.blit(img, (px, py))
 
 
