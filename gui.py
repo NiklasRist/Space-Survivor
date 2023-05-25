@@ -29,11 +29,14 @@ class Gui:
     self.Spiel_fenster.blit(over_text, (400, 400)) 
 
       
-  def display_lifes(self):
+  def display_lifes(self, feld_obj):
     lifeText = self.lifeFont.render("Leben : ", True, (255, 255, 255))
-    self.Spiel_fenster.blit(lifeText, (Feld.Spielfeld_width -100, Feld.Spielfeld_height))
+    self.Spiel_fenster.blit(lifeText, (feld_obj.Spielfeld_width -100, feld_obj.Spielfeld_height))
 
   def create_Spielfeld(self, pSpielfeld):
     self.Spiel_fenster.blit(pSpielfeld.IMG, (pSpielfeld.x, pSpielfeld.y))
+
+  def display_text(self, px, py, text, color, feld_obj):
+    pass
 
 
