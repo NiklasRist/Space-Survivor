@@ -7,7 +7,7 @@ import sqlite3
 
 
 class Speicher:
-    connection = sqlite3.connect(".\speicher\leaderboard.db")
+    connection = sqlite3.connect("\speicher\leaderboard.db")
     cursor=connection.cursor()
     
     sqlCreateTable="""CREATE TABLE leaderboard (Spieler, Punktzahl, id)""" #id automatisch zugewiesen, beginnt bei 0
