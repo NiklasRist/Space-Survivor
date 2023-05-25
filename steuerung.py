@@ -76,10 +76,15 @@ class Steuerung():
     
     def lokaler_Mehrspieler(self):
         if self.spiel_start:
+            #erstellt beide Spielfelder
             self.Gui_1.create_Spielfeld(self.Spielfeld_1)
             self.Gui_1.create_Spielfeld(self.Spielfeld_2)
+            #erstellt beide Spieler
             self.Gui_1.Create_spieler(self.Spieler_1)
             self.Gui_1.Create_spieler(self.Spieler_2)
+            #stellt den Score beider Spieler dar
+            self.Gui_1.display_text(0, 0, "Score: {self.Spieler_1.punkte}", pygame.Color(255, 255, 255, a=255), 34)
+            self.Gui_1.display_text(self.Spielfeld_1.Spielfeld_width, 0, "Score: {self.Spieler_2.punkte}", pygame.Color(255, 255, 255, a=255), 34)
             ''' #nur bei Spielstart
                 Punkte darstellen
                 Leben darstellen
