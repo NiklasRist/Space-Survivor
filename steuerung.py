@@ -69,6 +69,7 @@ class Steuerung():
                   
     def main_Menu(self):
         self.game_mode=1
+        self.spiel_start=True
         '''
             3 Buttons die game_mode verändern
         '''
