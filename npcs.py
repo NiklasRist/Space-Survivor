@@ -11,7 +11,7 @@ class Gegner:
 
     def __init__(self, feld_obj):
         self.G_leben = 4
-        self.GegnerIMG = pygame.image.load("images\TestImage.png")
+        self.GegnerIMG = pygame.image.load(".\images\TestImage.png")
         self.GegnerIMG = pygame.transform.scale(self.GegnerIMG, (int(0.375*feld_obj.Spielfeld_width), int(0.375*feld_obj.Spielfeld_width)))
         self.x = 0
         self.y = 0
