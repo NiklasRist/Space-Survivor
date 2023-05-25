@@ -26,8 +26,8 @@ class Steuerung():
         self.NPCs_1 = Gegner()
         self.Gegnerspawn_1 = GegnerSpawnen()
         self.Event_1 = Event()
-        self.Spieler_1 = Spieler(0,0)
-        self.Spieler_2 = Spieler(self.Spielfeld_1.Spielfeld_width, 0)
+        self.Spieler_1 = Spieler((0.5*self.Spielfeld_1.Spielfeld_width), (self.Spielfeld_1.Spielfeld_height*0.9))
+        self.Spieler_2 = Spieler((1.5*self.Spielfeld_1.Spielfeld_width), (self.Spielfeld_1.Spielfeld_height*0.9))
         self.Taste_1 = verwalter()
         self.leaderboard_1 = leaderboard()
         self.speicher_1 = Speicher()
@@ -83,10 +83,9 @@ class Steuerung():
             self.Gui_1.Create_spieler(self.Spieler_1)
             self.Gui_1.Create_spieler(self.Spieler_2)
             #stellt den Score beider Spieler dar
-            self.Gui_1.display_text(0, 0, "Score: {self.Spieler_1.punkte}", pygame.Color(255, 255, 255, a=255), 34)
-            self.Gui_1.display_text(self.Spielfeld_1.Spielfeld_width, 0, "Score: {self.Spieler_2.punkte}", pygame.Color(255, 255, 255, a=255), 34)
+            self.Gui_1.display_text(0, 0, f"Score: {self.Spieler_1.punkte}", pygame.Color(255, 255, 255, a=255), 34)
+            self.Gui_1.display_text(self.Spielfeld_1.Spielfeld_width, 0, f"Score: {self.Spieler_2.punkte}", pygame.Color(255, 255, 255, a=255), 34)
             ''' #nur bei Spielstart
-                Punkte darstellen
                 Leben darstellen
                 Kontostand darstellen
                 (321)
