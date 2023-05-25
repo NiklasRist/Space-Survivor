@@ -96,7 +96,7 @@ class Steuerung():
                 (321)
                 schießen freigeben
                 Tasten freigeben
-                Gegner spawnen
+                Gegner spawnen (Gegnerobjekte werden in einem 2 dimensionalen Array gespeichert, die erste Dimension steht für das Spielfeld die zweite für das Objekt, es muss eine maximalanzahl für Gegner geben)
             '''
             self.spiel_start=False
         ''' #immer

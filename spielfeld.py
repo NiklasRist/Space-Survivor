@@ -6,7 +6,7 @@ class Feld():
   
   def __init__(self, px, py):
     self.Spielfeld_width = root.winfo_screenwidth()/2
-    self.Spielfeld_height = root.winfo_screenheight()/2
+    self.Spielfeld_height = root.winfo_screenheight()
     self.x=px
     self.y=py
     self.IMG = pygame.image.load(".\images\TestImage.png")
