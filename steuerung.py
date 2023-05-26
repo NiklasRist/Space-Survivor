@@ -19,8 +19,8 @@ class Steuerung():
     def __init__(self):
         pygame.init()
         self.clock = pygame.time.Clock()
-        self.Spielfeld_1 = Feld(0,0)
-        self.Spielfeld_2 = Feld(self.Spielfeld_1.Spielfeld_width,0)
+        self.Spielfeld_1 = Feld(0,0,0)
+        self.Spielfeld_2 = Feld(self.Spielfeld_1.Spielfeld_width,0,1)
         self.Gui_1 = Gui(self.Spielfeld_1)
         self.Shop_1 = Shop()
         self.Gegnerspawn_1 = GegnerSpawnen()
