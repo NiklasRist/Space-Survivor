@@ -34,6 +34,7 @@ class Steuerung():
         self.game_mode=0 #0=Main Menu, 1=lokaler Mehrspieler, 2=LAN Mehrspieler, 3=Optionen
         self.spiel_start=True
         self.gegner=[[],[]] #[0]=side, [1]=Gegner Objekt
+        self.maximale_Gegneranzahl=15
         self.main_loop()
         
     
@@ -81,7 +82,7 @@ class Steuerung():
         self.spiel_start=False
         
         #erschafft Gegner, darf nicht jedes mal passieren, Gegner müssen sich auf Spieler zubewegen
-        if len(self.gegner[1])<30:
+        if len(self.gegner[1])<self.maximale_Gegneranzahl*2:
             self.create_enemy(self.Spielfeld_1)
             self.create_enemy(self.Spielfeld_2)
         
