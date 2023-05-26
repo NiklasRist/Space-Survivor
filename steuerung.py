@@ -50,8 +50,7 @@ class Steuerung():
     def main_loop(self):
         self.Gui_1.create_Fenster()
         while not self.end:
-            self.Taste_1.react_input(self.end, self.Spieler_1, self.Spielfeld_1)
-            self.Taste_1.react_input(self.end, self.Spieler_2, self.Spielfeld_2)
+            self.Taste_1.react_input(self.end, self.Spieler_1, self.Spieler_2, self.Spielfeld_1)
             if self.game_mode==0:
                 self.main_Menu()
             elif self.game_mode==1:
