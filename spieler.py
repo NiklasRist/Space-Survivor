@@ -22,10 +22,18 @@ class Spieler():
         self.schaden=1
         self.SpielerIMG_links = pygame.image.load(".\images\TestImage.png")
         self.SpielerIMG_links = pygame.transform.scale(self.SpielerIMG_links, (int(0.05*feld_obj.Spielfeld_width), int(0.05*feld_obj.Spielfeld_width)))
+        self.SpielerIMG_links = pygame.transform.scale(self.SpielerIMG_links, (40, 40))
+        self.SpielerIMG_rechts = pygame.image.load(".\images\TestImage.png")
+        self.SpielerIMG_rechts = pygame.transform.scale(self.SpielerIMG_rechts, (40, 40))
+        self.SpielerIMG_oben = pygame.image.load(".\images\TestImage.png")
+        self.SpielerIMG_oben = pygame.transform.scale(self.SpielerIMG_oben, (40, 40))
+        
+        
         self.SpielerIMG = pygame.image.load(".\images\TestImage.png")
         self.SpielerIMG = pygame.transform.scale(self.SpielerIMG, (int(0.05*feld_obj.Spielfeld_width), int(0.05*feld_obj.Spielfeld_width)))
         self.Aktuelles_bild=self.SpielerIMG
         
+        self.spieler_images = ['self.SpielerIMG_links', 'self.SpielerIMG' , 'self.Aktuelles_bild']
 
 
     
