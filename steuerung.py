@@ -14,8 +14,8 @@ from speicher import Speicher
 
 
 
+
 class Steuerung():
-    Gui_1=0
     def __init__(self):
         pygame.init()
         self.clock = pygame.time.Clock()
@@ -23,7 +23,7 @@ class Steuerung():
         self.Spielfeld_2 = Feld(self.Spielfeld_1.Spielfeld_width,0)
         self.Gui_1 = Gui(self.Spielfeld_1)
         self.Shop_1 = Shop()
-        self.NPCs_1 = Gegner(self.Spielfeld_1)
+        #self.NPCs_1 = Gegner(self.Spielfeld_1)
         self.Gegnerspawn_1 = GegnerSpawnen()
         self.Event_1 = Event()
         self.Spieler_1 = Spieler((0.5*self.Spielfeld_1.Spielfeld_width), (self.Spielfeld_1.Spielfeld_height*0.5), self.Spielfeld_1)
@@ -32,11 +32,11 @@ class Steuerung():
         self.leaderboard_1 = leaderboard()
         self.speicher_1 = Speicher()
         self.end = False 
-        self.Gui_1.create_Fenster()
         self.game_mode=0 #0=Main Menu, 1=lokaler Mehrspieler, 2=LAN Mehrspieler, 3=Optionen
         self.spiel_start=True
-        self.main_loop()
         self.gegner=[]
+        self.main_loop()
+        
     
     
     
@@ -47,7 +47,7 @@ class Steuerung():
    
 
     def main_loop(self):
-
+        self.Gui_1.create_Fenster()
         while not self.end:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:  
@@ -65,6 +65,7 @@ class Steuerung():
             else:
                 self.game_mode=0
             
+            #self.create_enemy()
             pygame.display.flip()
             self.clock.tick(60)     
                   
@@ -92,6 +93,8 @@ class Steuerung():
             #stellt Eventpunkte Spieler dar
             self.Gui_1.display_text(self.Spielfeld_1.Spielfeld_width*0.8, 0, f"Punkte: {self.Spieler_1.punkte}", pygame.Color(255, 255, 255, a=255), int(34*(self.Spielfeld_1.Spielfeld_width/800)))
             self.Gui_1.display_text(self.Spielfeld_1.Spielfeld_width*1.8, 0, f"Punkte: {self.Spieler_2.punkte}", pygame.Color(255, 255, 255, a=255), int(34*(self.Spielfeld_1.Spielfeld_width/800)))
+            
+            self.create_enemy()
             ''' #nur bei Spielstart
                 (321)
                 schießen freigeben
@@ -117,8 +120,8 @@ class Steuerung():
         pass       
     
     def create_enemy(self):
-        #self.gegner.append()
-        self.Gui_1.Create_gegner(self.gegner[0])
+        self.gegner.append(Gegner(self.Spielfeld_1))
+        self.Gui_1.Create_gegner(self.gegner[len(self.gegner)-1])
 
     
 
