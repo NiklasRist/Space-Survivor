@@ -1,6 +1,6 @@
 import pygame
 from spielfeld import Feld
-
+import random
 pygame.init()
 clock = pygame.time.Clock()
 
@@ -14,7 +14,7 @@ class Gegner:
         self.GegnerIMG = pygame.image.load(".\images\TestImage.png")
         self.GegnerIMG = pygame.transform.scale(self.GegnerIMG, (int(0.0375*feld_obj.Spielfeld_width), int(0.0375*feld_obj.Spielfeld_width)))
         self.x = 0
-        self.y = 0
+        self.y = random.randint(0, feld_obj.Spielfeld_height)
         self.schaden=1
 
     def Bewegen(self):
