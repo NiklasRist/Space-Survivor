@@ -14,7 +14,7 @@ pygame.init()
 class Spieler():
     '''Die Spielerklasse'''
 
-    def __init__(self,x, y):
+    def __init__(self,x,y, feld_obj):
         self.x=x
         self.y=y
         self.leben = 3
@@ -22,11 +22,11 @@ class Spieler():
         self.schaden=1
         self.SpielerIMG_links = pygame.image.load(".\images\TestImage.png")
         self.SpielerIMG_links = pygame.transform.scale(self.SpielerIMG_links, (int(0.05*feld_obj.Spielfeld_width), int(0.05*feld_obj.Spielfeld_width)))
-        self.SpielerIMG_links = pygame.transform.scale(self.SpielerIMG_links, (int(0.05*feld_obj.Spielfeld_width), int(0.05*feld_obj.Spielfeld_width))
+        self.SpielerIMG_links = pygame.transform.scale(self.SpielerIMG_links, (int(0.05*feld_obj.Spielfeld_width), int(0.05*feld_obj.Spielfeld_width)))
         self.SpielerIMG_rechts = pygame.image.load(".\images\TestImage.png")
-        self.SpielerIMG_rechts = pygame.transform.scale(self.SpielerIMG_rechts, (int(0.05*feld_obj.Spielfeld_width), int(0.05*feld_obj.Spielfeld_width))
+        self.SpielerIMG_rechts = pygame.transform.scale(self.SpielerIMG_rechts, (int(0.05*feld_obj.Spielfeld_width), int(0.05*feld_obj.Spielfeld_width)))
         self.SpielerIMG_oben = pygame.image.load(".\images\TestImage.png")
-        self.SpielerIMG_oben = pygame.transform.scale(self.SpielerIMG_oben, (int(0.05*feld_obj.Spielfeld_width), int(0.05*feld_obj.Spielfeld_width))
+        self.SpielerIMG_oben = pygame.transform.scale(self.SpielerIMG_oben, (int(0.05*feld_obj.Spielfeld_width), int(0.05*feld_obj.Spielfeld_width)))
         
         
         self.SpielerIMG = pygame.image.load(".\images\TestImage.png")
