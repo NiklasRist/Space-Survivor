@@ -137,7 +137,6 @@ class Steuerung():
             x=0
             y=0
         #Abstandsberechnung Gegner Spieler (Vektorrechnung)
-            print(self.gegner[1].index(gegner))
             if self.gegner[0][self.gegner[1].index(gegner)]==0:
                 x=gegner.x-spieler_obj.x
                 y=gegner.y-spieler_obj.y
