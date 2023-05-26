@@ -33,7 +33,7 @@ class Steuerung():
         self.end = False 
         self.game_mode=0 #0=Main Menu, 1=lokaler Mehrspieler, 2=LAN Mehrspieler, 3=Optionen
         self.spiel_start=True
-        self.gegner=[]
+        self.gegner=[[],[]] #[0]=side, [1]=Gegner Objekt
         self.main_loop()
         
     
@@ -64,7 +64,6 @@ class Steuerung():
             else:
                 self.game_mode=0
             
-            #self.create_enemy()
             pygame.display.flip()
             self.clock.tick(60)     
                   
@@ -76,32 +75,33 @@ class Steuerung():
         '''
     
     def lokaler_Mehrspieler(self):
-        if self.spiel_start:
-            #erstellt beide Spielfelder
-            self.Gui_1.create_Spielfeld(self.Spielfeld_1)
-            self.Gui_1.create_Spielfeld(self.Spielfeld_2)
-            #erstellt beide Spieler
-            self.Gui_1.Create_spieler(self.Spieler_1)
-            self.Gui_1.Create_spieler(self.Spieler_2)
-            #stellt den Score beider Spieler dar
-            self.Gui_1.display_text(0, 0, f"Score: {self.Spieler_1.punkte}", pygame.Color(255, 255, 255, a=255), int(34*(self.Spielfeld_1.Spielfeld_width/800)))
-            self.Gui_1.display_text(self.Spielfeld_1.Spielfeld_width, 0, f"Score: {self.Spieler_2.punkte}", pygame.Color(255, 255, 255, a=255), int(34*(self.Spielfeld_1.Spielfeld_width/800)))
-            #stellt Leben beider Spieler dar
-            self.Gui_1.display_text(self.Spielfeld_1.Spielfeld_width*0.4, 0, f"Leben: {self.Spieler_1.leben}", pygame.Color(255, 255, 255, a=255), int(34*(self.Spielfeld_1.Spielfeld_width/800)))
-            self.Gui_1.display_text(self.Spielfeld_1.Spielfeld_width*1.4, 0, f"Leben: {self.Spieler_2.leben}", pygame.Color(255, 255, 255, a=255), int(34*(self.Spielfeld_1.Spielfeld_width/800)))
-            #stellt Eventpunkte Spieler dar
-            self.Gui_1.display_text(self.Spielfeld_1.Spielfeld_width*0.8, 0, f"Punkte: {self.Spieler_1.punkte}", pygame.Color(255, 255, 255, a=255), int(34*(self.Spielfeld_1.Spielfeld_width/800)))
-            self.Gui_1.display_text(self.Spielfeld_1.Spielfeld_width*1.8, 0, f"Punkte: {self.Spieler_2.punkte}", pygame.Color(255, 255, 255, a=255), int(34*(self.Spielfeld_1.Spielfeld_width/800)))
-            
-            self.create_enemy(self.Spielfeld_1)
-            self.create_enemy(self.Spielfeld_2)
-            ''' #nur bei Spielstart
-                (321)
-                schießen freigeben
-                Tasten freigeben
-                Gegner spawnen (Gegnerobjekte werden in einem 2 dimensionalen Array gespeichert, die erste Dimension steht für das Spielfeld die zweite für das Objekt, es muss eine maximalanzahl für Gegner geben)
-            '''
-            self.spiel_start=False
+        #erstellt beide Spielfelder
+        self.Gui_1.create_Spielfeld(self.Spielfeld_1)
+        self.Gui_1.create_Spielfeld(self.Spielfeld_2)
+        #erstellt beide Spieler
+        self.Gui_1.Create_spieler(self.Spieler_1)
+        self.Gui_1.Create_spieler(self.Spieler_2)
+        #stellt den Score beider Spieler dar
+        self.Gui_1.display_text(0, 0, f"Score: {self.Spieler_1.punkte}", pygame.Color(255, 255, 255, a=255), int(34*(self.Spielfeld_1.Spielfeld_width/800)))
+        self.Gui_1.display_text(self.Spielfeld_1.Spielfeld_width, 0, f"Score: {self.Spieler_2.punkte}", pygame.Color(255, 255, 255, a=255), int(34*(self.Spielfeld_1.Spielfeld_width/800)))
+        #stellt Leben beider Spieler dar
+        self.Gui_1.display_text(self.Spielfeld_1.Spielfeld_width*0.4, 0, f"Leben: {self.Spieler_1.leben}", pygame.Color(255, 255, 255, a=255), int(34*(self.Spielfeld_1.Spielfeld_width/800)))
+        self.Gui_1.display_text(self.Spielfeld_1.Spielfeld_width*1.4, 0, f"Leben: {self.Spieler_2.leben}", pygame.Color(255, 255, 255, a=255), int(34*(self.Spielfeld_1.Spielfeld_width/800)))
+        #stellt Eventpunkte Spieler dar
+        self.Gui_1.display_text(self.Spielfeld_1.Spielfeld_width*0.8, 0, f"Punkte: {self.Spieler_1.punkte}", pygame.Color(255, 255, 255, a=255), int(34*(self.Spielfeld_1.Spielfeld_width/800)))
+        self.Gui_1.display_text(self.Spielfeld_1.Spielfeld_width*1.8, 0, f"Punkte: {self.Spieler_2.punkte}", pygame.Color(255, 255, 255, a=255), int(34*(self.Spielfeld_1.Spielfeld_width/800)))
+        
+        
+        #erschafft Gegner, darf nicht jedes mal passieren, Gegneranzahl muss begrenzt werden, update Screen muss erstellt werden
+        self.create_enemy(self.Spielfeld_1)
+        self.create_enemy(self.Spielfeld_2)
+        ''' #nur bei Spielstart
+            (321)
+            schießen freigeben
+            Tasten freigeben
+            Gegner spawnen (Gegnerobjekte werden in einem 2 dimensionalen Array gespeichert, die erste Dimension steht für das Spielfeld die zweite für das Objekt, es muss eine maximalanzahl für Gegner geben)
+        '''
+        self.spiel_start=False
         ''' #immer
                 Spieler bewegen
                 Event auslösen
@@ -120,8 +120,9 @@ class Steuerung():
         pass       
     
     def create_enemy(self, feld_obj):
-        self.gegner.append(Gegner(feld_obj))
-        self.Gui_1.Create_gegner(self.gegner[len(self.gegner)-1])
+        self.gegner[0].append(feld_obj.side)
+        self.gegner[1].append(Gegner(feld_obj))
+        self.Gui_1.Create_gegner(self.gegner[1][len(self.gegner[0])-1])
 
     
 

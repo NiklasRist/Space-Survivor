@@ -18,9 +18,8 @@ class Gegner:
         if random.randint(0,1)==1: #entscheidet von welcher Seite der Gegner kommt
             self.x+=feld_obj.Spielfeld_width-int(0.0375*feld_obj.Spielfeld_width)
         self.y = random.randint(0, feld_obj.Spielfeld_height-int(0.0375*feld_obj.Spielfeld_width))
-        self.side=0 #Spielfeld_1
-        if feld_obj.side==1:
-            self.side=1 #Spielfeld_2
+        self.side=feld_obj.side
+
 
     def Bewegen(self):
         print("Bewegen")
