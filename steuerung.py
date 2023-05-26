@@ -83,7 +83,7 @@ class Steuerung():
             self.create_enemy(self.Spielfeld_1)
             self.create_enemy(self.Spielfeld_2)
         
-
+        self.move_gegner(self.Spieler_1, self.Spieler_2)
         self.update_screen_1()
         
         ''' #nur bei Spielstart
@@ -132,11 +132,23 @@ class Steuerung():
         
 
 
-    def move_gegner(self):
+    def move_gegner(self, spieler_obj, spieler_obj_2):
         for gegner in self.gegner[1]:
-            #Abstandsberechnung Gegner Spieler (Vektorrechnung)
-            x=gegner.x
-            y=gegner.y
-            abstand=math.sqrt((x)**2,(y)**2)
+            x=0
+            y=0
+        #Abstandsberechnung Gegner Spieler (Vektorrechnung)
+            print(self.gegner[1].index(gegner))
+            if self.gegner[0][self.gegner[1].index(gegner)]==0:
+                x=gegner.x-spieler_obj.x
+                y=gegner.y-spieler_obj.y
+            if self.gegner[0][self.gegner[1].index(gegner)]==1:
+                x=gegner.x-spieler_obj_2.x
+                y=gegner.y-spieler_obj_2.y  
+            comb=x**2+y**2
+            abstand=math.sqrt(comb)
             if abstand>0:
-                pass
+                #einheitsvektor berechnen
+                x=x/abstand
+                y=y/abstand
+                gegner.x-=x
+                gegner.y-=y
