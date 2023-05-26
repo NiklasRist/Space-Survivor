@@ -36,6 +36,7 @@ class Steuerung():
         self.game_mode=0 #0=Main Menu, 1=lokaler Mehrspieler, 2=LAN Mehrspieler, 3=Optionen
         self.spiel_start=True
         self.main_loop()
+        self.gegner=[]
     
     
     
@@ -115,8 +116,10 @@ class Steuerung():
     def optionen(self):
         pass       
     
-    
-    
+    def create_enemy(self):
+        #self.gegner.append()
+        self.Gui_1.Create_gegner(self.gegner[0])
+
     
 
 
