@@ -9,26 +9,27 @@ class verwalter:
     
     def __init__(self):
         pass
-        
-    '''@Mostafa bitte mach das als Operation mit dem jeweiligen Spielerobjekt als Input
-        Spieler.SpielerIMG_links = Spieler.Aktuelles_bild
-        Spieler.SpielerIMG = Spieler.SpielerIMG_links
-        Spieler.Aktuelles_bild = Spieler.SpielerIMG
-    '''
-    def move_Spieler1(self):
+
+
+    
+    def move_Spieler1(self,spieler_object):
         
         for event in pygame.event.get():
                     
             if pygame.event.type == pygame.KEYDOWN:
                 if pygame.event.key == pygame.K_RIGHT:
                     x_change = +10
+                    spieler_object.SpielerIMG_rechts = spieler_object.Aktuelles_bild
+
                     
                 if pygame.event.key == pygame.K_LEFT:
                     x_change = -10
+                    spieler_object.SpielerIMG_links = spieler_object.Aktuelles_bild
 
             if pygame.event.type == pygame.KEYUP:
                 if pygame.event.key ==  pygame.K_RIGHT or  pygame.event.key == pygame.K_LEFT:
                     x_change = 0
+                    spieler_object.SpielerIMG_oben = spieler_object.Aktuelles_bild
 
             if x > Feld.Spielfeld_width - 40:
                 x = 760
