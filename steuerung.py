@@ -23,7 +23,6 @@ class Steuerung():
         self.Spielfeld_2 = Feld(self.Spielfeld_1.Spielfeld_width,0)
         self.Gui_1 = Gui(self.Spielfeld_1)
         self.Shop_1 = Shop()
-        #self.NPCs_1 = Gegner(self.Spielfeld_1)
         self.Gegnerspawn_1 = GegnerSpawnen()
         self.Event_1 = Event()
         self.Spieler_1 = Spieler((0.5*self.Spielfeld_1.Spielfeld_width), (self.Spielfeld_1.Spielfeld_height*0.5), self.Spielfeld_1)
@@ -94,7 +93,8 @@ class Steuerung():
             self.Gui_1.display_text(self.Spielfeld_1.Spielfeld_width*0.8, 0, f"Punkte: {self.Spieler_1.punkte}", pygame.Color(255, 255, 255, a=255), int(34*(self.Spielfeld_1.Spielfeld_width/800)))
             self.Gui_1.display_text(self.Spielfeld_1.Spielfeld_width*1.8, 0, f"Punkte: {self.Spieler_2.punkte}", pygame.Color(255, 255, 255, a=255), int(34*(self.Spielfeld_1.Spielfeld_width/800)))
             
-            self.create_enemy()
+            self.create_enemy(self.Spielfeld_1)
+            self.create_enemy(self.Spielfeld_2)
             ''' #nur bei Spielstart
                 (321)
                 schießen freigeben
@@ -119,8 +119,8 @@ class Steuerung():
     def optionen(self):
         pass       
     
-    def create_enemy(self):
-        self.gegner.append(Gegner(self.Spielfeld_1))
+    def create_enemy(self, feld_obj):
+        self.gegner.append(Gegner(feld_obj))
         self.Gui_1.Create_gegner(self.gegner[len(self.gegner)-1])
 
     

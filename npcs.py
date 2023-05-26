@@ -13,8 +13,8 @@ class Gegner:
         self.G_leben = 4
         self.GegnerIMG = pygame.image.load(".\images\TestImage.png")
         self.GegnerIMG = pygame.transform.scale(self.GegnerIMG, (int(0.0375*feld_obj.Spielfeld_width), int(0.0375*feld_obj.Spielfeld_width)))
-        self.x = 0
-        self.y = random.randint(0, feld_obj.Spielfeld_height)
+        self.x = 0+feld_obj.x
+        self.y = random.randint(0, feld_obj.Spielfeld_height-int(0.0375*feld_obj.Spielfeld_width))
         self.schaden=1
 
     def Bewegen(self):
