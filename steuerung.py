@@ -11,6 +11,7 @@ from spielfeld import Feld
 from taste import verwalter
 from leaderboard import leaderboard
 from speicher import Speicher
+from projektil import projektil
 
 
 
@@ -31,6 +32,7 @@ class Steuerung():
         self.Taste_1 = verwalter()
         self.leaderboard_1 = leaderboard()
         self.speicher_1 = Speicher()
+        self.projektile=[]
         self.end = False 
         self.game_mode=0 #0=Main Menu, 1=lokaler Mehrspieler, 2=LAN Mehrspieler, 3=Optionen
         self.spiel_start=True
@@ -91,9 +93,7 @@ class Steuerung():
                 schießen freigeben
                 Tasten freigeben
             #immer
-                Spieler bewegen
                 Event auslösen
-                Gegner erschaffen & bewegen
                 Projektil erschaffen & bewegen
                 Kollision->Text aktuallisieren
         '''        
@@ -151,3 +151,14 @@ class Steuerung():
                 y=y/abstand
                 gegner.x-=x
                 gegner.y-=y
+                
+    def create_projectile(self, x, y, feld_obj, schuetze_obj, richtungsvektor):
+        self.projektile.append(projektil(x, y, feld_obj, schuetze_obj, richtungsvektor))
+        
+    def berechne_einheitsvektor(self):
+        pass
+        
+    def schießen(self, x, y, feld_obj, schuetze_obj):
+        einheitsvektor=self.berechne_einheitsvektor()
+        self.create_projectile(x, y, feld_obj, schuetze_obj, einheitsvektor)
+        
