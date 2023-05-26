@@ -26,6 +26,8 @@ class Spieler():
         self.SpielerIMG = pygame.transform.scale(self.SpielerIMG, (40, 40))
         self.Aktuelles_bild=self.SpielerIMG
         self.Aktuelles_bild = pygame.transform.scale(self.Aktuelles_bild, (40, 40))
+        
+        self.spieler_images = ['self.SpielerIMG_links', 'self.SpielerIMG' , 'self.Aktuelles_bild']
 
 
     
