@@ -20,6 +20,7 @@ class Spieler():
         self.leben = 3
         self.punkte = 0
         self.schaden=1
+        self.side=feld_obj.side
         self.SpielerIMG_links = pygame.image.load(".\images\TestImage.png")
         self.SpielerIMG_links = pygame.transform.scale(self.SpielerIMG_links, (int(0.05*feld_obj.Spielfeld_width), int(0.05*feld_obj.Spielfeld_width)))
         self.SpielerIMG_links = pygame.transform.scale(self.SpielerIMG_links, (int(0.05*feld_obj.Spielfeld_width), int(0.05*feld_obj.Spielfeld_width)))

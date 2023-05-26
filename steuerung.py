@@ -1,5 +1,6 @@
 import sys
 import pygame
+import math
 from gegner_spawnen import GegnerSpawnen
 from gui import Gui
 from spieler import Spieler
@@ -49,11 +50,8 @@ class Steuerung():
     def main_loop(self):
         self.Gui_1.create_Fenster()
         while not self.end:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:  
-                    end = True
-                    pygame.quit()
-                    sys.exit(0)
+            self.Taste_1.react_input(self.end, self.Spieler_1, self.Spielfeld_1)
+            self.Taste_1.react_input(self.end, self.Spieler_2, self.Spielfeld_2)
             if self.game_mode==0:
                 self.main_Menu()
             elif self.game_mode==1:
@@ -135,3 +133,11 @@ class Steuerung():
         
 
 
+    def move_gegner(self):
+        for gegner in self.gegner[1]:
+            #Abstandsberechnung Gegner Spieler (Vektorrechnung)
+            x=gegner.x
+            y=gegner.y
+            abstand=math.sqrt((x)**2,(y)**2)
+            if abstand>0:
+                pass
