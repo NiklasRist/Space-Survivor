@@ -75,12 +75,53 @@ class Steuerung():
         '''
     
     def lokaler_Mehrspieler(self):
+        
+        if self.spiel_start:
+            pass
+        self.spiel_start=False
+        
+        #erschafft Gegner, darf nicht jedes mal passieren, Gegner müssen sich auf Spieler zubewegen
+        if len(self.gegner[1])<30:
+            self.create_enemy(self.Spielfeld_1)
+            self.create_enemy(self.Spielfeld_2)
+        
+
+        self.update_screen_1()
+        
+        ''' #nur bei Spielstart
+                (321)
+                schießen freigeben
+                Tasten freigeben
+            #immer
+                Spieler bewegen
+                Event auslösen
+                Gegner erschaffen & bewegen
+                Projektil erschaffen & bewegen
+                Kollision->Text aktuallisieren
+        '''        
+
+    def lan_Mehrspieler(self):
+        pass
+
+    def optionen(self):
+        pass       
+    
+    def create_enemy(self, feld_obj):
+        self.gegner[0].append(feld_obj.side)
+        self.gegner[1].append(Gegner(feld_obj))
+        self.Gui_1.display_gegner(self.gegner[1][len(self.gegner[0])-1])
+
+    
+    def update_screen_1(self): #1 = game_mode
         #erstellt beide Spielfelder
-        self.Gui_1.create_Spielfeld(self.Spielfeld_1)
-        self.Gui_1.create_Spielfeld(self.Spielfeld_2)
+        self.Gui_1.display_Spielfeld(self.Spielfeld_1)
+        self.Gui_1.display_Spielfeld(self.Spielfeld_2)
         #erstellt beide Spieler
-        self.Gui_1.Create_spieler(self.Spieler_1)
-        self.Gui_1.Create_spieler(self.Spieler_2)
+        self.Gui_1.display_spieler(self.Spieler_1)
+        self.Gui_1.display_spieler(self.Spieler_2)
+        #stellt alle Gegner dar
+        for gegner in self.gegner[1]:
+            self.Gui_1.display_gegner(gegner)
         #stellt den Score beider Spieler dar
         self.Gui_1.display_text(0, 0, f"Score: {self.Spieler_1.punkte}", pygame.Color(255, 255, 255, a=255), int(34*(self.Spielfeld_1.Spielfeld_width/800)))
         self.Gui_1.display_text(self.Spielfeld_1.Spielfeld_width, 0, f"Score: {self.Spieler_2.punkte}", pygame.Color(255, 255, 255, a=255), int(34*(self.Spielfeld_1.Spielfeld_width/800)))
@@ -91,41 +132,5 @@ class Steuerung():
         self.Gui_1.display_text(self.Spielfeld_1.Spielfeld_width*0.8, 0, f"Punkte: {self.Spieler_1.punkte}", pygame.Color(255, 255, 255, a=255), int(34*(self.Spielfeld_1.Spielfeld_width/800)))
         self.Gui_1.display_text(self.Spielfeld_1.Spielfeld_width*1.8, 0, f"Punkte: {self.Spieler_2.punkte}", pygame.Color(255, 255, 255, a=255), int(34*(self.Spielfeld_1.Spielfeld_width/800)))
         
-        
-        #erschafft Gegner, darf nicht jedes mal passieren, Gegneranzahl muss begrenzt werden, update Screen muss erstellt werden
-        self.create_enemy(self.Spielfeld_1)
-        self.create_enemy(self.Spielfeld_2)
-        ''' #nur bei Spielstart
-            (321)
-            schießen freigeben
-            Tasten freigeben
-            Gegner spawnen (Gegnerobjekte werden in einem 2 dimensionalen Array gespeichert, die erste Dimension steht für das Spielfeld die zweite für das Objekt, es muss eine maximalanzahl für Gegner geben)
-        '''
-        self.spiel_start=False
-        ''' #immer
-                Spieler bewegen
-                Event auslösen
-                Gegner erschaffen & bewegen
-                Projektil erschaffen & bewegen
-                Kollision->Text aktuallisieren
-        '''        
-
-    def lan_Mehrspieler(self):
-        self.Gui_1.create_Spielfeld(self.Spielfeld_1)
-        self.Gui_1.create_Spielfeld(self.Spielfeld_2)
-        self.Gui_1.Create_spieler(self.Spieler_1)
-        self.Gui_1.Create_spieler(self.Spieler_2)
-
-    def optionen(self):
-        pass       
-    
-    def create_enemy(self, feld_obj):
-        self.gegner[0].append(feld_obj.side)
-        self.gegner[1].append(Gegner(feld_obj))
-        self.Gui_1.Create_gegner(self.gegner[1][len(self.gegner[0])-1])
-
-    
-
-
 
 
