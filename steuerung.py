@@ -145,7 +145,7 @@ class Steuerung():
                 y=gegner.y-spieler_obj_2.y  
             comb=x**2+y**2
             abstand=math.sqrt(comb)
-            if abstand>0:
+            if abstand>1:
                 #einheitsvektor berechnen
                 x=x/abstand
                 y=y/abstand
