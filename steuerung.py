@@ -38,6 +38,8 @@ class Steuerung():
         self.spiel_start=True
         self.gegner=[] 
         self.maximale_Gegneranzahl=15
+        self.maximale_projektil_anzahl=60
+        self.count=0
         self.main_loop()
         
     
@@ -84,9 +86,13 @@ class Steuerung():
             self.create_enemy(self.Spielfeld_1)
             self.create_enemy(self.Spielfeld_2)
         
-        
-        self.create_projectile(self.Spielfeld_1, self.Spieler_1)
-        self.create_projectile(self.Spielfeld_2, self.Spieler_2)
+        if len(self.projektile)<self.maximale_projektil_anzahl*2:
+            if self.count==5:
+                self.create_projectile(self.Spielfeld_1, self.Spieler_1)
+                self.create_projectile(self.Spielfeld_2, self.Spieler_2)
+                self.count=0
+            else:
+                self.count+=1
         
         self.move_projectile(self.Spieler_1, self.Spieler_2)
         self.Taste_1.react_input(self.end, self.Spieler_1, self.Spieler_2, self.Spielfeld_1, self.Spielfeld_2)
@@ -145,18 +151,8 @@ class Steuerung():
 
     def move_projectile(self, spieler_obj, spieler_obj_2):
         for projectile in self.projektile:
-            x=0
-            y=0
-        #Abstandsberechnung Gegner Spieler (Vektorrechnung)
-            if self.projektile[self.projektile.index(projectile)].side==0:
-                x,y = self.berechne_vektor(spieler_obj, spieler_obj)
-            if self.projektile[self.projektile.index(projectile)].side==1:
-                x,y = self.berechne_vektor(spieler_obj_2,spieler_obj_2)
-            abstand=self.berechne_abstand(x,y)
-            if abstand>1:
-                x_change,y_change=self.berechne_einheitsvektor(x,y,abstand)
-                projectile.x+=x_change
-                projectile.y+=y_change
+            projectile.x+=projectile.richtungsvektor[0]
+            projectile.y+=projectile.richtungsvektor[1]
     
     def move_gegner(self, spieler_obj, spieler_obj_2):
         for gegner in self.gegner:
@@ -187,7 +183,10 @@ class Steuerung():
         return math.sqrt(x**2+y**2)
         
     def berechne_einheitsvektor(self, x, y, abstand):
-        return x/abstand, y/abstand
+        if abstand==0:
+            return 0,0
+        else:
+            return x/abstand, y/abstand
         
     def schießen(self, x, y, feld_obj, schuetze_obj):
         einheitsvektor=self.berechne_einheitsvektor()
