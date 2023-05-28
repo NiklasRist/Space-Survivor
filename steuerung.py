@@ -138,25 +138,26 @@ class Steuerung():
             y=0
         #Abstandsberechnung Gegner Spieler (Vektorrechnung)
             if self.gegner[0][self.gegner[1].index(gegner)]==0:
-                x=gegner.x-spieler_obj.x
-                y=gegner.y-spieler_obj.y
+                x,y = self.berechne_vektor( gegner, spieler_obj)
             if self.gegner[0][self.gegner[1].index(gegner)]==1:
-                x=gegner.x-spieler_obj_2.x
-                y=gegner.y-spieler_obj_2.y  
-            comb=x**2+y**2
-            abstand=math.sqrt(comb)
+                x,y = self.berechne_vektor( gegner,spieler_obj_2)
+            abstand=self.berechne_abstand(x,y)
             if abstand>1:
-                #einheitsvektor berechnen
-                x=x/abstand
-                y=y/abstand
-                gegner.x-=x
-                gegner.y-=y
+                x_change,y_change=self.berechne_einheitsvektor(x,y,abstand)
+                gegner.x+=x_change
+                gegner.y+=y_change
                 
     def create_projectile(self, x, y, feld_obj, schuetze_obj, richtungsvektor):
         self.projektile.append(projektil(x, y, feld_obj, schuetze_obj, richtungsvektor))
+    
+    def berechne_vektor(self, obj_1, obj_2):
+        return obj_2.x-obj_1.x, obj_2.y-obj_1.y
+   
+    def berechne_abstand(self, x, y):
+        return math.sqrt(x**2+y**2)
         
-    def berechne_einheitsvektor(self):
-        pass
+    def berechne_einheitsvektor(self, x, y, abstand):
+        return x/abstand, y/abstand
         
     def schießen(self, x, y, feld_obj, schuetze_obj):
         einheitsvektor=self.berechne_einheitsvektor()
