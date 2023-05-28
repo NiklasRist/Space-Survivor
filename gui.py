@@ -20,27 +20,21 @@ class Gui:
     pygame.display.set_caption("Space survior")
     Gui.spiel_fenster.fill(white)
 
-  def display_spieler(self, obj): 
-    self.spiel_fenster.blit(obj.SpielerIMG, (obj.x,obj.y))
-
-  def display_gegner(self, obj): 
-    self.spiel_fenster.blit(obj.GegnerIMG, (obj.x,obj.y))
-
   def lost_text(self):
     over_text = self.lost_font_text.render("you lost", True, (255, 255, 255))
     self.spiel_fenster.blit(over_text, (400, 400)) 
-
-      
+   
   def display_lifes(self, feld_obj):
     lifeText = self.lifeFont.render("Leben : ", True, (255, 255, 255))
     self.spiel_fenster.blit(lifeText, (feld_obj.Spielfeld_width -100, feld_obj.Spielfeld_height))
-
-  def display_Spielfeld(self, pSpielfeld):
-    self.spiel_fenster.blit(pSpielfeld.IMG, (pSpielfeld.x, pSpielfeld.y))
 
   def display_text(self, px, py, text, color, size):
     font = pygame.font.SysFont(None, size)
     img = font.render(text, True, color)
     self.spiel_fenster.blit(img, (px, py))
+
+
+  def display(self, obj): 
+    self.spiel_fenster.blit(obj.aktuelles_bild, (obj.x,obj.y))
 
 

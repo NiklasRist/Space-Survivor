@@ -36,7 +36,7 @@ class Steuerung():
         self.end = False 
         self.game_mode=0 #0=Main Menu, 1=lokaler Mehrspieler, 2=LAN Mehrspieler, 3=Optionen
         self.spiel_start=True
-        self.gegner=[[],[]] #[0]=side, [1]=Gegner Objekt
+        self.gegner=[] 
         self.maximale_Gegneranzahl=15
         self.main_loop()
         
@@ -52,7 +52,6 @@ class Steuerung():
     def main_loop(self):
         self.Gui_1.create_Fenster()
         while not self.end:
-            self.Taste_1.react_input(self.end, self.Spieler_1, self.Spieler_2, self.Spielfeld_1, self.Spielfeld_2)
             if self.game_mode==0:
                 self.main_Menu()
             elif self.game_mode==1:
@@ -81,10 +80,16 @@ class Steuerung():
         self.spiel_start=False
         
         #erschafft Gegner, darf nicht jedes mal passieren, Gegner müssen sich auf Spieler zubewegen
-        if len(self.gegner[1])<self.maximale_Gegneranzahl*2:
+        if len(self.gegner)<self.maximale_Gegneranzahl*2:
             self.create_enemy(self.Spielfeld_1)
             self.create_enemy(self.Spielfeld_2)
         
+        
+        self.create_projectile(self.Spielfeld_1, self.Spieler_1)
+        self.create_projectile(self.Spielfeld_2, self.Spieler_2)
+        
+        self.move_projectile(self.Spieler_1, self.Spieler_2)
+        self.Taste_1.react_input(self.end, self.Spieler_1, self.Spieler_2, self.Spielfeld_1, self.Spielfeld_2)
         self.move_gegner(self.Spieler_1, self.Spieler_2)
         self.update_screen_1()
         
@@ -105,21 +110,28 @@ class Steuerung():
         pass       
     
     def create_enemy(self, feld_obj):
-        self.gegner[0].append(feld_obj.side)
-        self.gegner[1].append(Gegner(feld_obj))
-        self.Gui_1.display_gegner(self.gegner[1][len(self.gegner[0])-1])
+        self.gegner.append(Gegner(feld_obj))
+        self.Gui_1.display(self.gegner[len(self.gegner)-1])
 
+    def create_projectile(self, feld_obj, schuetze_obj):
+        x,y=self.berechne_vektor(schuetze_obj, schuetze_obj)
+        richtungsvektor=self.berechne_einheitsvektor(x,y, self.berechne_abstand(x,y))
+        self.projektile.append(projektil(schuetze_obj.x, schuetze_obj.y, feld_obj, schuetze_obj, richtungsvektor))
+        self.Gui_1.display(self.projektile[len(self.projektile)-1])
     
     def update_screen_1(self): #1 = game_mode
         #erstellt beide Spielfelder
-        self.Gui_1.display_Spielfeld(self.Spielfeld_1)
-        self.Gui_1.display_Spielfeld(self.Spielfeld_2)
+        self.Gui_1.display(self.Spielfeld_1)
+        self.Gui_1.display(self.Spielfeld_2)
         #erstellt beide Spieler
-        self.Gui_1.display_spieler(self.Spieler_1)
-        self.Gui_1.display_spieler(self.Spieler_2)
+        self.Gui_1.display(self.Spieler_1)
+        self.Gui_1.display(self.Spieler_2)
         #stellt alle Gegner dar
-        for gegner in self.gegner[1]:
-            self.Gui_1.display_gegner(gegner)
+        for gegner in self.gegner:
+            self.Gui_1.display(gegner)
+        #stellt alle Projektile dar
+        for projectile in self.projektile:
+            self.Gui_1.display(projectile)
         #stellt den Score beider Spieler dar
         self.Gui_1.display_text(0, 0, f"Score: {self.Spieler_1.punkte}", pygame.Color(255, 255, 255, a=255), int(34*(self.Spielfeld_1.Spielfeld_width/800)))
         self.Gui_1.display_text(self.Spielfeld_1.Spielfeld_width, 0, f"Score: {self.Spieler_2.punkte}", pygame.Color(255, 255, 255, a=255), int(34*(self.Spielfeld_1.Spielfeld_width/800)))
@@ -131,15 +143,29 @@ class Steuerung():
         self.Gui_1.display_text(self.Spielfeld_1.Spielfeld_width*1.8, 0, f"Punkte: {self.Spieler_2.punkte}", pygame.Color(255, 255, 255, a=255), int(34*(self.Spielfeld_1.Spielfeld_width/800)))
         
 
-
-    def move_gegner(self, spieler_obj, spieler_obj_2):
-        for gegner in self.gegner[1]:
+    def move_projectile(self, spieler_obj, spieler_obj_2):
+        for projectile in self.projektile:
             x=0
             y=0
         #Abstandsberechnung Gegner Spieler (Vektorrechnung)
-            if self.gegner[0][self.gegner[1].index(gegner)]==0:
+            if self.projektile[self.projektile.index(projectile)].side==0:
+                x,y = self.berechne_vektor(spieler_obj, spieler_obj)
+            if self.projektile[self.projektile.index(projectile)].side==1:
+                x,y = self.berechne_vektor(spieler_obj_2,spieler_obj_2)
+            abstand=self.berechne_abstand(x,y)
+            if abstand>1:
+                x_change,y_change=self.berechne_einheitsvektor(x,y,abstand)
+                projectile.x+=x_change
+                projectile.y+=y_change
+    
+    def move_gegner(self, spieler_obj, spieler_obj_2):
+        for gegner in self.gegner:
+            x=0
+            y=0
+        #Abstandsberechnung Gegner Spieler (Vektorrechnung)
+            if self.gegner[self.gegner.index(gegner)].side==0:
                 x,y = self.berechne_vektor( gegner, spieler_obj)
-            if self.gegner[0][self.gegner[1].index(gegner)]==1:
+            if self.gegner[self.gegner.index(gegner)].side==1:
                 x,y = self.berechne_vektor( gegner,spieler_obj_2)
             abstand=self.berechne_abstand(x,y)
             if abstand>1:
@@ -147,11 +173,15 @@ class Steuerung():
                 gegner.x+=x_change
                 gegner.y+=y_change
                 
-    def create_projectile(self, x, y, feld_obj, schuetze_obj, richtungsvektor):
-        self.projektile.append(projektil(x, y, feld_obj, schuetze_obj, richtungsvektor))
+    #def move(self, spieler_obj, spieler_obj_2):
+
+                
     
     def berechne_vektor(self, obj_1, obj_2):
-        return obj_2.x-obj_1.x, obj_2.y-obj_1.y
+        if obj_1!=obj_2:
+            return obj_2.x-obj_1.x, obj_2.y-obj_1.y
+        else:
+            return obj_1.last_position[0]-obj_1.x, obj_1.last_position[1]-obj_1.x
    
     def berechne_abstand(self, x, y):
         return math.sqrt(x**2+y**2)

@@ -17,6 +17,7 @@ class Spieler():
     def __init__(self,x,y, feld_obj):
         self.x=x
         self.y=y
+        self.last_position = [x,y]
         self.leben = 3
         self.punkte = 0
         self.schaden=1
@@ -32,7 +33,7 @@ class Spieler():
         
         self.SpielerIMG = pygame.image.load(".\images\TestImage.png")
         self.SpielerIMG = pygame.transform.scale(self.SpielerIMG, (int(0.05*feld_obj.Spielfeld_width), int(0.05*feld_obj.Spielfeld_width)))
-        self.Aktuelles_bild=self.SpielerIMG
+        self.aktuelles_bild=self.SpielerIMG
         
         self.spieler_images = ['self.SpielerIMG_links', 'self.SpielerIMG' , 'self.Aktuelles_bild']
 

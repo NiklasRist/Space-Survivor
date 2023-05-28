@@ -11,6 +11,7 @@ class Feld():
     self.y=py
     self.IMG = pygame.image.load(".\images\TestImage.png")
     self.IMG = pygame.transform.scale(self.IMG, (self.Spielfeld_width, self.Spielfeld_height))
+    self.aktuelles_bild=self.IMG
     self.side=side
     
     #background
