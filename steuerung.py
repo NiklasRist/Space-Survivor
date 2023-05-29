@@ -40,6 +40,7 @@ class Steuerung():
         self.maximale_Gegneranzahl=15
         self.maximale_projektil_anzahl=60
         self.count=0
+        self.richtungsvektor=[0, 0]
         self.main_loop()
         
     
@@ -121,8 +122,10 @@ class Steuerung():
 
     def create_projectile(self, feld_obj, schuetze_obj):
         x,y=self.berechne_vektor(schuetze_obj, schuetze_obj)
-        richtungsvektor=self.berechne_einheitsvektor(x,y, self.berechne_abstand(x,y))
-        self.projektile.append(projektil(schuetze_obj.x, schuetze_obj.y, feld_obj, schuetze_obj, richtungsvektor))
+        self.richtungsvektor[0],self.richtungsvektor[1]=self.berechne_einheitsvektor(x,y, self.berechne_abstand(x,y))
+        self.richtungsvektor[0], self.richtungsvektor[1]=int(self.richtungsvektor[0]), int(self.richtungsvektor[1])
+        print(self.richtungsvektor)
+        self.projektile.append(projektil(schuetze_obj.x, schuetze_obj.y, feld_obj, schuetze_obj, self.richtungsvektor))
         self.Gui_1.display(self.projektile[len(self.projektile)-1])
     
     def update_screen_1(self): #1 = game_mode
@@ -153,6 +156,7 @@ class Steuerung():
         for projectile in self.projektile:
             projectile.x+=projectile.richtungsvektor[0]
             projectile.y+=projectile.richtungsvektor[1]
+            #print(projectile.richtungsvektor)
     
     def move_gegner(self, spieler_obj, spieler_obj_2):
         for gegner in self.gegner:
@@ -177,7 +181,7 @@ class Steuerung():
         if obj_1!=obj_2:
             return obj_2.x-obj_1.x, obj_2.y-obj_1.y
         else:
-            return obj_1.last_position[0]-obj_1.x, obj_1.last_position[1]-obj_1.x
+            return obj_1.last_position[0]-obj_1.x, obj_1.last_position[1]-obj_1.y
    
     def berechne_abstand(self, x, y):
         return math.sqrt(x**2+y**2)
