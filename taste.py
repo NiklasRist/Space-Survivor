@@ -55,21 +55,21 @@ class verwalter:
         spieler_object.x += self.x_spieler1
         spieler_object_2.x += self.x_spieler2  
         
-        if spieler_object.x > feld_obj.Spielfeld_width-int(0.05*feld_obj.Spielfeld_width):
-            spieler_object.x = feld_obj.Spielfeld_width-int(0.05*feld_obj.Spielfeld_width)
-        if spieler_object.x < feld_obj.x:
-            spieler_object.x =feld_obj.x
-        if spieler_object.y > feld_obj.Spielfeld_height-int(0.05*feld_obj.Spielfeld_height):
-            spieler_object.y = feld_obj.Spielfeld_height-int(0.05*feld_obj.Spielfeld_height)
-        if spieler_object.y < feld_obj.y:
-            spieler_object.y =feld_obj.y  
+        if spieler_object_2.x > feld_obj.Spielfeld_width-int(0.05*feld_obj.Spielfeld_width):
+            spieler_object_2.x = feld_obj.Spielfeld_width-int(0.05*feld_obj.Spielfeld_width)
+        if spieler_object_2.x < feld_obj.x:
+            spieler_object_2.x =feld_obj.x
+        if spieler_object_2.y > feld_obj.Spielfeld_height-int(0.05*feld_obj.Spielfeld_height):
+            spieler_object_2.y = feld_obj.Spielfeld_height-int(0.05*feld_obj.Spielfeld_height)
+        if spieler_object_2.y < feld_obj.y:
+            spieler_object_2.y =feld_obj.y  
             
-        if spieler_object_2.x > feld_obj_2.x + feld_obj_2.Spielfeld_width-int(0.05*feld_obj_2.Spielfeld_width):
-            spieler_object_2.x = feld_obj_2.x + feld_obj_2.Spielfeld_width-int(0.05*feld_obj_2.Spielfeld_width)
-        if spieler_object_2.x < feld_obj_2.x:
-            spieler_object_2.x = feld_obj_2.x
-        if spieler_object_2.y > feld_obj_2.Spielfeld_height-int(0.05*feld_obj_2.Spielfeld_height):
-            spieler_object_2.y = feld_obj_2.Spielfeld_height-int(0.05*feld_obj_2.Spielfeld_height)
-        if spieler_object_2.y < feld_obj_2.y:
-            spieler_object_2.y =feld_obj_2.y                                     
+        if spieler_object.x > feld_obj_2.x + feld_obj_2.Spielfeld_width-int(0.05*feld_obj_2.Spielfeld_width):
+            spieler_object.x = feld_obj_2.x + feld_obj_2.Spielfeld_width-int(0.05*feld_obj_2.Spielfeld_width)
+        if spieler_object.x < feld_obj_2.x:
+            spieler_object.x = feld_obj_2.x
+        if spieler_object.y > feld_obj_2.Spielfeld_height-int(0.05*feld_obj_2.Spielfeld_height):
+            spieler_object.y = feld_obj_2.Spielfeld_height-int(0.05*feld_obj_2.Spielfeld_height)
+        if spieler_object.y < feld_obj_2.y:
+            spieler_object.y =feld_obj_2.y                                     
             

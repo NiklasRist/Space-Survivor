@@ -38,9 +38,8 @@ class Steuerung():
         self.spiel_start=True
         self.gegner=[] 
         self.maximale_Gegneranzahl=15
-        self.maximale_projektil_anzahl=60
+        self.maximale_projektil_anzahl=30
         self.count=0
-        self.richtungsvektor=[0, 0]
         self.main_loop()
         
     
@@ -87,16 +86,20 @@ class Steuerung():
             self.create_enemy(self.Spielfeld_1)
             self.create_enemy(self.Spielfeld_2)
         
-        if len(self.projektile)<self.maximale_projektil_anzahl*2:
-            if self.count==5:
+        if self.count==5:
                 self.create_projectile(self.Spielfeld_1, self.Spieler_1)
                 self.create_projectile(self.Spielfeld_2, self.Spieler_2)
                 self.count=0
-            else:
-                self.count+=1
+                if self.maximale_projektil_anzahl<len(self.projektile):
+                    self.projektile.pop(0)
+                    self.projektile.pop(0)
+                    print(len(self.projektile))
+        else:
+            self.count+=1
+        
         
         self.move_projectile(self.Spieler_1, self.Spieler_2)
-        self.Taste_1.react_input(self.end, self.Spieler_1, self.Spieler_2, self.Spielfeld_1, self.Spielfeld_2)
+        self.Taste_1.react_input(self.end, self.Spieler_2, self.Spieler_1, self.Spielfeld_1, self.Spielfeld_2)
         self.move_gegner(self.Spieler_1, self.Spieler_2)
         self.update_screen_1()
         
@@ -121,11 +124,11 @@ class Steuerung():
         self.Gui_1.display(self.gegner[len(self.gegner)-1])
 
     def create_projectile(self, feld_obj, schuetze_obj):
+        richtungsvektor=[0, 0]
         x,y=self.berechne_vektor(schuetze_obj, schuetze_obj)
-        self.richtungsvektor[0],self.richtungsvektor[1]=self.berechne_einheitsvektor(x,y, self.berechne_abstand(x,y))
-        self.richtungsvektor[0], self.richtungsvektor[1]=int(self.richtungsvektor[0]), int(self.richtungsvektor[1])
-        print(self.richtungsvektor)
-        self.projektile.append(projektil(schuetze_obj.x, schuetze_obj.y, feld_obj, schuetze_obj, self.richtungsvektor))
+        richtungsvektor[0], richtungsvektor[1]=self.berechne_einheitsvektor(x,y, self.berechne_abstand(x,y))
+        richtungsvektor[0], richtungsvektor[1]=20*int(richtungsvektor[0]), 20*int(richtungsvektor[1])
+        self.projektile.append(projektil(schuetze_obj.x, schuetze_obj.y, feld_obj, schuetze_obj, richtungsvektor))
         self.Gui_1.display(self.projektile[len(self.projektile)-1])
     
     def update_screen_1(self): #1 = game_mode
@@ -154,8 +157,8 @@ class Steuerung():
 
     def move_projectile(self, spieler_obj, spieler_obj_2):
         for projectile in self.projektile:
-            projectile.x+=projectile.richtungsvektor[0]
-            projectile.y+=projectile.richtungsvektor[1]
+            projectile.x-=projectile.richtungsvektor[0]
+            projectile.y-=projectile.richtungsvektor[1]
             #print(projectile.richtungsvektor)
     
     def move_gegner(self, spieler_obj, spieler_obj_2):
