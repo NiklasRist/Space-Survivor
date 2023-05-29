@@ -40,6 +40,7 @@ class Steuerung():
         self.maximale_Gegneranzahl=15
         self.maximale_projektil_anzahl=30
         self.count=0
+        self.projektile_vektor=[1,0]
         self.main_loop()
         
     
@@ -93,7 +94,6 @@ class Steuerung():
                 if self.maximale_projektil_anzahl<len(self.projektile):
                     self.projektile.pop(0)
                     self.projektile.pop(0)
-                    print(len(self.projektile))
         else:
             self.count+=1
         
@@ -124,11 +124,12 @@ class Steuerung():
         self.Gui_1.display(self.gegner[len(self.gegner)-1])
 
     def create_projectile(self, feld_obj, schuetze_obj):
-        richtungsvektor=[0, 0]
         x,y=self.berechne_vektor(schuetze_obj, schuetze_obj)
-        richtungsvektor[0], richtungsvektor[1]=self.berechne_einheitsvektor(x,y, self.berechne_abstand(x,y))
-        richtungsvektor[0], richtungsvektor[1]=20*int(richtungsvektor[0]), 20*int(richtungsvektor[1])
-        self.projektile.append(projektil(schuetze_obj.x, schuetze_obj.y, feld_obj, schuetze_obj, richtungsvektor))
+        k=[0,0]
+        k[0], k[1]=self.berechne_einheitsvektor(x,y, self.berechne_abstand(x,y))
+        if k!=[0,0]:
+            self.projektile_vektor=k
+        self.projektile.append(projektil(schuetze_obj.x, schuetze_obj.y, feld_obj, schuetze_obj, [20*int(self.projektile_vektor[0]), 20*int(self.projektile_vektor[1])]))
         self.Gui_1.display(self.projektile[len(self.projektile)-1])
     
     def update_screen_1(self): #1 = game_mode
@@ -176,7 +177,6 @@ class Steuerung():
                 gegner.x+=x_change
                 gegner.y+=y_change
                 
-    #def move(self, spieler_obj, spieler_obj_2):
 
                 
     
