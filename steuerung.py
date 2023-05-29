@@ -159,7 +159,7 @@ class Steuerung():
         for projectile in self.projektile:
             projectile.x-=projectile.richtungsvektor[0]
             projectile.y-=projectile.richtungsvektor[1]
-            #print(projectile.richtungsvektor)
+            self.projectile_boundaries()
     
     def move_gegner(self, spieler_obj, spieler_obj_2):
         for gegner in self.gegner:
@@ -199,3 +199,11 @@ class Steuerung():
         einheitsvektor=self.berechne_einheitsvektor()
         self.create_projectile(x, y, feld_obj, schuetze_obj, einheitsvektor)
         
+    def projectile_boundaries(self):
+        for projectile in self.projektile:
+            if projectile.side == self.Spielfeld_1.side:
+                if projectile.x < self.Spielfeld_1.x or projectile.x > self.Spielfeld_1.x+self.Spielfeld_1.Spielfeld_width-0.0125*self.Spielfeld_1.Spielfeld_width or projectile.y < self.Spielfeld_1.y or projectile.y > self.Spielfeld_1.y+self.Spielfeld_1.Spielfeld_height:
+                    self.projektile.pop(self.projektile.index(projectile))
+            if projectile.side == self.Spielfeld_2.side:
+                if projectile.x < self.Spielfeld_2.x or projectile.x > self.Spielfeld_2.x+self.Spielfeld_2.Spielfeld_width or projectile.y < self.Spielfeld_2.y or projectile.y > self.Spielfeld_2.y+self.Spielfeld_2.Spielfeld_height:
+                    self.projektile.pop(self.projektile.index(projectile))
