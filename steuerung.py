@@ -28,7 +28,7 @@ class Steuerung():
         self.Gegnerspawn_1 = GegnerSpawnen()
         self.Event_1 = Event()
         self.Spieler_1 = Spieler((0.5*self.Spielfeld_1.Spielfeld_width), (self.Spielfeld_1.Spielfeld_height*0.5), self.Spielfeld_1)
-        self.Spieler_2 = Spieler((1.5*self.Spielfeld_1.Spielfeld_width), (self.Spielfeld_1.Spielfeld_height*0.5), self.Spielfeld_1)
+        self.Spieler_2 = Spieler((1.5*self.Spielfeld_2.Spielfeld_width), (self.Spielfeld_2.Spielfeld_height*0.5), self.Spielfeld_2)
         self.Taste_1 = verwalter()
         self.leaderboard_1 = leaderboard()
         self.speicher_1 = Speicher()
@@ -40,17 +40,9 @@ class Steuerung():
         self.maximale_Gegneranzahl=15
         self.maximale_projektil_anzahl=30
         self.count=0
-        self.projektile_vektor=[1,0]
+        self.projektile_vektor=[[1,0],[-1,0]]
+        self.text_size=int(34*(self.Spielfeld_1.Spielfeld_width/800))
         self.main_loop()
-        
-    
-    
-    
-    
-
-        
-    
-   
 
     def main_loop(self):
         self.Gui_1.create_Fenster()
@@ -128,8 +120,8 @@ class Steuerung():
         k=[0,0]
         k[0], k[1]=self.berechne_einheitsvektor(x,y, self.berechne_abstand(x,y))
         if k!=[0,0]:
-            self.projektile_vektor=k
-        self.projektile.append(projektil(schuetze_obj.x, schuetze_obj.y, feld_obj, schuetze_obj, [20*int(self.projektile_vektor[0]), 20*int(self.projektile_vektor[1])]))
+            self.projektile_vektor[schuetze_obj.side]=k
+        self.projektile.append(projektil(schuetze_obj.x, schuetze_obj.y, feld_obj, schuetze_obj, [20*int(self.projektile_vektor[schuetze_obj.side][0]), 20*int(self.projektile_vektor[schuetze_obj.side][1])]))
         self.Gui_1.display(self.projektile[len(self.projektile)-1])
     
     def update_screen_1(self): #1 = game_mode
@@ -146,14 +138,14 @@ class Steuerung():
         for projectile in self.projektile:
             self.Gui_1.display(projectile)
         #stellt den Score beider Spieler dar
-        self.Gui_1.display_text(0, 0, f"Score: {self.Spieler_1.punkte}", pygame.Color(255, 255, 255, a=255), int(34*(self.Spielfeld_1.Spielfeld_width/800)))
-        self.Gui_1.display_text(self.Spielfeld_1.Spielfeld_width, 0, f"Score: {self.Spieler_2.punkte}", pygame.Color(255, 255, 255, a=255), int(34*(self.Spielfeld_1.Spielfeld_width/800)))
+        self.Gui_1.display_text(0, 0, f"Score: {self.Spieler_1.punkte}", pygame.Color(255, 255, 255, a=255), self.text_size)
+        self.Gui_1.display_text(self.Spielfeld_1.Spielfeld_width, 0, f"Score: {self.Spieler_2.punkte}", pygame.Color(255, 255, 255, a=255), self.text_size)
         #stellt Leben beider Spieler dar
-        self.Gui_1.display_text(self.Spielfeld_1.Spielfeld_width*0.4, 0, f"Leben: {self.Spieler_1.leben}", pygame.Color(255, 255, 255, a=255), int(34*(self.Spielfeld_1.Spielfeld_width/800)))
-        self.Gui_1.display_text(self.Spielfeld_1.Spielfeld_width*1.4, 0, f"Leben: {self.Spieler_2.leben}", pygame.Color(255, 255, 255, a=255), int(34*(self.Spielfeld_1.Spielfeld_width/800)))
+        self.Gui_1.display_text(self.Spielfeld_1.Spielfeld_width*0.4, 0, f"Leben: {self.Spieler_1.leben}", pygame.Color(255, 255, 255, a=255), self.text_size)
+        self.Gui_1.display_text(self.Spielfeld_1.Spielfeld_width*1.4, 0, f"Leben: {self.Spieler_2.leben}", pygame.Color(255, 255, 255, a=255), self.text_size)
         #stellt Eventpunkte Spieler dar
-        self.Gui_1.display_text(self.Spielfeld_1.Spielfeld_width*0.8, 0, f"Punkte: {self.Spieler_1.punkte}", pygame.Color(255, 255, 255, a=255), int(34*(self.Spielfeld_1.Spielfeld_width/800)))
-        self.Gui_1.display_text(self.Spielfeld_1.Spielfeld_width*1.8, 0, f"Punkte: {self.Spieler_2.punkte}", pygame.Color(255, 255, 255, a=255), int(34*(self.Spielfeld_1.Spielfeld_width/800)))
+        self.Gui_1.display_text(self.Spielfeld_1.Spielfeld_width*0.8, 0, f"Punkte: {self.Spieler_1.punkte}", pygame.Color(255, 255, 255, a=255), self.text_size)
+        self.Gui_1.display_text(self.Spielfeld_1.Spielfeld_width*1.8, 0, f"Punkte: {self.Spieler_2.punkte}", pygame.Color(255, 255, 255, a=255), self.text_size)
         
 
     def move_projectile(self, spieler_obj, spieler_obj_2):
