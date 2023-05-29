@@ -19,6 +19,7 @@ class Spieler():
         self.y=y
         self.last_position = [x,y]
         self.size=int(0.05*feld_obj.Spielfeld_width)
+        self.mittelpunkt=[self.x+int(0,5*self.size), self.y+int(0,5*self.size)]
         self.leben = 3
         self.punkte = 0
         self.schaden=1
