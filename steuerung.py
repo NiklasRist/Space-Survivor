@@ -8,7 +8,7 @@ from shop import Shop
 from npcs import Gegner
 from event import Event
 from spielfeld import Feld
-from taste import verwalter
+from taste_copy import verwalter
 from leaderboard import leaderboard
 from speicher import Speicher
 from projektil import projektil
@@ -121,7 +121,7 @@ class Steuerung():
         k[0], k[1]=self.berechne_einheitsvektor(x,y, self.berechne_abstand(x,y))
         if k!=[0,0]:
             self.projektile_vektor[schuetze_obj.side]=k
-        self.projektile.append(projektil(schuetze_obj.x, schuetze_obj.y, feld_obj, schuetze_obj, [20*int(self.projektile_vektor[schuetze_obj.side][0]), 20*int(self.projektile_vektor[schuetze_obj.side][1])]))
+        self.projektile.append(projektil(schuetze_obj.mittelpunkt[0], schuetze_obj.mittelpunkt[1], feld_obj, schuetze_obj, [20*int(self.projektile_vektor[schuetze_obj.side][0]), 20*int(self.projektile_vektor[schuetze_obj.side][1])]))
         self.Gui_1.display(self.projektile[len(self.projektile)-1])
     
     def update_screen_1(self): #1 = game_mode
@@ -164,7 +164,7 @@ class Steuerung():
             if self.gegner[self.gegner.index(gegner)].side==1:
                 x,y = self.berechne_vektor( gegner,spieler_obj_2)
             abstand=self.berechne_abstand(x,y)
-            if abstand>1:
+            if abstand>=1:
                 x_change,y_change=self.berechne_einheitsvektor(x,y,abstand)
                 gegner.x+=x_change
                 gegner.y+=y_change
