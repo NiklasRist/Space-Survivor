@@ -40,7 +40,6 @@ class Steuerung():
         self.maximale_Gegneranzahl=15
         self.maximale_projektil_anzahl=30
         self.count=0
-        self.projektile_vektor=[[1,0],[-1,0]]
         self.text_size=int(34*(self.Spielfeld_1.Spielfeld_width/800))
         self.main_loop()
 
@@ -116,12 +115,7 @@ class Steuerung():
         self.Gui_1.display(self.gegner[len(self.gegner)-1])
 
     def create_projectile(self, feld_obj, schuetze_obj): #Richtungsvektor ändert sich bei zu kleinen Bewegungen nicht, mögliche Lösung kopiere den letzten Richtungsvektor aus Verwalter
-        x,y=self.berechne_vektor(schuetze_obj, schuetze_obj)
-        k=[0,0]
-        k[0], k[1]=self.berechne_einheitsvektor(x,y, self.berechne_abstand(x,y))
-        if k!=[0,0]:
-            self.projektile_vektor[schuetze_obj.side]=k
-        self.projektile.append(projektil(schuetze_obj.mittelpunkt[0], schuetze_obj.mittelpunkt[1], feld_obj, schuetze_obj, [20*self.projektile_vektor[schuetze_obj.side][0], 20*self.projektile_vektor[schuetze_obj.side][1]]))
+        self.projektile.append(projektil(schuetze_obj.mittelpunkt[0], schuetze_obj.mittelpunkt[1], feld_obj, schuetze_obj, [2*schuetze_obj.aktueller_richtungsvektor[0], 2*schuetze_obj.aktueller_richtungsvektor[1]]))
         self.Gui_1.display(self.projektile[len(self.projektile)-1])
     
     def update_screen_1(self): #1 = game_mode
@@ -176,7 +170,7 @@ class Steuerung():
         if obj_1!=obj_2:
             return obj_2.x-obj_1.x, obj_2.y-obj_1.y
         else:
-            return obj_1.last_position[0]-obj_1.x, obj_1.last_position[1]-obj_1.y
+            return obj_1.aktueller_richtungsvektor[0]-obj_1.x, obj_1.aktueller_richtungsvektor[1]-obj_1.y
    
     def berechne_abstand(self, x, y):
         return math.sqrt(x**2+y**2)
