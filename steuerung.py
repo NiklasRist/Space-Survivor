@@ -8,7 +8,7 @@ from shop import Shop
 from npcs import Gegner
 from event import Event
 from spielfeld import Feld
-from taste_copy import verwalter
+from taste import verwalter
 from leaderboard import leaderboard
 from speicher import Speicher
 from projektil import projektil
@@ -115,13 +115,13 @@ class Steuerung():
         self.gegner.append(Gegner(feld_obj))
         self.Gui_1.display(self.gegner[len(self.gegner)-1])
 
-    def create_projectile(self, feld_obj, schuetze_obj):
+    def create_projectile(self, feld_obj, schuetze_obj): #Richtungsvektor ändert sich bei zu kleinen Bewegungen nicht, mögliche Lösung kopiere den letzten Richtungsvektor aus Verwalter
         x,y=self.berechne_vektor(schuetze_obj, schuetze_obj)
         k=[0,0]
         k[0], k[1]=self.berechne_einheitsvektor(x,y, self.berechne_abstand(x,y))
         if k!=[0,0]:
             self.projektile_vektor[schuetze_obj.side]=k
-        self.projektile.append(projektil(schuetze_obj.mittelpunkt[0], schuetze_obj.mittelpunkt[1], feld_obj, schuetze_obj, [20*int(self.projektile_vektor[schuetze_obj.side][0]), 20*int(self.projektile_vektor[schuetze_obj.side][1])]))
+        self.projektile.append(projektil(schuetze_obj.mittelpunkt[0], schuetze_obj.mittelpunkt[1], feld_obj, schuetze_obj, [20*self.projektile_vektor[schuetze_obj.side][0], 20*self.projektile_vektor[schuetze_obj.side][1]]))
         self.Gui_1.display(self.projektile[len(self.projektile)-1])
     
     def update_screen_1(self): #1 = game_mode
@@ -199,3 +199,4 @@ class Steuerung():
             if projectile.side == self.Spielfeld_2.side:
                 if projectile.x < self.Spielfeld_2.x or projectile.x > self.Spielfeld_2.x+self.Spielfeld_2.Spielfeld_width or projectile.y < self.Spielfeld_2.y or projectile.y > self.Spielfeld_2.y+self.Spielfeld_2.Spielfeld_height:
                     self.projektile.pop(self.projektile.index(projectile))
+                    
