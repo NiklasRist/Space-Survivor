@@ -114,7 +114,7 @@ class Steuerung():
         self.gegner.append(Gegner(feld_obj))
         self.Gui_1.display(self.gegner[len(self.gegner)-1])
 
-    def create_projectile(self, feld_obj, schuetze_obj): #Richtungsvektor ändert sich bei zu kleinen Bewegungen nicht, mögliche Lösung kopiere den letzten Richtungsvektor aus Verwalter
+    def create_projectile(self, feld_obj, schuetze_obj): 
         self.projektile.append(projektil(schuetze_obj.mittelpunkt[0], schuetze_obj.mittelpunkt[1], feld_obj, schuetze_obj, [2*schuetze_obj.aktueller_richtungsvektor[0], 2*schuetze_obj.aktueller_richtungsvektor[1]]))
         self.Gui_1.display(self.projektile[len(self.projektile)-1])
     

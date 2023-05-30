@@ -17,7 +17,7 @@ class Spieler():
     def __init__(self,x,y, feld_obj):
         self.x=x
         self.y=y
-        self.aktueller_richtungsvektor = [10,10]
+        self.aktueller_richtungsvektor = [0,10]
         self.size=int(0.05*feld_obj.Spielfeld_width)
         self.mittelpunkt=[self.x+self.size*0.5, self.y+self.size*0.5]
         self.leben = 3

@@ -18,15 +18,6 @@ class Gui:
   def create_Fenster(self):
     white = (255,255,255) 
     pygame.display.set_caption("Space survior")
-    Gui.spiel_fenster.fill(white)
-
-  def lost_text(self):
-    over_text = self.lost_font_text.render("you lost", True, (255, 255, 255))
-    self.spiel_fenster.blit(over_text, (400, 400)) 
-   
-  def display_lifes(self, feld_obj):
-    lifeText = self.lifeFont.render("Leben : ", True, (255, 255, 255))
-    self.spiel_fenster.blit(lifeText, (feld_obj.Spielfeld_width -100, feld_obj.Spielfeld_height))
 
   def display_text(self, px, py, text, color, size):
     font = pygame.font.SysFont(None, size)
