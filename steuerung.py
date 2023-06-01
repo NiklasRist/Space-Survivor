@@ -78,7 +78,7 @@ class Steuerung():
             self.create_enemy(self.Spielfeld_1)
             self.create_enemy(self.Spielfeld_2)
         
-        if self.count==5:
+        if self.count==15:
                 self.create_projectile(self.Spielfeld_1, self.Spieler_1)
                 self.create_projectile(self.Spielfeld_2, self.Spieler_2)
                 self.count=0
@@ -114,8 +114,8 @@ class Steuerung():
         self.gegner.append(Gegner(feld_obj))
         self.Gui_1.display(self.gegner[len(self.gegner)-1])
 
-    def create_projectile(self, feld_obj, schuetze_obj): 
-        self.projektile.append(projektil(schuetze_obj.mittelpunkt[0], schuetze_obj.mittelpunkt[1], feld_obj, schuetze_obj, [2*schuetze_obj.aktueller_richtungsvektor[0], 2*schuetze_obj.aktueller_richtungsvektor[1]]))
+    def create_projectile(self, feld_obj, schuetze_obj): #add velocity+acceleration #spieler darf projektile nicht aufholen
+        self.projektile.append(projektil(schuetze_obj.mittelpunkt[0], schuetze_obj.mittelpunkt[1], feld_obj, schuetze_obj, [schuetze_obj.aktueller_richtungsvektor[0], schuetze_obj.aktueller_richtungsvektor[1]]))
         self.Gui_1.display(self.projektile[len(self.projektile)-1])
     
     def update_screen_1(self): #1 = game_mode
