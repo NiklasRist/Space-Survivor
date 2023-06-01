@@ -6,7 +6,7 @@ class spieler_polygon:
         for eckpunkt in polygon:
             eckpunkt[0]=eckpunkt[0]/48*object_size
             eckpunkt[1]=eckpunkt[1]/48*object_size
-    def is_in_side(self,polygon_side, x,y) -> bool: 
+    def is_in_side(self,polygon_side, x,y) -> bool: #geht das wenn der Bildschirm vergrößert/verkleinert wird
         r=0
         differenz=(self.collision_polygon[polygon_side][0]-self.collision_polygon[polygon_side-1][0], self.collision_polygon[polygon_side][1]-self.collision_polygon[polygon_side-1][1])
         abstand=math.sqrt(differenz[0]**2,differenz[1]**2)
@@ -27,7 +27,7 @@ class projektil_polygon:
         for eckpunkt in polygon:
             eckpunkt[0]=eckpunkt[0]/10*object_size
             eckpunkt[1]=eckpunkt[1]/10*object_size
-    def is_in_side(self,polygon_side, x,y) -> bool: 
+    def is_in_side(self,polygon_side, x,y) -> bool: #geht das wenn der Bildschirm vergrößert/verkleinert wird
         r=0
         differenz=(self.collision_polygon[polygon_side][0]-self.collision_polygon[polygon_side-1][0], self.collision_polygon[polygon_side][1]-self.collision_polygon[polygon_side-1][1])
         abstand=math.sqrt(differenz[0]**2,differenz[1]**2)
@@ -45,7 +45,7 @@ class asteroid_polygon:
         for eckpunkt in polygon:
             eckpunkt[0]=eckpunkt[0]/67*object_size
             eckpunkt[1]=eckpunkt[1]/63*object_size
-    def is_in_side(self,polygon_side, x,y) -> bool: 
+    def is_in_side(self,polygon_side, x,y) -> bool: #geht das wenn der Bildschirm vergrößert/verkleinert wird
         r=0
         differenz=(self.collision_polygon[polygon_side][0]-self.collision_polygon[polygon_side-1][0], self.collision_polygon[polygon_side][1]-self.collision_polygon[polygon_side-1][1])
         abstand=math.sqrt(differenz[0]**2,differenz[1]**2)
@@ -63,7 +63,7 @@ class enemy_polygon:
         for eckpunkt in polygon:
             eckpunkt[0]=eckpunkt[0]/64*object_size
             eckpunkt[1]=eckpunkt[1]/64*object_size
-    def is_in_side(self,polygon_side, x,y) -> bool: 
+    def is_in_side(self,polygon_side, x,y) -> bool: #geht das wenn der Bildschirm vergrößert/verkleinert wird
         r=0
         differenz=(self.collision_polygon[polygon_side][0]-self.collision_polygon[polygon_side-1][0], self.collision_polygon[polygon_side][1]-self.collision_polygon[polygon_side-1][1])
         abstand=math.sqrt(differenz[0]**2,differenz[1]**2)
