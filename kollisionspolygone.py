@@ -1,11 +1,24 @@
+import math
 class spieler_polygon:
     def __init__(self) -> None:
-        self.collision_polygon_complex=[(22,16),(22,21),(21,22),(19,22),(19,25)(18,26),(16,26),(15,25),(15,22),(13,22),(13,31),(12,32),(10,32),(9,31),(9,29),(6,29),(6,41),(15,41),(16,42),(16,44),(21,44),(21,42),(22,41),(25,41),(26,42),(26,44),(31,44),(31,42),(32,41),(41,41),(41,29),(38,29),(38,31),(37,32),(35,32),(34,31),(34,22),(32,22),(32,25),(31,26),(29,26), (29,25), (28,22), (26,22), (25,21), (25,16)]
         self.collision_polygon=[(22,15),(6,31),(6,45),(41,45),(41,31),(25,15)]
     def rescale_polygon(self, object_size, polygon):
         for eckpunkt in polygon:
             eckpunkt[0]=eckpunkt[0]/48*object_size
             eckpunkt[1]=eckpunkt[1]/48*object_size
+    def is_in_side(self,polygon_side, x,y) -> bool: 
+        r=0
+        differenz=(self.collision_polygon[polygon_side][0]-self.collision_polygon[polygon_side-1][0], self.collision_polygon[polygon_side][1]-self.collision_polygon[polygon_side-1][1])
+        abstand=math.sqrt(differenz[0]**2,differenz[1]**2)
+        einheitsvektor=(differenz[0]/abstand,differenz[1]/abstand)
+        while (x,y) != (self.collision_polygon[polygon_side-1][0]+r*einheitsvektor[0],self.collision_polygon[polygon_side-1][1]+r*einheitsvektor[1]):
+            r+=1
+            if r==abstand+1:
+                return False
+        return True
+    
+        
+        
 
 class projektil_polygon:
     def __init__(self) -> None:
@@ -14,6 +27,16 @@ class projektil_polygon:
         for eckpunkt in polygon:
             eckpunkt[0]=eckpunkt[0]/10*object_size
             eckpunkt[1]=eckpunkt[1]/10*object_size
+    def is_in_side(self,polygon_side, x,y) -> bool: 
+        r=0
+        differenz=(self.collision_polygon[polygon_side][0]-self.collision_polygon[polygon_side-1][0], self.collision_polygon[polygon_side][1]-self.collision_polygon[polygon_side-1][1])
+        abstand=math.sqrt(differenz[0]**2,differenz[1]**2)
+        einheitsvektor=(differenz[0]/abstand,differenz[1]/abstand)
+        while (x,y) != (self.collision_polygon[polygon_side-1][0]+r*einheitsvektor[0],self.collision_polygon[polygon_side-1][1]+r*einheitsvektor[1]):
+            r+=1
+            if r==abstand+1:
+                return False
+        return True
 
 class asteroid_polygon:
     def __init__(self) -> None:
@@ -22,3 +45,31 @@ class asteroid_polygon:
         for eckpunkt in polygon:
             eckpunkt[0]=eckpunkt[0]/67*object_size
             eckpunkt[1]=eckpunkt[1]/63*object_size
+    def is_in_side(self,polygon_side, x,y) -> bool: 
+        r=0
+        differenz=(self.collision_polygon[polygon_side][0]-self.collision_polygon[polygon_side-1][0], self.collision_polygon[polygon_side][1]-self.collision_polygon[polygon_side-1][1])
+        abstand=math.sqrt(differenz[0]**2,differenz[1]**2)
+        einheitsvektor=(differenz[0]/abstand,differenz[1]/abstand)
+        while (x,y) != (self.collision_polygon[polygon_side-1][0]+r*einheitsvektor[0],self.collision_polygon[polygon_side-1][1]+r*einheitsvektor[1]):
+            r+=1
+            if r==abstand+1:
+                return False
+        return True
+            
+class enemy_polygon:
+    def __init__(self) -> None:
+        self.collision_polygon=[(26,23),(15,34),(15,52),(24,61),(38,61),(49,50),(49,35),(37,23)]
+    def rescale_polygon(self, object_size, polygon):
+        for eckpunkt in polygon:
+            eckpunkt[0]=eckpunkt[0]/64*object_size
+            eckpunkt[1]=eckpunkt[1]/64*object_size
+    def is_in_side(self,polygon_side, x,y) -> bool: 
+        r=0
+        differenz=(self.collision_polygon[polygon_side][0]-self.collision_polygon[polygon_side-1][0], self.collision_polygon[polygon_side][1]-self.collision_polygon[polygon_side-1][1])
+        abstand=math.sqrt(differenz[0]**2,differenz[1]**2)
+        einheitsvektor=(differenz[0]/abstand,differenz[1]/abstand)
+        while (x,y) != (self.collision_polygon[polygon_side-1][0]+r*einheitsvektor[0],self.collision_polygon[polygon_side-1][1]+r*einheitsvektor[1]):
+            r+=1
+            if r==abstand+1:
+                return False
+        return True

@@ -12,6 +12,7 @@ from taste import verwalter
 from leaderboard import leaderboard
 from speicher import Speicher
 from projektil import projektil
+from kollisionspolygone import spieler_polygon, asteroid_polygon, projektil_polygon, enemy_polygon
 
 
 
@@ -194,3 +195,5 @@ class Steuerung():
                 if projectile.x < self.Spielfeld_2.x or projectile.x > self.Spielfeld_2.x+self.Spielfeld_2.Spielfeld_width or projectile.y < self.Spielfeld_2.y or projectile.y > self.Spielfeld_2.y+self.Spielfeld_2.Spielfeld_height:
                     self.projektile.pop(self.projektile.index(projectile))
                     
+    def test_collision (self, obj_1, obj_2) -> bool:
+        pass
