@@ -116,7 +116,7 @@ class Steuerung():
         self.Gui_1.display(self.gegner[len(self.gegner)-1])
 
     def create_projectile(self, feld_obj, schuetze_obj): #add velocity+acceleration #spieler darf projektile nicht aufholen
-        self.projektile.append(projektil(schuetze_obj.mittelpunkt[0], schuetze_obj.mittelpunkt[1], feld_obj, schuetze_obj, [schuetze_obj.aktueller_richtungsvektor[0], schuetze_obj.aktueller_richtungsvektor[1]]))
+        self.projektile.append(projektil(schuetze_obj.mittelpunkt[0], schuetze_obj.mittelpunkt[1], feld_obj, schuetze_obj, [-1*schuetze_obj.aktueller_richtungsvektor[0], -1*schuetze_obj.aktueller_richtungsvektor[1]]))
         self.Gui_1.display(self.projektile[len(self.projektile)-1])
     
     def update_screen_1(self): #1 = game_mode
