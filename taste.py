@@ -35,10 +35,23 @@ class verwalter:
                 if event.__dict__["key"] == pygame.K_LEFT: #keycode von K_LEFT
                     self.x_spieler_1 -= 10
                     spieler_object.aktuelles_bild = spieler_object.SpielerIMG_links 
-                if event.__dict__["key"] == pygame.K_d: #keycode von K_a
+                if event.__dict__["key"] == pygame.K_d: #keycode von K_d
                     self.x_spieler_2 += 10
                 if event.__dict__["key"] == pygame.K_a: #keycode von K_a
                     self.x_spieler_2 -= 10
+                
+                
+                if event.__dict__["key"] == pygame.K_DOWN: #keycode von K_DOWN
+                    self.y_spieler_1 += 10                   
+                if event.__dict__["key"] == pygame.K_UP: #keycode von K_UP
+                    self.y_spieler_1 -= 10                   
+                if event.__dict__["key"] == pygame.K_s: #keycode von K_s
+                    self.y_spieler_2 += 10
+                if event.__dict__["key"] == pygame.K_w: #keycode von K_w
+                    self.y_spieler_2 -= 10
+
+
+
                     
             if event.type == pygame.KEYUP:
                 
@@ -48,8 +61,13 @@ class verwalter:
                 if (event.__dict__["key"] ==  pygame.K_a or  event.__dict__["key"] == pygame.K_d):
                     spieler_object.aktuelles_bild = spieler_object.SpielerIMG
                     self.x_spieler_2 = 0
-            
 
+            
+                if (event.__dict__["key"] ==  pygame.K_UP or  event.__dict__["key"] == pygame.K_DOWN):
+                    self.y_spieler_1 = 0
+                if (event.__dict__["key"] ==  pygame.K_s or  event.__dict__["key"] == pygame.K_w):
+                    spieler_object.aktuelles_bild = spieler_object.SpielerIMG
+                    self.y_spieler_2 = 0
                  
 
 
@@ -58,8 +76,14 @@ class verwalter:
             spieler_object.aktueller_richtungsvektor=self.x_spieler_1, self.y_spieler_1
         if math.sqrt(self.x_spieler_2**2+self.y_spieler_2**2)!=0:
             spieler_object_2.aktueller_richtungsvektor=self.x_spieler_2, self.y_spieler_2
+        
         spieler_object.x += self.x_spieler_1
-        spieler_object_2.x += self.x_spieler_2  
+        spieler_object_2.x += self.x_spieler_2 
+
+        spieler_object.y += self.y_spieler_1
+        spieler_object_2.y += self.y_spieler_2 
+
+
         
         if spieler_object_2.x > feld_obj.Spielfeld_width- spieler_object_2.size:
             spieler_object_2.x = feld_obj.Spielfeld_width-spieler_object_2.size
