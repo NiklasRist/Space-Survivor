@@ -1,10 +1,11 @@
 import math
 import numpy
+
 class spieler_polygon:
     def __init__(self) -> None:
         self.collision_polygon=[(22,15),(6,31),(6,45),(41,45),(41,31),(25,15)]
         self.mittelpunkt=[24, 30]
-        sides=6
+        self.sides=6
     def rescale_polygon(self, object_size, polygon):
         add_all=[0,0]
         for eckpunkt in polygon:
@@ -39,10 +40,17 @@ class spieler_polygon:
         '''
             Prüft ob der Schnittpunkt eines anderen Polygons auf oder zwischen dem Mittelpunkt oder dem Schnittpunkt dieses Polygons ist.
         '''
-        schnittpunkt_1=self.give_schnittpunkt()
-        schnittpunkt_2=schnittpunkt_1
-        if schnittpunkt_1[2]==False:
-           schnittpunkt_2=polygon_object.give_schnittpunkt()
+        for side in range(spieler.sides):
+            
+            zw=self.give_schnittpunkt(side+1, polygon_object)
+            if type(zw)==list:
+                schnittpunkt_1=zw
+                schnittpunkt_2=schnittpunkt_1
+                if schnittpunkt_1[2]==False:
+                    schnittpunkt_2=polygon_object.give_schnittpunkt()
+ 
+spieler=spieler_polygon()   
+for side in range(spieler.sides):
         
 
 class projektil_polygon:
