@@ -29,7 +29,11 @@ class Steuerung():
         self.Gegnerspawn_1 = GegnerSpawnen()
         self.Event_1 = Event()
         self.Spieler_1 = Spieler((0.5*self.Spielfeld_1.Spielfeld_width), (self.Spielfeld_1.Spielfeld_height*0.5), self.Spielfeld_1)
+        self.spieler_1_collision_polygon=spieler_polygon()
+        self.init_polygon(self.Spieler_1, self.spieler_1_collision_polygon)
         self.Spieler_2 = Spieler((1.5*self.Spielfeld_2.Spielfeld_width), (self.Spielfeld_2.Spielfeld_height*0.5), self.Spielfeld_2)
+        self.spieler_2_collision_polygon=spieler_polygon()
+        self.init_polygon(self.Spieler_2, self.spieler_2_collision_polygon)
         self.Taste_1 = verwalter()
         self.leaderboard_1 = leaderboard()
         self.speicher_1 = Speicher()
@@ -44,6 +48,10 @@ class Steuerung():
         self.text_size=int(34*(self.Spielfeld_1.Spielfeld_width/800))
         self.main_loop()
 
+    def init_polygon(self, obj, col_pol_obj) -> None:
+        '''Rescaled und verschiebt das Polygon.'''
+        col_pol_obj.rescale_polygon(obj.size)
+        col_pol_obj.move_polygon([obj.mittelpunkt[0]-col_pol_obj.mittelpunkt[0], obj.mittelpunkt[1]-col_pol_obj.mittelpunkt[1]])
     def main_loop(self):
         self.Gui_1.create_Fenster()
         while not self.end:
