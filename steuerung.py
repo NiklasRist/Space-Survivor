@@ -143,7 +143,7 @@ class Steuerung():
         self.Gui_1.display_text(self.Spielfeld_1.Spielfeld_width*1.8, 0, f"Punkte: {self.Spieler_2.punkte}", pygame.Color(255, 255, 255, a=255), self.text_size)
         
 
-    def move_projectile(self, spieler_obj, spieler_obj_2):
+    def move_projectile(self, spieler_obj, spieler_obj_2): #sollte bei [1,1] geschwindigkeit beginnen immer schneller werden
         for projectile in self.projektile:
             projectile.x-=projectile.richtungsvektor[0]
             projectile.y-=projectile.richtungsvektor[1]
