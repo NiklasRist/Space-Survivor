@@ -82,9 +82,9 @@ class projektil_polygon(polygon):
         self.collision_polygon=[[3,0],[0,3],[0,6],[3,9],[6,9],[9,6],[9,3],[6,0]]
         self.mittelpunkt=[]
         self.sides=8
-    def rescale_polygon(self, object_size, polygon):
+    def rescale_polygon(self, object_size):
         add_all=[0,0]
-        for eckpunkt in polygon:
+        for eckpunkt in self.collision_polygon:
             eckpunkt[0]=eckpunkt[0]/10*object_size
             eckpunkt[1]=eckpunkt[1]/10*object_size
             add_all[0]+=eckpunkt[0]
@@ -95,9 +95,9 @@ class asteroid_polygon(polygon):
     def __init__(self) -> None:
         self.collision_polygon=[[26,9],[7,28],[7,40],[22,55],[43,55],[59,39],[59,27],[41,29]]
         self.sides=8
-    def rescale_polygon(self, object_size, polygon):
+    def rescale_polygon(self, object_size):
         add_all=[0,0]
-        for eckpunkt in polygon:
+        for eckpunkt in self.collision_polygon:
             eckpunkt[0]=eckpunkt[0]/67*object_size
             eckpunkt[1]=eckpunkt[1]/63*object_size
             add_all[0]+=eckpunkt[0]
@@ -108,9 +108,9 @@ class enemy_polygon(polygon):
     def __init__(self) -> None:
         self.collision_polygon=[[26,23],[15,34],[15,52],[24,61],[38,61],[49,50],[49,35],[37,23]]
         self.sides=8
-    def rescale_polygon(self, object_size, polygon):
+    def rescale_polygon(self, object_size):
         add_all=[0,0]
-        for eckpunkt in polygon:
+        for eckpunkt in self.collision_polygon:
             eckpunkt[0]=eckpunkt[0]/64*object_size
             eckpunkt[1]=eckpunkt[1]/64*object_size
             add_all[0]+=eckpunkt[0]
