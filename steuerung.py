@@ -38,10 +38,12 @@ class Steuerung():
         self.leaderboard_1 = leaderboard()
         self.speicher_1 = Speicher()
         self.projektile=[]
+        self.projektil_polygone=[]
         self.end = False 
         self.game_mode=0 #0=Main Menu, 1=lokaler Mehrspieler, 2=LAN Mehrspieler, 3=Optionen
         self.spiel_start=True
-        self.gegner=[] 
+        self.gegner=[]
+        self.gegner_polygon=[] 
         self.maximale_Gegneranzahl=15
         self.maximale_projektil_anzahl=30
         self.count=0
@@ -79,8 +81,7 @@ class Steuerung():
     def lokaler_Mehrspieler(self):
         
         if self.spiel_start:
-            pass
-        self.spiel_start=False
+            self.spiel_start=False
         
         #erschafft Gegner, darf nicht jedes mal passieren, Gegner müssen sich auf Spieler zubewegen
         if len(self.gegner)<self.maximale_Gegneranzahl*2:
@@ -98,7 +99,7 @@ class Steuerung():
             self.count+=1
         
         
-        self.move_projectile(self.Spieler_1, self.Spieler_2)
+        self.move_projectile()
         self.Taste_1.react_input(self.end, self.Spieler_2, self.Spieler_1, self.Spielfeld_1, self.Spielfeld_2)
         self.move_gegner(self.Spieler_1, self.Spieler_2)
         self.update_screen_1()
@@ -121,10 +122,14 @@ class Steuerung():
     
     def create_enemy(self, feld_obj):
         self.gegner.append(Gegner(feld_obj))
+        self.gegner_polygon.append(asteroid_polygon())
+        self.init_polygon(self.gegner[-1],self.gegner_polygon[-1])
         self.Gui_1.display(self.gegner[len(self.gegner)-1])
 
     def create_projectile(self, feld_obj, schuetze_obj): #add velocity+acceleration #spieler darf projektile nicht aufholen
         self.projektile.append(projektil(schuetze_obj.mittelpunkt[0], schuetze_obj.mittelpunkt[1], feld_obj, schuetze_obj, [-1*schuetze_obj.aktueller_richtungsvektor[0], -1*schuetze_obj.aktueller_richtungsvektor[1]]))
+        self.projektil_polygone.append(projektil_polygon())
+        self.init_polygon(self.projektile[-1], self.projektil_polygone[-1])
         self.Gui_1.display(self.projektile[len(self.projektile)-1])
     
     def update_screen_1(self): #1 = game_mode
@@ -151,11 +156,14 @@ class Steuerung():
         self.Gui_1.display_text(self.Spielfeld_1.Spielfeld_width*1.8, 0, f"Punkte: {self.Spieler_2.punkte}", pygame.Color(255, 255, 255, a=255), self.text_size)
         
 
-    def move_projectile(self, spieler_obj, spieler_obj_2): #sollte bei [1,1] geschwindigkeit beginnen immer schneller werden
+    def move_projectile(self): 
         for projectile in self.projektile:
-            projectile.x-=projectile.richtungsvektor[0]
-            projectile.y-=projectile.richtungsvektor[1]
+            projectile.x+=projectile.richtungsvektor[0]
+            projectile.y+=projectile.richtungsvektor[1]
+            self.projektil_polygone[self.projektile.index(projectile)].move_polygon(projectile.richtungsvektor)
             self.projectile_boundaries()
+            projectile.richtungsvektor[0]=projectile.richtungsvektor[0]*1.002
+            projectile.richtungsvektor[1]=projectile.richtungsvektor[1]*1.002
     
     def move_gegner(self, spieler_obj, spieler_obj_2):
         for gegner in self.gegner:
@@ -171,6 +179,7 @@ class Steuerung():
                 x_change,y_change=self.berechne_einheitsvektor(x,y,abstand)
                 gegner.x+=x_change
                 gegner.y+=y_change
+                self.gegner_polygon[self.gegner.index(gegner)].move_polygon([x_change, y_change])
                 
 
                 
@@ -198,9 +207,11 @@ class Steuerung():
         for projectile in self.projektile:
             if projectile.side == self.Spielfeld_1.side:
                 if projectile.x < self.Spielfeld_1.x or projectile.x > self.Spielfeld_1.x+self.Spielfeld_1.Spielfeld_width-0.0125*self.Spielfeld_1.Spielfeld_width or projectile.y < self.Spielfeld_1.y or projectile.y > self.Spielfeld_1.y+self.Spielfeld_1.Spielfeld_height:
+                    self.projektil_polygone.pop(self.projektile.index(projectile))
                     self.projektile.pop(self.projektile.index(projectile))
             if projectile.side == self.Spielfeld_2.side:
                 if projectile.x < self.Spielfeld_2.x or projectile.x > self.Spielfeld_2.x+self.Spielfeld_2.Spielfeld_width or projectile.y < self.Spielfeld_2.y or projectile.y > self.Spielfeld_2.y+self.Spielfeld_2.Spielfeld_height:
+                    self.projektil_polygone.pop(self.projektile.index(projectile))
                     self.projektile.pop(self.projektile.index(projectile))
                     
     def test_collision (self, obj_1, obj_2) -> bool:
