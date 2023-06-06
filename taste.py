@@ -103,6 +103,6 @@ class verwalter:
         if spieler_object.y < feld_obj_2.y:
             spieler_object.y =feld_obj_2.y   
         
-        spieler_object.mittelpunkt= [spieler_object.x+0.5*spieler_object.size, spieler_object.y+0.5*spieler_object.size]   
-        spieler_object_2.mittelpunkt= [spieler_object_2.x+0.5*spieler_object_2.size, spieler_object_2.y+0.5*spieler_object_2.size]                          
+        spieler_object.mittelpunkt= [spieler_object.x+0.5*spieler_object.size, spieler_object.y+0.625*spieler_object.size]   
+        spieler_object_2.mittelpunkt= [spieler_object_2.x+0.5*spieler_object_2.size, spieler_object_2.y+0.625*spieler_object_2.size]                          
             

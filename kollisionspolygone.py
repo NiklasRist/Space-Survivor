@@ -30,12 +30,24 @@ class polygon:
             s:x=self.collison_polygon[polygon_side-1]+r*(self.collison_polygon[polygon_side]-self.collision_polygon[polygon_side-1]))) (Teil der Polygonseitengerade)
             schittpunkt(x,y,lines_are_identical)
         '''
-        parametergleichungsvariable=(((self.mittelpunkt[0]-self.collision_polygon[polygon_side-1][0])*(self.collision_polygon[polygon_side-1][1]-self.collision_polygon[polygon_side][1]))-((self.mittelpunkt[1]-self.collision_polygon[polygon_side-1][1])*(self.collision_polygon[polygon_side-1][0]-self.collision_polygon[polygon_side][0])))/(((self.mittelpunkt[0]-polygon_object.mittelpunkt[0])*(self.collision_polygon[polygon_side-1][1]-self.collision_polygon[polygon_side][1]))-((self.mittelpunkt[1]-polygon_object.mittelpunkt[1])*(self.collision_polygon[polygon_side-1][0]-self.collision_polygon[polygon_side][0])),False)
+        x_1=self.mittelpunkt[0]
+        y_1=self.mittelpunkt[1]
+        x_2=polygon_object.mittelpunkt[0]
+        y_2=polygon_object.mittelpunkt[1]
+        x_3=self.collision_polygon[polygon_side-1][0]
+        y_3=self.collision_polygon[polygon_side-1][1]
+        x_4=self.collision_polygon[polygon_side][0]
+        y_4=self.collision_polygon[polygon_side][1]
+        zaehler=(x_1-x_3)*(y_3-y_4)-(y_1-y_3)*(x_3-x_4)
+        nenner=(x_1-x_2)*(y_3-y_4)-(y_1-y_2)*(x_3-x_4)
+        if nenner==0: return None #parallel?
+        parametergleichungsvariable=zaehler/nenner
         schnittpunkt=[(self.mittelpunkt[0]+parametergleichungsvariable*(polygon_object.mittelpunkt[0]-self.mittelpunkt[0])),(self.mittelpunkt[1]+parametergleichungsvariable*(polygon_object.mittelpunkt[1]-self.mittelpunkt[1]))]
-        if 0<=parametergleichungsvariable<=1: #Schnitttpunkt?
+        if 0<=parametergleichungsvariable<=1: #nicht parallel und nicht identisch?
+            schnittpunkt.append(False)
             return schnittpunkt
         elif self.mittelpunkt==self.collision_polygon[polygon_side-1] and polygon_object.mittelpunkt==self.collision_polygon[polygon_side]: #identisch?
-            schnittpunkt[2]=True
+            schnittpunkt.append(True)
             return schnittpunkt
         else: return None #parallel?
         
@@ -47,13 +59,13 @@ class polygon:
         schnittpunkt_2=[]
         for side in range(self.sides):
             
-            zw=self.give_schnittpunkt(side+1, polygon_object)
+            zw=self.give_schnittpunkt(side, polygon_object)
             if type(zw)==list and math.sqrt((polygon_object.mittelpunkt[0]-zw[0])**2 + (polygon_object.mittelpunkt[1]-zw[1])**2)<= math.sqrt((polygon_object.mittelpunkt[0]-self.mittelpunkt[0])**2+(polygon_object.mittelpunkt[1]-self.mittelpunkt[1])**2): #nicht parallel und mittelpunkt_1<=Schnittpunkt<=mittelpunkt_2
                 schnittpunkt_1=zw
                 schnittpunkt_2=schnittpunkt_1
                 if zw[2]==False:
                     for p_side in range(polygon_object.sides):
-                        zw=polygon_object.give_schnittpunkt(p_side+1, self)
+                        zw=polygon_object.give_schnittpunkt(p_side, self)
                         if type(zw)==list and math.sqrt((self.mittelpunkt[0]-zw[0])**2 + (self.mittelpunkt[1]-zw[1])**2)<= math.sqrt((polygon_object.mittelpunkt[0]-self.mittelpunkt[0])**2+(polygon_object.mittelpunkt[1]-self.mittelpunkt[1])**2): #nicht parallel und mittelpunkt_1<=Schnittpunkt<=mittelpunkt_2
                             schnittpunkt_2=zw
         if polygon_object.mittelpunkt<=schnittpunkt_1<=schnittpunkt_2 or polygon_object.mittelpunkt>=schnittpunkt_1>=schnittpunkt_2 : #zwischen mittelpunkt und schnitt punkt von polygon_object?

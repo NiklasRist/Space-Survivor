@@ -102,6 +102,7 @@ class Steuerung():
         self.move_projectile()
         self.Taste_1.react_input(self.end, self.Spieler_2, self.Spieler_1, self.Spielfeld_1, self.Spielfeld_2)
         self.move_gegner(self.Spieler_1, self.Spieler_2)
+        self.test_for_collision()
         self.update_screen_1()
         
         ''' #nur bei Spielstart
@@ -110,7 +111,6 @@ class Steuerung():
                 Tasten freigeben
             #immer
                 Event auslösen
-                Projektil erschaffen & bewegen
                 Kollision->Text aktuallisieren
         '''        
 
@@ -179,6 +179,7 @@ class Steuerung():
                 x_change,y_change=self.berechne_einheitsvektor(x,y,abstand)
                 gegner.x+=x_change
                 gegner.y+=y_change
+                gegner.mittelpunkt=self.gegner_polygon[self.gegner.index(gegner)].mittelpunkt
                 self.gegner_polygon[self.gegner.index(gegner)].move_polygon([x_change, y_change])
                 
 
@@ -186,9 +187,9 @@ class Steuerung():
     
     def berechne_vektor(self, obj_1, obj_2):
         if obj_1!=obj_2:
-            return obj_2.x-obj_1.x, obj_2.y-obj_1.y
+            return obj_2.mittelpunkt[0]-obj_1.mittelpunkt[0], obj_2.mittelpunkt[1]-obj_1.mittelpunkt[1]
         else:
-            return obj_1.aktueller_richtungsvektor[0]-obj_1.x, obj_1.aktueller_richtungsvektor[1]-obj_1.y
+            return obj_1.aktueller_richtungsvektor[0]-obj_1.mittelpunkt[0], obj_1.aktueller_richtungsvektor[1]-obj_1.mittelpunkt[1]
    
     def berechne_abstand(self, x, y):
         return math.sqrt(x**2+y**2)
@@ -214,5 +215,8 @@ class Steuerung():
                     self.projektil_polygone.pop(self.projektile.index(projectile))
                     self.projektile.pop(self.projektile.index(projectile))
                     
-    def test_collision (self, obj_1, obj_2) -> bool:
-        pass
+    def test_for_collision (self) -> bool:
+        for gegner in self.gegner:
+            if gegner.side==1:
+                if self.spieler_1_collision_polygon.collision(self.gegner_polygon[self.gegner.index(gegner)]):
+                    self.Spieler_1.leben-=1

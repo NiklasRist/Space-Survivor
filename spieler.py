@@ -19,7 +19,7 @@ class Spieler():
         self.y=y
         self.aktueller_richtungsvektor = [0,10]
         self.size=int(0.05*feld_obj.Spielfeld_width)
-        self.mittelpunkt=[self.x+self.size*0.5, self.y+self.size*0.5]
+        self.mittelpunkt=[int(x+(24/48)*self.size), int(y+(30/48)*self.size)]
         self.leben = 3
         self.punkte = 0
         self.schaden=1
