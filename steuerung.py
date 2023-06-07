@@ -71,7 +71,8 @@ class Steuerung():
             elif self.game_mode==3:
                 self.optionen()
             elif self.game_mode==4:
-                self.game_over_screen()
+                #self.game_over_screen()
+                pass
             else:
                 self.game_mode=0
             
