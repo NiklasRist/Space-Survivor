@@ -6,6 +6,7 @@ class polygon:
         self.mittelpunkt=[]
         self.sides=0
     def rescale_polygon(self, object_size):
+        '''Passt die Größe des Polygons an die Größe eines Objekts an'''
         add_all=[0,0]
         for eckpunkt in self.collision_polygon:
             eckpunkt[0]=eckpunkt[0]/48*object_size
@@ -15,6 +16,7 @@ class polygon:
         self.mittelpunkt=[int(add_all[0]/self.sides),int(add_all[1]/self.sides)]
       
     def move_polygon(self, vektor):
+        '''Bewegt das Polygon um einen Vektor.'''
         for eckpunkt in self.collision_polygon: 
             eckpunkt[0]+=vektor[0]
             eckpunkt[1]+=vektor[1]  
@@ -76,6 +78,9 @@ class polygon:
             return True
         return False
     def collision(self, polygon_object):
+        '''
+            Prüft ob das Polygon mit dem anderen Polygon kollidiert
+        '''
         for side in range(self.sides):
             '''
                 Seitengleichung finden 
@@ -111,6 +116,7 @@ class spieler_polygon(polygon):
         self.mittelpunkt=[24, 30]
         self.sides=6
     def rescale_polygon(self, object_size):
+        '''Passt die Größe des Polygons an die Größe eines Objekts an'''
         add_all=[0,0]
         for eckpunkt in self.collision_polygon:
             eckpunkt[0]=eckpunkt[0]/48*object_size
@@ -126,6 +132,7 @@ class projektil_polygon(polygon):
         self.mittelpunkt=[]
         self.sides=8
     def rescale_polygon(self, object_size):
+        '''Passt die Größe des Polygons an die Größe eines Objekts an'''
         add_all=[0,0]
         for eckpunkt in self.collision_polygon:
             eckpunkt[0]=eckpunkt[0]/10*object_size
@@ -139,6 +146,7 @@ class asteroid_polygon(polygon):
         self.collision_polygon=[[26,9],[7,28],[7,40],[22,55],[43,55],[59,39],[59,27],[41,29]]
         self.sides=8
     def rescale_polygon(self, object_size):
+        '''Passt die Größe des Polygons an die Größe eines Objekts an'''
         add_all=[0,0]
         for eckpunkt in self.collision_polygon:
             eckpunkt[0]=eckpunkt[0]/67*object_size
@@ -152,6 +160,7 @@ class enemy_polygon(polygon):
         self.collision_polygon=[[26,23],[15,34],[15,52],[24,61],[38,61],[49,50],[49,35],[37,23]]
         self.sides=8
     def rescale_polygon(self, object_size):
+        '''Passt die Größe des Polygons an die Größe eines Objekts an'''
         add_all=[0,0]
         for eckpunkt in self.collision_polygon:
             eckpunkt[0]=eckpunkt[0]/64*object_size
