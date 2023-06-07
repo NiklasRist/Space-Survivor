@@ -22,6 +22,7 @@ class Spieler():
         self.mittelpunkt=[int(x+(24/48)*self.size), int(y+(30/48)*self.size)]
         self.leben = 3
         self.punkte = 0
+        self.score=0
         self.schaden=1
         self.side=feld_obj.side
         self.SpielerIMG_links = pygame.image.load(".\images\spieler_stark_links.png")

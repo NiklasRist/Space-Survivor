@@ -40,7 +40,7 @@ class polygon:
         y_4=self.collision_polygon[polygon_side][1]
         zaehler=(x_1-x_3)*(y_3-y_4)-(y_1-y_3)*(x_3-x_4)
         nenner=(x_1-x_2)*(y_3-y_4)-(y_1-y_2)*(x_3-x_4)
-        if nenner==0: return None #parallel?
+        if nenner==0: return None
         parametergleichungsvariable=zaehler/nenner
         schnittpunkt=[(self.mittelpunkt[0]+parametergleichungsvariable*(polygon_object.mittelpunkt[0]-self.mittelpunkt[0])),(self.mittelpunkt[1]+parametergleichungsvariable*(polygon_object.mittelpunkt[1]-self.mittelpunkt[1]))]
         if 0<=parametergleichungsvariable<=1: #nicht parallel und nicht identisch?
@@ -51,7 +51,7 @@ class polygon:
             return schnittpunkt
         else: return None #parallel?
         
-    def collision(self, polygon_object):
+    def collision_0(self, polygon_object):
         '''
             Prüft ob der Schnittpunkt eines anderen Polygons auf oder zwischen dem Mittelpunkt oder dem Schnittpunkt dieses Polygons ist.
         '''
@@ -70,8 +70,39 @@ class polygon:
                             schnittpunkt_2=zw
         if polygon_object.mittelpunkt<=schnittpunkt_1<=schnittpunkt_2 or polygon_object.mittelpunkt>=schnittpunkt_1>=schnittpunkt_2 : #zwischen mittelpunkt und schnitt punkt von polygon_object?
             return True
-        else:
-            return False
+        if self.polygon_1_is_in_polygon_2(self,polygon_object):
+            return True
+        if self.polygon_1_is_in_polygon_2(polygon_object, self):
+            return True
+        return False
+    def collision(self, polygon_object):
+        for side in range(self.sides):
+            '''
+                Seitengleichung finden +
+                Normalenachse erstellen +
+                relative Position des Schnittpunkts zur Normalenachse finden (Skalarprodukt) +
+                Array mit Schnittpunkten pro Objekt +
+                min und max Werte im Array finden +
+                Position der min und max Werte beider Polygone auf einem Zahlenstrahl vergleichen +
+                Falls es eine Lücke gibt return False +
+            '''
+            seitengleichung_richtungsvektor=[]
+            if side+1==self.sides:
+                seitengleichung_richtungsvektor=[self.collision_polygon[-1][0]-self.collision_polygon[side][0], self.collision_polygon[-1][1]-self.collision_polygon[side][1]]
+            else:
+                seitengleichung_richtungsvektor=[self.collision_polygon[side+1][0]-self.collision_polygon[side][0], self.collision_polygon[side+1][1]-self.collision_polygon[side][1]]
+            normalenachse_richtungsvektor=[-1*seitengleichung_richtungsvektor[1], seitengleichung_richtungsvektor[0]]
+            self_shadow=[]
+            polygon_object_shadow=[]
+            for eckpunkt in self.collision_polygon:
+                skalarprodukt=eckpunkt[0]*normalenachse_richtungsvektor[0]+eckpunkt[1]*normalenachse_richtungsvektor[1]
+                self_shadow.append(skalarprodukt)
+            for eckpunkt in polygon_object.collision_polygon:
+                skalarprodukt=eckpunkt[0]*normalenachse_richtungsvektor[0]+eckpunkt[1]*normalenachse_richtungsvektor[1]
+                polygon_object_shadow.append(skalarprodukt)
+            if (min(self_shadow) > max(polygon_object_shadow)) or (min(polygon_object_shadow) > max(self_shadow)):
+                return False
+        return True   
  
     
 class spieler_polygon(polygon):

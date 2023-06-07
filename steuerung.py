@@ -54,6 +54,8 @@ class Steuerung():
         '''Rescaled und verschiebt das Polygon.'''
         col_pol_obj.rescale_polygon(obj.size)
         col_pol_obj.move_polygon([obj.mittelpunkt[0]-col_pol_obj.mittelpunkt[0], obj.mittelpunkt[1]-col_pol_obj.mittelpunkt[1]])
+    def move_polygon(self, obj, col_pol_obj):
+        col_pol_obj.move_polygon([obj.mittelpunkt[0]-col_pol_obj.mittelpunkt[0], obj.mittelpunkt[1]-col_pol_obj.mittelpunkt[1]])
     def main_loop(self):
         self.Gui_1.create_Fenster()
         while not self.end:
@@ -83,7 +85,7 @@ class Steuerung():
         if self.spiel_start:
             self.spiel_start=False
         
-        #erschafft Gegner, darf nicht jedes mal passieren, Gegner müssen sich auf Spieler zubewegen
+        
         if len(self.gegner)<self.maximale_Gegneranzahl*2:
             self.create_enemy(self.Spielfeld_1)
             self.create_enemy(self.Spielfeld_2)
@@ -102,6 +104,8 @@ class Steuerung():
         self.move_projectile()
         self.Taste_1.react_input(self.end, self.Spieler_2, self.Spieler_1, self.Spielfeld_1, self.Spielfeld_2)
         self.move_gegner(self.Spieler_1, self.Spieler_2)
+        self.move_polygon(self.Spieler_1, self.spieler_1_collision_polygon)
+        self.move_polygon(self.Spieler_2, self.spieler_2_collision_polygon)
         self.test_for_collision()
         self.update_screen_1()
         
@@ -146,8 +150,8 @@ class Steuerung():
         for projectile in self.projektile:
             self.Gui_1.display(projectile)
         #stellt den Score beider Spieler dar
-        self.Gui_1.display_text(0, 0, f"Score: {self.Spieler_1.punkte}", pygame.Color(255, 255, 255, a=255), self.text_size)
-        self.Gui_1.display_text(self.Spielfeld_1.Spielfeld_width, 0, f"Score: {self.Spieler_2.punkte}", pygame.Color(255, 255, 255, a=255), self.text_size)
+        self.Gui_1.display_text(0, 0, f"Score: {self.Spieler_1.score}", pygame.Color(255, 255, 255, a=255), self.text_size)
+        self.Gui_1.display_text(self.Spielfeld_1.Spielfeld_width, 0, f"Score: {self.Spieler_2.score}", pygame.Color(255, 255, 255, a=255), self.text_size)
         #stellt Leben beider Spieler dar
         self.Gui_1.display_text(self.Spielfeld_1.Spielfeld_width*0.4, 0, f"Leben: {self.Spieler_1.leben}", pygame.Color(255, 255, 255, a=255), self.text_size)
         self.Gui_1.display_text(self.Spielfeld_1.Spielfeld_width*1.4, 0, f"Leben: {self.Spieler_2.leben}", pygame.Color(255, 255, 255, a=255), self.text_size)
@@ -217,6 +221,27 @@ class Steuerung():
                     
     def test_for_collision (self) -> bool:
         for gegner in self.gegner:
-            if gegner.side==1:
-                if self.spieler_1_collision_polygon.collision(self.gegner_polygon[self.gegner.index(gegner)]):
-                    self.Spieler_1.leben-=1
+            try:
+                if gegner.side==0:
+                    if self.spieler_1_collision_polygon.collision(self.gegner_polygon[self.gegner.index(gegner)]):
+                        self.Spieler_1.leben-=1            
+                if gegner.side==1:
+                    if self.gegner_polygon[self.gegner.index(gegner)].collision(self.spieler_2_collision_polygon):
+                        self.Spieler_2.leben-=1
+                for projektil in self.projektile:
+                        if projektil.side==gegner.side:
+                            if self.gegner_polygon[self.gegner.index(gegner)].collision(self.projektil_polygone[self.projektile.index(projektil)]):
+                                if projektil.side==0:
+                                    self.Spieler_1.score+=1
+                                    self.Spieler_1.punkte+=1
+                                else:
+                                    self.Spieler_2.punkte+=1
+                                    self.Spieler_2.score+=1
+                                self.gegner_polygon.pop(self.gegner.index(gegner))
+                                self.gegner.pop(self.gegner.index(gegner))
+                                self.projektil_polygone.pop(self.projektile.index(projektil))
+                                self.projektile.pop(self.projektile.index(projektil))
+                                
+            except:
+                print("Gegner not in list")
+            
