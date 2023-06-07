@@ -28,4 +28,5 @@ class Gui:
   def display(self, obj): 
     self.spiel_fenster.blit(obj.aktuelles_bild, (obj.x,obj.y))
 
-
+  def fill(self, color):
+    self.spiel_fenster.fill(color)

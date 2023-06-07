@@ -67,12 +67,18 @@ class Steuerung():
                 self.lan_Mehrspieler()
             elif self.game_mode==3:
                 self.optionen()
+            elif self.game_mode==4:
+                self.game_over_screen()
             else:
                 self.game_mode=0
             
             pygame.display.flip()
             self.clock.tick(60)     
-                  
+    def game_over_screen(self):
+        self.Gui_1.fill((255,255,255))  
+        if self.Taste_1.react_input(self.end, self.Spieler_2, self.Spieler_1, self.Spielfeld_1, self.Spielfeld_2):
+            self.game_mode=0 
+            self.main_loop()          
     def main_Menu(self):
         self.game_mode=1
         self.spiel_start=True
@@ -81,6 +87,10 @@ class Steuerung():
         '''
     
     def lokaler_Mehrspieler(self):
+        if self.Spieler_1.leben<=0:
+            self.game_mode=4
+        if self.Spieler_2.leben<=0:
+            self.game_mode=4
         
         if self.spiel_start:
             self.spiel_start=False

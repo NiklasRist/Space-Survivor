@@ -50,7 +50,8 @@ class verwalter:
                 if event.__dict__["key"] == pygame.K_w: #keycode von K_w
                     self.y_spieler_2 -= 10
 
-
+                if event.__dict__["key"] == pygame.K_0:
+                    return True
 
                     
             if event.type == pygame.KEYUP:

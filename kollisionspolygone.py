@@ -78,13 +78,13 @@ class polygon:
     def collision(self, polygon_object):
         for side in range(self.sides):
             '''
-                Seitengleichung finden +
-                Normalenachse erstellen +
-                relative Position des Schnittpunkts zur Normalenachse finden (Skalarprodukt) +
-                Array mit Schnittpunkten pro Objekt +
-                min und max Werte im Array finden +
-                Position der min und max Werte beider Polygone auf einem Zahlenstrahl vergleichen +
-                Falls es eine Lücke gibt return False +
+                Seitengleichung finden 
+                Normalenachse erstellen 
+                relative Position des Schnittpunkts zur Normalenachse finden (Skalarprodukt) 
+                Array mit Schnittpunkten pro Objekt 
+                min und max Werte im Array finden 
+                Position der min und max Werte beider Polygone auf einem Zahlenstrahl vergleichen 
+                Falls es eine Lücke gibt return False 
             '''
             seitengleichung_richtungsvektor=[]
             if side+1==self.sides:
