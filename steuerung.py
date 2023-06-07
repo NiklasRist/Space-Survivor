@@ -49,7 +49,6 @@ class Steuerung():
         self.count=0
         self.text_size=int(34*(self.Spielfeld_1.Spielfeld_width/800))
         self.main_loop()
-
     def init_polygon(self, obj, col_pol_obj) -> None:
         '''Rescaled und verschiebt das Polygon.'''
         col_pol_obj.rescale_polygon(obj.size)
@@ -91,7 +90,6 @@ class Steuerung():
         '''
             3 Buttons die game_mode verändern
         '''
-    
     def lokaler_Mehrspieler(self):
         '''
         Führt die Aktionen für den lokalen Mehrspielermodus aus.
@@ -130,11 +128,11 @@ class Steuerung():
         if self.spiel_start:
             self.spiel_start=False
         
-        
+        '''#erschafft neue Asteroiden
         if len(self.asteroiden)<self.maximale_asteroiden_anzahl*2:
             self.create_asteroiden(self.Spielfeld_1)
             self.create_asteroiden(self.Spielfeld_2)
-        
+        '''
         if self.count==15:
                 self.create_projectile(self.Spielfeld_1, self.Spieler_1)
                 self.create_projectile(self.Spielfeld_2, self.Spieler_2)
@@ -148,29 +146,17 @@ class Steuerung():
         
         self.move_projectile()
         self.Taste_1.react_input(self.end, self.Spieler_2, self.Spieler_1, self.Spielfeld_1, self.Spielfeld_2)
-        self.move_asteroid(self.Spieler_1, self.Spieler_2)
+        #self.move_asteroid(self.Spieler_1, self.Spieler_2)
         self.move_polygon(self.Spieler_1, self.spieler_1_collision_polygon)
         self.move_polygon(self.Spieler_2, self.spieler_2_collision_polygon)
         self.test_for_collision()
         self.update_screen_1()
-        
-        ''' #nur bei Spielstart
-                (321)
-                schießen freigeben
-                Tasten freigeben
-            #immer
-                Event auslösen
-                Kollision->Text aktuallisieren
-        '''        
-
     def lan_Mehrspieler(self):
         '''In Arbeit'''
         pass
-
     def optionen(self):
         '''In Arbeit'''
-        pass       
-    
+        pass          
     def create_asteroiden(self, feld_obj):
         """
         Erzeugt einen neuen Asteroiden auf dem angegebenen Spielfeld.
@@ -185,15 +171,19 @@ class Steuerung():
         self.asteroiden_polygon.append(asteroid_polygon())
         self.init_polygon(self.asteroiden[-1],self.asteroiden_polygon[-1])
         self.Gui_1.display(self.asteroiden[len(self.asteroiden)-1])
-
     def create_projectile(self, feld_obj, schuetze_obj): 
         '''Erstellt ein Projektil mit zugehörigem Polygon (gleicher index)'''
         self.projektile.append(projektil(schuetze_obj.mittelpunkt[0], schuetze_obj.mittelpunkt[1], feld_obj, schuetze_obj, [-1*schuetze_obj.aktueller_richtungsvektor[0], -1*schuetze_obj.aktueller_richtungsvektor[1]]))
         self.projektil_polygone.append(projektil_polygon())
         self.init_polygon(self.projektile[-1], self.projektil_polygone[-1])
-        self.Gui_1.display(self.projektile[len(self.projektile)-1])
-    
-    def update_screen_1(self): #1 = game_mode
+        self.Gui_1.display(self.projektile[len(self.projektile)-1])    
+    def update_screen_1(self): #_1 = game_mode
+        '''
+        Aktualisiert den Bildschirm für den Spielmodus 1.
+
+        Diese Methode aktualisiert den Bildschirm, indem sie alle Spielfeldobjekte, Spieler, Gegner, Projektile,
+        Scoreanzeigen, Lebensanzeigen und Eventpunkteanzeigen darstellt.
+        '''
         #erstellt beide Spielfelder
         self.Gui_1.display(self.Spielfeld_1)
         self.Gui_1.display(self.Spielfeld_2)
@@ -215,8 +205,6 @@ class Steuerung():
         #stellt Eventpunkte Spieler dar
         self.Gui_1.display_text(self.Spielfeld_1.Spielfeld_width*0.8, 0, f"Punkte: {self.Spieler_1.punkte}", pygame.Color(255, 255, 255, a=255), self.text_size)
         self.Gui_1.display_text(self.Spielfeld_1.Spielfeld_width*1.8, 0, f"Punkte: {self.Spieler_2.punkte}", pygame.Color(255, 255, 255, a=255), self.text_size)
-        
-
     def move_projectile(self): 
         '''Bewegt Projektile & ihre Polygone um einen Richtungsvektor und setzt ihre Position zurück, wenn sie außerhalb des Spielfelds sind. Beschleunigt den Richtungsvektor um einen Faktor'''
         for projectile in self.projektile:
@@ -225,8 +213,7 @@ class Steuerung():
             self.projektil_polygone[self.projektile.index(projectile)].move_polygon(projectile.richtungsvektor)
             self.projectile_boundaries()
             projectile.richtungsvektor[0]=projectile.richtungsvektor[0]*1.002
-            projectile.richtungsvektor[1]=projectile.richtungsvektor[1]*1.002
-    
+            projectile.richtungsvektor[1]=projectile.richtungsvektor[1]*1.002  
     def move_asteroid(self, spieler_obj, spieler_obj_2):
         '''Bewegt die Asteroiden und ihre Polygone um einen Einheitsvektor auf den Spieler zu.'''
         for asteroid in self.asteroiden:
@@ -243,11 +230,7 @@ class Steuerung():
                 asteroid.x+=x_change
                 asteroid.y+=y_change
                 asteroid.mittelpunkt=self.asteroiden_polygon[self.asteroiden.index(asteroid)].mittelpunkt
-                self.asteroiden_polygon[self.asteroiden.index(asteroid)].move_polygon([x_change, y_change])
-                
-
-                
-    
+                self.asteroiden_polygon[self.asteroiden.index(asteroid)].move_polygon([x_change, y_change])   
     def berechne_vektor(self, obj_1, obj_2):
         '''Berechnet einen Richtungsvektor aus den Koordinaten zweier Objekte'''
         if obj_1!=obj_2:
