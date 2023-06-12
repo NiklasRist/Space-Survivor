@@ -41,9 +41,5 @@ class Speicher:
         Speicher.cursor.execute(Speicher.sqlSelectAll)
         return Speicher.cursor.fetchall() #2-dimensionaler Array [(spieler, punktzahl),(spieler, punktzahl),...]
 
-#Speicher.createTable
-#Speicher.saveOneEntryInLeaderboard("Nur", 7)
-#Speicher.saveOneEntryInLeaderboard("Nur", 7)
-#Speicher.updateEntry("HArald", 24, 0)
-#print(Speicher.loadEntries())
+
  

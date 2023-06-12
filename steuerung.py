@@ -37,6 +37,7 @@ class Steuerung():
         self.Taste_1 = verwalter()
         self.leaderboard_1 = leaderboard()
         self.speicher_1 = Speicher()
+        self.saved_leaderboard=self.speicher_1.loadEntries()
         self.projektile=[]
         self.projektil_polygone=[]
         self.gegner=[]
