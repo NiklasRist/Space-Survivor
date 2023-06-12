@@ -12,11 +12,7 @@ from taste import verwalter
 from leaderboard import leaderboard
 #from speicher import Speicher
 from projektil import projektil
-from button import button
-
-
-
-
+from button import Button
 
 class Steuerung():
     def __init__(self):
@@ -57,10 +53,10 @@ class Steuerung():
         score_p_image = pygame.pygame.image.load('.\images\buttons\b_score_pressed.png').convert_alpha()
 
         self.buttons = [
-            button(100, 200, menue_image, menue_p_image, self.Spielfeld_1.Spielfeld_width, self.Spielfeld_1.Spielfeld_height, 'menue_button'),
-            button(200, 200, play_lan_image, play_lan_p_image, self.Spielfeld_1.Spielfeld_width, self.Spielfeld_1.Spielfeld_height, 'play_lan_button'),
-            button(100, 400, play_local_image, play_local_p_image, self.Spielfeld_1.Spielfeld_width, self.Spielfeld_1.Spielfeld_height, 'play_local_button'),
-            button(200, 400, score_image, score_p_image, self.Spielfeld_1.Spielfeld_width, self.Spielfeld_1.Spielfeld_height, 'score_button')
+            Button(100, 200, menue_image, menue_p_image, self.Spielfeld_1.Spielfeld_width, self.Spielfeld_1.Spielfeld_height, 'menue_button'),
+            Button(200, 200, play_lan_image, play_lan_p_image, self.Spielfeld_1.Spielfeld_width, self.Spielfeld_1.Spielfeld_height, 'play_lan_button'),
+            Button(100, 400, play_local_image, play_local_p_image, self.Spielfeld_1.Spielfeld_width, self.Spielfeld_1.Spielfeld_height, 'play_local_button'),
+            Button(200, 400, score_image, score_p_image, self.Spielfeld_1.Spielfeld_width, self.Spielfeld_1.Spielfeld_height, 'score_button')
         ]
 
         self.main_loop()

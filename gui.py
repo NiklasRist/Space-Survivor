@@ -3,7 +3,7 @@ import pygame
 from spieler import Spieler
 from spielfeld import Feld
 from taste import verwalter
-from button import button
+from button import Button
 
 
 
