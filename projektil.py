@@ -5,9 +5,9 @@ class projektil:
         self.x=x
         self.y=y
         self.size=int(0.0125*feld_obj.Spielfeld_width)
-        self.mittelpunkt=[self.x+0.5*self.size, self.y+0.5*self.size]
+        self.mittelpunkt=[self.x+int(0,5*self.size), self.y+int(0,5*self.size)]
         self.side=feld_obj.side
-        self.image=pygame.image.load(".\images\projectile_normal.png")
+        self.image=pygame.image.load(".\images\TestImage.png")
         self.image=pygame.transform.scale(self.image, (self.size, self.size))
         self.aktuelles_bild=self.image
         self.schuetze=schuetze_obj

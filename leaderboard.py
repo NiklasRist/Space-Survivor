@@ -1,3 +1,4 @@
+#pygame 145,678 changes
 class leaderboard:
 	spieler=[]
 	punktzahl=[]
