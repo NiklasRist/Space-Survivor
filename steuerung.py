@@ -147,7 +147,6 @@ class Steuerung():
             self.create_asteroiden(self.Spielfeld_1)
             self.create_asteroiden(self.Spielfeld_2)
         '''
-
         if len(self.gegner)<10:
             
             self.gegner.append(Gegner(self.Spielfeld_1))
@@ -156,13 +155,6 @@ class Steuerung():
             self.gegner.append(Gegner(self.Spielfeld_2))
             self.gegner_polygon.append(enemy_polygon())
             self.init_polygon(self.gegner[-1], self.gegner_polygon[-1])
-
-
-
-
-            
-
-
 
         if self.count==15:
                 self.create_projectile(self.Spielfeld_1, self.Spieler_1)
@@ -242,7 +234,7 @@ class Steuerung():
             self.Gui_1.display(asteroid)
 
         for gegner_obj in self.gegner:
-            self.Gui_1.display(gegner_obj)    
+            self.Gui_1.display(gegner_obj)  
         #stellt alle Projektile dar
         for projectile in self.projektile:
             self.Gui_1.display(projectile)
@@ -315,6 +307,7 @@ class Steuerung():
             return 0,0
         else:
             return x/abstand, y/abstand        
+
 
 
     def projectile_boundaries(self):
