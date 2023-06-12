@@ -13,7 +13,7 @@ from leaderboard import leaderboard
 from speicher import Speicher
 from projektil import projektil
 from kollisionspolygone import spieler_polygon, asteroid_polygon, projektil_polygon, enemy_polygon
-from gegner import Gegener
+from gegner import Gegner
 from button import Button
 
 
@@ -78,8 +78,7 @@ class Steuerung():
                 self.game_mode=0
             
             pygame.display.flip()
-            self.clock.tick(60)     
-            
+            self.clock.tick(60)                 
     def handle_button_events(self):  
         for event in pygame.event.get():    
             if event.type == pygame.MOUSEBUTTONDOWN:
@@ -90,8 +89,7 @@ class Steuerung():
             if event.type == pygame.MOUSEBUTTONUP:
                 mouse_pos = pygame.mouse.get_pos()
                 for button in self.buttons:
-                    button.check_collision(mouse_pos)
-                    
+                    button.check_collision(mouse_pos)                    
     def game_over_screen(self):
         '''In Arbeit'''
         self.Gui_1.fill((255,255,255))  
@@ -264,9 +262,7 @@ class Steuerung():
                 asteroid.x+=x_change
                 asteroid.y+=y_change
                 asteroid.mittelpunkt=self.asteroiden_polygon[self.asteroiden.index(asteroid)].mittelpunkt
-                self.asteroiden_polygon[self.asteroiden.index(asteroid)].move_polygon([x_change, y_change])   
-    
-    
+                self.asteroiden_polygon[self.asteroiden.index(asteroid)].move_polygon([x_change, y_change])      
     def move_gegner(self, spieler_obj, spieler_obj_2):
         '''Bewegt die gegner und ihre Polygone um einen Einheitsvektor auf den Spieler zu.'''
         for gegner in self.gegner:
@@ -284,39 +280,25 @@ class Steuerung():
                 asteroid.y+=y_change
                 asteroid.mittelpunkt=self.enemy_polygon[self.asteroiden.index(asteroid)].mittelpunkt
                 self.enemy_polygon[self.asteroiden.index(asteroid)].move_polygon([x_change, y_change])
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     def berechne_vektor(self, obj_1, obj_2):
         '''Berechnet einen Richtungsvektor aus den Koordinaten zweier Objekte'''
         if obj_1!=obj_2:
             return obj_2.mittelpunkt[0]-obj_1.mittelpunkt[0], obj_2.mittelpunkt[1]-obj_1.mittelpunkt[1]
         else:
-            return obj_1.aktueller_richtungsvektor[0]-obj_1.mittelpunkt[0], obj_1.aktueller_richtungsvektor[1]-obj_1.mittelpunkt[1]
-   
+            return obj_1.aktueller_richtungsvektor[0]-obj_1.mittelpunkt[0], obj_1.aktueller_richtungsvektor[1]-obj_1.mittelpunkt[1]  
     def berechne_abstand(self, x, y):
         '''Berechnet den Betrag(/Abstand) eines Vektors'''
-        return math.sqrt(x**2+y**2)
-        
+        return math.sqrt(x**2+y**2)       
     def berechne_einheitsvektor(self, x, y, abstand):
         '''Berechnet aus einem Richtungsvektor und Abstand einen Einheitsvektor'''
         if abstand==0:
             return 0,0
         else:
-            return x/abstand, y/abstand
-        
+            return x/abstand, y/abstand        
     def schießen(self, x, y, feld_obj, schuetze_obj):
         '''Erschafft ein Projektil mit einer Bewegungsrichtung'''
         einheitsvektor=self.berechne_einheitsvektor()
-        self.create_projectile(x, y, feld_obj, schuetze_obj, einheitsvektor)
-        
+        self.create_projectile(x, y, feld_obj, schuetze_obj, einheitsvektor)        
     def projectile_boundaries(self):
         '''Entfernt Projektile aus der Liste, wenn diese außerhalb des Spielfelds sind'''
         for projectile in self.projektile:
@@ -327,8 +309,7 @@ class Steuerung():
             if projectile.side == self.Spielfeld_2.side:
                 if projectile.x < self.Spielfeld_2.x or projectile.x > self.Spielfeld_2.x+self.Spielfeld_2.Spielfeld_width or projectile.y < self.Spielfeld_2.y or projectile.y > self.Spielfeld_2.y+self.Spielfeld_2.Spielfeld_height:
                     self.projektil_polygone.pop(self.projektile.index(projectile))
-                    self.projektile.pop(self.projektile.index(projectile))
-                    
+                    self.projektile.pop(self.projektile.index(projectile))                   
     def test_for_collision (self) -> bool:
         '''In Arbeit. Prüft bsiher auf Kollisionen mit Asteroiden und reagiert auf Kollisionen'''
         for asteroid in self.asteroiden:
