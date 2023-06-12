@@ -37,8 +37,10 @@ class verwalter:
                     spieler_object.aktuelles_bild = spieler_object.SpielerIMG_links 
                 if event.__dict__["key"] == pygame.K_d: #keycode von K_d
                     self.x_spieler_2 += 10
+                    spieler_object_2.aktuelles_bild = spieler_object_2.SpielerIMG_rechts
                 if event.__dict__["key"] == pygame.K_a: #keycode von K_a
                     self.x_spieler_2 -= 10
+                    spieler_object_2.aktuelles_bild = spieler_object_2.SpielerIMG_links
                 
                 
                 if event.__dict__["key"] == pygame.K_DOWN: #keycode von K_DOWN
@@ -60,14 +62,15 @@ class verwalter:
                     spieler_object.aktuelles_bild = spieler_object.SpielerIMG
                     self.x_spieler_1 = 0
                 if (event.__dict__["key"] ==  pygame.K_a or  event.__dict__["key"] == pygame.K_d):
-                    spieler_object.aktuelles_bild = spieler_object.SpielerIMG
+                    spieler_object_2.aktuelles_bild = spieler_object_2.SpielerIMG
                     self.x_spieler_2 = 0
 
             
                 if (event.__dict__["key"] ==  pygame.K_UP or  event.__dict__["key"] == pygame.K_DOWN):
                     self.y_spieler_1 = 0
-                if (event.__dict__["key"] ==  pygame.K_s or  event.__dict__["key"] == pygame.K_w):
                     spieler_object.aktuelles_bild = spieler_object.SpielerIMG
+                if (event.__dict__["key"] ==  pygame.K_s or  event.__dict__["key"] == pygame.K_w):
+                    spieler_object_2.aktuelles_bild = spieler_object_2.SpielerIMG
                     self.y_spieler_2 = 0
                  
 
