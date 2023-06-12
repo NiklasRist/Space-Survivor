@@ -148,7 +148,8 @@ class Steuerung():
             self.create_asteroiden(self.Spielfeld_2)
         '''
 
-        if len(self.gegner)<4:
+        if len(self.gegner)<10:
+            
             self.gegner.append(Gegner(self.Spielfeld_1))
             self.gegner_polygon.append(enemy_polygon())
             self.init_polygon(self.gegner[-1], self.gegner_polygon[-1])
@@ -167,18 +168,34 @@ class Steuerung():
                 self.create_projectile(self.Spielfeld_1, self.Spieler_1)
                 self.create_projectile(self.Spielfeld_2, self.Spieler_2)
                 self.count=0
+                for gegner_obj in self.gegner:
+                    if gegner_obj.side == 0:
+                        self.create_projectile(self.Spielfeld_1,gegner_obj) 
+                    else:
+                        self.create_projectile(self.Spielfeld_2,gegner_obj)
+                                       
+
+
                 if self.maximale_projektil_anzahl<len(self.projektile):
+                    self.projektile.pop(0)
                     self.projektile.pop(0)
                     self.projektile.pop(0)
         else:
             self.count+=1
         
+
+
+
         
         self.move_projectile()
         self.Taste_1.react_input(self.end, self.Spieler_2, self.Spieler_1, self.Spielfeld_1, self.Spielfeld_2)
         #self.move_asteroid(self.Spieler_1, self.Spieler_2)
         self.move_polygon(self.Spieler_1, self.spieler_1_collision_polygon)
         self.move_polygon(self.Spieler_2, self.spieler_2_collision_polygon)
+        self.move_gegner(self.Spieler_1,self.Spieler_2)
+
+
+
         self.test_for_collision()
         self.update_screen_1()
     def lan_Mehrspieler(self):
@@ -277,10 +294,12 @@ class Steuerung():
             abstand=self.berechne_abstand(x,y)
             if abstand>=1:
                 x_change,y_change=self.berechne_einheitsvektor(x,y,abstand)
-                asteroid.x+=x_change
-                asteroid.y+=y_change
-                asteroid.mittelpunkt=self.enemy_polygon[self.asteroiden.index(asteroid)].mittelpunkt
-                self.enemy_polygon[self.asteroiden.index(asteroid)].move_polygon([x_change, y_change])
+                gegner.x+=2*x_change
+                gegner.y+=2*y_change
+                gegner.aktueller_richtungsvektor = [x_change,y_change]
+
+                gegner.mittelpunkt=self.gegner_polygon[self.gegner.index(gegner)].mittelpunkt
+                self.gegner_polygon[self.gegner.index(gegner)].move_polygon([x_change, y_change])
     def berechne_vektor(self, obj_1, obj_2):
         '''Berechnet einen Richtungsvektor aus den Koordinaten zweier Objekte'''
         if obj_1!=obj_2:
@@ -296,10 +315,8 @@ class Steuerung():
             return 0,0
         else:
             return x/abstand, y/abstand        
-    def schießen(self, x, y, feld_obj, schuetze_obj):
-        '''Erschafft ein Projektil mit einer Bewegungsrichtung'''
-        einheitsvektor=self.berechne_einheitsvektor()
-        self.create_projectile(x, y, feld_obj, schuetze_obj, einheitsvektor)        
+
+
     def projectile_boundaries(self):
         '''Entfernt Projektile aus der Liste, wenn diese außerhalb des Spielfelds sind'''
         for projectile in self.projektile:
