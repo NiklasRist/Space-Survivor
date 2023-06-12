@@ -1,27 +1,32 @@
 import sys
 import pygame
 
-class button():
+class Button():
 
-    def __init__(self, px, py, width, height, button_txt, onclick_function=None, one_press=False):
-            self.button_text = button_txt
-            self.x = px
-            self.y = py
-            self.width = width
-            self.height = height
-            self.onclick_function = onclick_function
-            self.one_press = one_press
-            self.already_pressed = False
+    def __init__(self, x, y, width, height, unpressed_img, pressed_img, label):
+        self.rect = pygame.Rect(x, y, width, height)
+        self.unpressed_img = pygame.image.load(unpressed_img)
+        self.pressed_img = pygame.image.load(pressed_img)
+        self.img = self.unpressed_img
+        self.label = label
 
-            self.fill_colors = {
-                'normal': '#ffffff',
-                'hover': '#666666',
-                'pressed': '#333333',
-            }
+    def check_collision(self, mouse_pos):
+        if self.rect.collidepoint(mouse_pos):
+            self.img = self.pressed_img
+            print(f"Button '{self.label}' clicked!")
+            self.perform_action()
+        else:
+            self.img = self.unpressed_img
 
-            self.button_surface = pygame.Surface((self.width, self.height))
-            self.button_rect = pygame.Rect(self.x, self.y, self.width, self.height)
+    def perform_action(self):
+        if self.label == 'menue_button':
+            return 0
+        elif self.label == 'play_local_button':
+            return 1
+        elif self.label == 'play_lan_button':
+            return 2
+        elif self.label == 'score_button':
+            return 3
 
-            self.button_surf = font.render(button_txt, True, (20, 20, 20))
-
-            objects.append(self)
+    def draw(self, screen):
+        screen.blit(self.img, self.rect)
