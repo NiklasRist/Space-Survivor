@@ -13,7 +13,7 @@ from leaderboard import leaderboard
 from speicher import Speicher
 from projektil import projektil
 from kollisionspolygone import spieler_polygon, asteroid_polygon, projektil_polygon, enemy_polygon
-
+from gegner import Gegener
 
 
 
@@ -39,6 +39,8 @@ class Steuerung():
         self.speicher_1 = Speicher()
         self.projektile=[]
         self.projektil_polygone=[]
+        self.gegner=[]
+        self.gegner_polygon= []
         self.end = False 
         self.game_mode=0 #0=Main Menu, 1=lokaler Mehrspieler, 2=LAN Mehrspieler, 3=Optionen
         self.spiel_start=True
@@ -133,6 +135,22 @@ class Steuerung():
             self.create_asteroiden(self.Spielfeld_1)
             self.create_asteroiden(self.Spielfeld_2)
         '''
+
+        if len(self.gegner)<4:
+            self.gegner.append(Gegner(self.Spielfeld_1))
+            self.gegner_polygon.append(enemy_polygon())
+            self.init_polygon(self.gegner[-1], self.gegner_polygon[-1])
+            self.gegner.append(Gegner(self.Spielfeld_2))
+            self.gegner_polygon.append(enemy_polygon())
+            self.init_polygon(self.gegner[-1], self.gegner_polygon[-1])
+
+
+
+
+            
+
+
+
         if self.count==15:
                 self.create_projectile(self.Spielfeld_1, self.Spieler_1)
                 self.create_projectile(self.Spielfeld_2, self.Spieler_2)
@@ -193,6 +211,9 @@ class Steuerung():
         #stellt alle Gegner dar
         for asteroid in self.asteroiden:
             self.Gui_1.display(asteroid)
+
+        for gegner_obj in self.gegner:
+            self.Gui_1.display(gegner_obj)    
         #stellt alle Projektile dar
         for projectile in self.projektile:
             self.Gui_1.display(projectile)
@@ -231,6 +252,35 @@ class Steuerung():
                 asteroid.y+=y_change
                 asteroid.mittelpunkt=self.asteroiden_polygon[self.asteroiden.index(asteroid)].mittelpunkt
                 self.asteroiden_polygon[self.asteroiden.index(asteroid)].move_polygon([x_change, y_change])   
+    
+    
+    def move_gegner(self, spieler_obj, spieler_obj_2):
+        '''Bewegt die gegner und ihre Polygone um einen Einheitsvektor auf den Spieler zu.'''
+        for gegner in self.gegner:
+            x=0
+            y=0
+        #Abstandsberechnung Gegner Spieler (Vektorrechnung)
+            if self.gegner[self.gegner.index(gegner)].side==0:
+                x,y = self.berechne_vektor(gegner, spieler_obj)
+            if self.gegner[self.gegner.index(gegner)].side==1:
+                x,y = self.berechne_vektor(gegner ,spieler_obj_2)
+            abstand=self.berechne_abstand(x,y)
+            if abstand>=1:
+                x_change,y_change=self.berechne_einheitsvektor(x,y,abstand)
+                asteroid.x+=x_change
+                asteroid.y+=y_change
+                asteroid.mittelpunkt=self.enemy_polygon[self.asteroiden.index(asteroid)].mittelpunkt
+                self.enemy_polygon[self.asteroiden.index(asteroid)].move_polygon([x_change, y_change])
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     def berechne_vektor(self, obj_1, obj_2):
         '''Berechnet einen Richtungsvektor aus den Koordinaten zweier Objekte'''
         if obj_1!=obj_2:
