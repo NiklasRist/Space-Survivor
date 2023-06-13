@@ -15,6 +15,7 @@ class Spieler():
     '''Die Spielerklasse''' 
 
     def __init__(self,x,y, feld_obj):
+        self.name="Edgar"
         self.x=x
         self.y=y
         self.aktueller_richtungsvektor = [0,10]

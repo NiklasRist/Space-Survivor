@@ -38,6 +38,8 @@ class Steuerung():
         self.leaderboard_1 = leaderboard()
         self.speicher_1 = Speicher()
         self.saved_leaderboard=self.speicher_1.loadEntries()
+        for entry in self.saved_leaderboard:
+            self.leaderboard_1.addToBoard(entry[0], entry[1])
         self.projektile=[]
         self.projektil_polygone=[]
         self.gegner=[]
@@ -113,10 +115,12 @@ class Steuerung():
                     button.check_collision(mouse_pos)                    
     def game_over_screen(self):
         '''In Arbeit'''
-        self.Gui_1.fill((255,255,255))  
+        
+        '''
         if self.Taste_1.react_input(self.end, self.Spieler_2, self.Spieler_1, self.Spielfeld_1, self.Spielfeld_2 ):
             self.game_mode=0 
-            self.main_loop()          
+            self.main_loop()
+        '''          
     def main_Menu(self):
         '''In Arbeit'''
         self.game_mode=1
@@ -156,10 +160,9 @@ class Steuerung():
         Die Positionen der Bilder wird aktualisiert.
         '''
 
-        if self.Spieler_1.leben<=0:
+        if self.Spieler_1.leben<=0 or self.Spieler_2.leben<=0:
             self.game_mode=4
-        if self.Spieler_2.leben<=0:
-            self.game_mode=4
+            self.leaderboard_1.updateBoardBoard(self.Spieler_1.name, self.Spieler_1.pPunktzahl)
         
         if self.spiel_start:
             self.spiel_start=False
