@@ -25,6 +25,7 @@ class Steuerung():
         self.Spielfeld_1 = Feld(0,0,0)
         self.Spielfeld_2 = Feld(self.Spielfeld_1.Spielfeld_width,0,1)
         self.background=pygame.transform.scale(self.Spielfeld_1.aktuelles_bild, (self.Spielfeld_1.Spielfeld_width*2, self.Spielfeld_1.Spielfeld_height))
+        self.leaderboard_background=pygame.transform.scale(pygame.image.load("images\leaderboard_background.png"),(1.6*self.Spielfeld_1.Spielfeld_width, 0.8*self.Spielfeld_1.Spielfeld_height))
         self.Gui_1 = Gui(self.Spielfeld_1)
         self.Shop_1 = Shop()
         self.Gegnerspawn_1 = GegnerSpawnen()
@@ -267,6 +268,7 @@ class Steuerung():
         self.Gui_1.display_text(self.Spielfeld_1.Spielfeld_width*1.8, 0, f"Punkte: {self.Spieler_2.punkte}", pygame.Color(255, 255, 255, a=255), self.text_size)
     def update_screen_4(self):
         self.Gui_1.spiel_fenster.blit(self.background, (0,0))
+        self.Gui_1.spiel_fenster.blit(self.leaderboard_background, (0.2*self.Spielfeld_1.Spielfeld_width, 0.1*self.Spielfeld_1.Spielfeld_height))
     def move_projectile(self): 
         '''Bewegt Projektile & ihre Polygone um einen Richtungsvektor und setzt ihre Position zurück, wenn sie außerhalb des Spielfelds sind. Beschleunigt den Richtungsvektor um einen Faktor'''
         for projectile in self.projektile:
