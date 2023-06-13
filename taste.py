@@ -19,22 +19,23 @@ class verwalter:
         self.y_1 = 0
         self.y_2 = 0
         
-    def handle_mouse_button_events(self, event):  
+    def handle_mouse_button_events(self, event, buttons):  
             if event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_pos = pygame.mouse.get_pos()
-                for button in self.buttons:
-                    self.game_mode = button.check_collision(mouse_pos)
+                for button in buttons:
+                    game_mode = button.check_collision(mouse_pos)
+                    return game_mode
                 
             if event.type == pygame.MOUSEBUTTONUP:
                 mouse_pos = pygame.mouse.get_pos()
-                for button in self.buttons:
+                for button in buttons:
                     button.check_collision(mouse_pos)        
 
-    def react_input(self, end, spieler_object, spieler_object_2, feld_obj, feld_obj_2, pButtons):
+    def react_input(self, end, spieler_object, spieler_object_2, feld_obj, feld_obj_2, buttons):
         
       
         for event in pygame.event.get():
-            self.handle_mouse_button_events(event)
+            self.handle_mouse_button_events(event, buttons)
             if event.type == pygame.QUIT:
                 end = True
                 pygame.quit()
