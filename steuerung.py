@@ -121,6 +121,8 @@ class Steuerung():
         '''In Arbeit'''
         self.game_mode=1
         self.spiel_start=True
+        for button in self.buttons:
+            button.draw(self.Gui_1)
         '''
             3 Buttons die game_mode verändern
         '''
