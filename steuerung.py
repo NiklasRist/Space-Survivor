@@ -102,17 +102,7 @@ class Steuerung():
             
             pygame.display.flip()
             self.clock.tick(60)                 
-    def handle_button_events(self):  
-        for event in pygame.event.get():    
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                mouse_pos = pygame.mouse.get_pos()
-                for button in self.buttons:
-                    self.game_mode = button.check_collision(mouse_pos)
-                
-            if event.type == pygame.MOUSEBUTTONUP:
-                mouse_pos = pygame.mouse.get_pos()
-                for button in self.buttons:
-                    button.check_collision(mouse_pos)                    
+            
     def game_over_screen(self):
         '''In Arbeit'''
         
