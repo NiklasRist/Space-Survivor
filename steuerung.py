@@ -51,7 +51,27 @@ class Steuerung():
         self.maximale_projektil_anzahl=30
         self.count=0
         self.text_size=int(34*(self.Spielfeld_1.Spielfeld_width/800))
+        
+        menue_image = pygame.pygame.image.load('.\images\buttons\b_menue.png').convert_alpha()
+        menue_p_image = pygame.pygame.image.load('.\images\buttons\b_menue_pressed.png').convert_alpha()
+
+        play_lan_image = pygame.pygame.image.load('.\images\buttons\b_play_lan.png').convert_alpha()
+        play_lan_p_image = pygame.pygame.image.pygame.image.load('.\images\buttons\b_play_lan_pressed.png').convert_alpha()
+
+        play_local_image = pygame.pygame.image.load('.\images\buttons\b_play_local.png').convert_alpha()
+        play_local_p_image = pygame.pygame.image.load('.\images\buttons\b_play_local_pressed.png').convert_alpha()
+
+        score_image = pygame.pygame.image.load('.\images\buttons\b_score.png').convert_alpha()
+        score_p_image = pygame.pygame.image.load('.\images\buttons\b_score_pressed.png').convert_alpha()
+
+        self.buttons = [
+            Button(100, 200, menue_image, menue_p_image, self.Spielfeld_1.Spielfeld_width, self.Spielfeld_1.Spielfeld_height, 'menue_button'),
+            Button(200, 200, play_lan_image, play_lan_p_image, self.Spielfeld_1.Spielfeld_width, self.Spielfeld_1.Spielfeld_height, 'play_lan_button'),
+            Button(100, 400, play_local_image, play_local_p_image, self.Spielfeld_1.Spielfeld_width, self.Spielfeld_1.Spielfeld_height, 'play_local_button'),
+            Button(200, 400, score_image, score_p_image, self.Spielfeld_1.Spielfeld_width, self.Spielfeld_1.Spielfeld_height, 'score_button')
+        ]
         self.main_loop()
+        
     def init_polygon(self, obj, col_pol_obj) -> None:
         '''Rescaled und verschiebt das Polygon.'''
         col_pol_obj.rescale_polygon(obj.size)
