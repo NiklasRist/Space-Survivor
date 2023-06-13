@@ -24,6 +24,7 @@ class Steuerung():
         self.clock = pygame.time.Clock()
         self.Spielfeld_1 = Feld(0,0,0)
         self.Spielfeld_2 = Feld(self.Spielfeld_1.Spielfeld_width,0,1)
+        self.background=pygame.transform.scale(self.Spielfeld_1.aktuelles_bild, (self.Spielfeld_1.Spielfeld_width*2, self.Spielfeld_1.Spielfeld_height))
         self.Gui_1 = Gui(self.Spielfeld_1)
         self.Shop_1 = Shop()
         self.Gegnerspawn_1 = GegnerSpawnen()
@@ -54,23 +55,23 @@ class Steuerung():
         self.count=0
         self.text_size=int(34*(self.Spielfeld_1.Spielfeld_width/800))
         
-        menue_image = pygame.pygame.image.load('.\images\buttons\b_menue.png').convert_alpha()
-        menue_p_image = pygame.pygame.image.load('.\images\buttons\b_menue_pressed.png').convert_alpha()
+        self.menue_image = pygame.image.load(r'.\images\buttons\b_menue.png').convert_alpha()
+        self.menue_p_image = pygame.image.load(r'.\images\buttons\b_menue_pressed.png').convert_alpha()
 
-        play_lan_image = pygame.pygame.image.load('.\images\buttons\b_play_lan.png').convert_alpha()
-        play_lan_p_image = pygame.pygame.image.pygame.image.load('.\images\buttons\b_play_lan_pressed.png').convert_alpha()
+        self.play_lan_image = pygame.image.load(r'.\images\buttons\b_play_lan.png').convert_alpha()
+        self.play_lan_p_image = pygame.image.load(r'.\images\buttons\b_play_lan_pressed.png').convert_alpha()
 
-        play_local_image = pygame.pygame.image.load('.\images\buttons\b_play_local.png').convert_alpha()
-        play_local_p_image = pygame.pygame.image.load('.\images\buttons\b_play_local_pressed.png').convert_alpha()
+        self.play_local_image = pygame.image.load(r'.\images\buttons\b_play_local.png').convert_alpha()
+        self.play_local_p_image = pygame.image.load(r'.\images\buttons\b_play_local_pressed.png').convert_alpha()
 
-        score_image = pygame.pygame.image.load('.\images\buttons\b_score.png').convert_alpha()
-        score_p_image = pygame.pygame.image.load('.\images\buttons\b_score_pressed.png').convert_alpha()
+        self.score_image = pygame.image.load(r'.\images\buttons\b_score.png').convert_alpha()
+        self.score_p_image = pygame.image.load(r'.\images\buttons\b_score_pressed.png').convert_alpha()
 
         self.buttons = [
-            Button(100, 200, menue_image, menue_p_image, self.Spielfeld_1.Spielfeld_width, self.Spielfeld_1.Spielfeld_height, 'menue_button'),
-            Button(200, 200, play_lan_image, play_lan_p_image, self.Spielfeld_1.Spielfeld_width, self.Spielfeld_1.Spielfeld_height, 'play_lan_button'),
-            Button(100, 400, play_local_image, play_local_p_image, self.Spielfeld_1.Spielfeld_width, self.Spielfeld_1.Spielfeld_height, 'play_local_button'),
-            Button(200, 400, score_image, score_p_image, self.Spielfeld_1.Spielfeld_width, self.Spielfeld_1.Spielfeld_height, 'score_button')
+            Button(100, 200, self.Spielfeld_1.Spielfeld_width, self.Spielfeld_1.Spielfeld_height, self.menue_image, self.menue_p_image, 'menue_button'),
+            Button(200, 200, self.Spielfeld_1.Spielfeld_width, self.Spielfeld_1.Spielfeld_height, self.play_lan_image, self.play_lan_p_image, 'play_lan_button'),
+            Button(100, 400, self.Spielfeld_1.Spielfeld_width, self.Spielfeld_1.Spielfeld_height, self.play_local_image, self.play_local_p_image, 'play_local_button'),
+            Button(200, 400, self.Spielfeld_1.Spielfeld_width, self.Spielfeld_1.Spielfeld_height, self.score_image, self.score_p_image, 'score_button')
         ]
         self.main_loop()
         
@@ -95,8 +96,8 @@ class Steuerung():
             elif self.game_mode==3:
                 self.optionen()
             elif self.game_mode==4:
-                #self.game_over_screen()
-                self.game_mode=1
+                self.game_over_screen()
+                #self.game_mode=1
             else:
                 self.game_mode=0
             
@@ -105,7 +106,7 @@ class Steuerung():
             
     def game_over_screen(self):
         '''In Arbeit'''
-        
+        self.update_screen_4()
         '''
         if self.Taste_1.react_input(self.end, self.Spieler_2, self.Spieler_1, self.Spielfeld_1, self.Spielfeld_2 ):
             self.game_mode=0 
@@ -152,16 +153,18 @@ class Steuerung():
 
         if self.Spieler_1.leben<=0 or self.Spieler_2.leben<=0:
             self.game_mode=4
-            self.leaderboard_1.updateBoardBoard(self.Spieler_1.name, self.Spieler_1.pPunktzahl)
+            self.leaderboard_1.updateBoard(self.Spieler_1.name, self.Spieler_1.punkte)
+            self.leaderboard_1.updateBoard(self.Spieler_2.name, self.Spieler_2.punkte)
+
         
         if self.spiel_start:
             self.spiel_start=False
         
-        '''#erschafft neue Asteroiden
+        #erschafft neue Asteroiden
         if len(self.asteroiden)<self.maximale_asteroiden_anzahl*2:
             self.create_asteroiden(self.Spielfeld_1)
             self.create_asteroiden(self.Spielfeld_2)
-        '''
+        
         if len(self.gegner)<10:
             
             self.gegner.append(Gegner(self.Spielfeld_1))
@@ -195,8 +198,8 @@ class Steuerung():
 
         
         self.move_projectile()
-        self.Taste_1.react_input(self.end, self.Spieler_2, self.Spieler_1, self.Spielfeld_1, self.Spielfeld_2)
-        #self.move_asteroid(self.Spieler_1, self.Spieler_2)
+        self.Taste_1.react_input(self.end, self.Spieler_2, self.Spieler_1, self.Spielfeld_1, self.Spielfeld_2, self.buttons)
+        self.move_asteroid(self.Spieler_1, self.Spieler_2) 
         self.move_polygon(self.Spieler_1, self.spieler_1_collision_polygon)
         self.move_polygon(self.Spieler_2, self.spieler_2_collision_polygon)
         self.move_gegner(self.Spieler_1,self.Spieler_2)
@@ -262,6 +265,8 @@ class Steuerung():
         #stellt Eventpunkte Spieler dar
         self.Gui_1.display_text(self.Spielfeld_1.Spielfeld_width*0.8, 0, f"Punkte: {self.Spieler_1.punkte}", pygame.Color(255, 255, 255, a=255), self.text_size)
         self.Gui_1.display_text(self.Spielfeld_1.Spielfeld_width*1.8, 0, f"Punkte: {self.Spieler_2.punkte}", pygame.Color(255, 255, 255, a=255), self.text_size)
+    def update_screen_4(self):
+        self.Gui_1.spiel_fenster.blit(self.background, (0,0))
     def move_projectile(self): 
         '''Bewegt Projektile & ihre Polygone um einen Richtungsvektor und setzt ihre Position zurück, wenn sie außerhalb des Spielfelds sind. Beschleunigt den Richtungsvektor um einen Faktor'''
         for projectile in self.projektile:
@@ -322,9 +327,6 @@ class Steuerung():
             return 0,0
         else:
             return x/abstand, y/abstand        
-
-
-
     def projectile_boundaries(self):
         '''Entfernt Projektile aus der Liste, wenn diese außerhalb des Spielfelds sind'''
         for projectile in self.projektile:

@@ -7,18 +7,18 @@ class leaderboard:
 		self.punktzahl = []
 	
 	def addToBoard(self, pSpieler, pPunktzahl):
-		leaderboard.spieler+=pSpieler
-		leaderboard.punktzahl+=pPunktzahl
+		self.spieler.append(pSpieler)
+		self.punktzahl.append(pPunktzahl)
   
 	def sortBoardByScoreDesc(self):
-		for i in range(len(leaderboard.punktzahl)):
-			for j in range(len(leaderboard.punktzahl)-1-i):
-				if leaderboard.punktzahl[j] > leaderboard.punktzahl[j + 1]:
-						leaderboard.punktzahl[j], leaderboard.punktzahl[j+1],leaderboard.spieler[j], leaderboard.spieler[j+1] = leaderboard.punktzahl[j+1], leaderboard.punktzahl[j],leaderboard.spieler[j+1], leaderboard.spieler[j]
+		for i in range(len(self.punktzahl)):
+			for j in range(len(self.punktzahl)-1-i):
+				if self.punktzahl[j] > self.punktzahl[j + 1]:
+						self.punktzahl[j], self.punktzahl[j+1],self.spieler[j], self.spieler[j+1] = self.punktzahl[j+1], self.punktzahl[j],self.spieler[j+1], self.spieler[j]
       
 	def deleteUnnecessaryEntries(self):
-		while len(leaderboard.punktzahl)>10:
-			leaderboard.punktzahl, leaderboard.spieler=leaderboard.punktzahl[1:], leaderboard.spieler[1:]
+		while len(self.punktzahl)>10:
+			self.punktzahl, self.spieler=self.punktzahl[1:], self.spieler[1:]
 
 	def updateBoard(self, pSpieler, pPunktzahl):
 		self.addToBoard(pSpieler, pPunktzahl)
