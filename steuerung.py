@@ -345,6 +345,37 @@ class Steuerung():
                     self.projektile.pop(self.projektile.index(projectile))                   
     def test_for_collision (self) -> bool:
         '''In Arbeit. Prüft bsiher auf Kollisionen mit Asteroiden und reagiert auf Kollisionen'''
+        for gegner in self.gegner:
+            try:
+                if gegner.side == 0:
+                    if self.spieler_1_collision_polygon.collision(self.gegner_polygon[self.gegner.index(gegner)]):
+                        self.Spieler_1.leben -= 1
+
+
+                if gegner.side == 1:
+                    if self.spieler_2_collision_polygon(self.gegner_polygon[self.gegner.index(gegner)]):
+                        self.Spieler_2.leben -= 1
+
+                for projektile in self.projektile:
+                    if projektile.side == gegner.side and self.gegner_polygon[self.gegner.index(gegner)].collision(self.projektil_polygon[self.projektil_polygone.index(projektil)]):
+                        if projektile.side == 0:
+                            self.Spieler_1.score += 1
+                            self.Spieler_1.punkte += 1
+
+                        if projektile.side == 1:
+                            self.Spieler_2.score += 1
+                            self.Spieler_2.punkte += 1
+
+                        self.gegner_polygon.pop(self.gegner.index(gegner))
+                        self.gegner.pop(self.gegner.index(gegner))
+                        self.projektil_polygon.pop(self.projektile.index(projektile))
+                        self.projektile.pop(self.projektile.index(projektile))        
+
+
+
+            except:
+                pass
+        
         for asteroid in self.asteroiden:
             try:
                 if asteroid.side==0:

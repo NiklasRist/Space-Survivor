@@ -25,15 +25,6 @@ class Gegner():
         self.gegner_speed = 8
         self.mittelpunkt=[int(self.x+(34/64)*self.size), int(self.y+(44/64)*self.size)]
 
-        #wird aufgerufen...(muss in steuerung)
-       
-        self.y += self.gegner_speed 
-
-
-        if self.y > feld_obj.Spielfeld_height:
-            pass #den code von asteroiden, dass die gegnern sich annähren muss hier geschrieben werden
-            self.x = random.randrange(0,feld_obj.Spielfeld_width)
-
 
         
         self.side = feld_obj.side
