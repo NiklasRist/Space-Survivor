@@ -23,10 +23,11 @@ class gui:
     font = pygame.font.SysFont(None, size)
     img = font.render(text, True, color)
     self.spiel_fenster.blit(img, (px, py))
-
+    
 
   def display(self, obj): 
     self.spiel_fenster.blit(obj.aktuelles_bild, (obj.x,obj.y))
 
   def fill(self, color):
     self.spiel_fenster.fill(color)
+ 

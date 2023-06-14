@@ -161,11 +161,11 @@ class steuerung():
         if self.spiel_start:
             self.spiel_start=False
         
-        #erschafft neue Asteroiden
+        '''#erschafft neue Asteroiden
         if len(self.asteroiden)<self.maximale_asteroiden_anzahl*2:
             self.create_asteroiden(self.spielfeld_1)
             self.create_asteroiden(self.Spielfeld_2)
-        
+        '''
         if len(self.gegner)<10:
             
             self.gegner.append(gegner(self.spielfeld_1))
@@ -179,18 +179,16 @@ class steuerung():
                 self.create_projectile(self.spielfeld_1, self.spieler_1)
                 self.create_projectile(self.Spielfeld_2, self.spieler_2)
                 self.count=0
+                
                 for gegner_obj in self.gegner:
                     if gegner_obj.side == 0:
                         self.create_projectile(self.spielfeld_1,gegner_obj) 
                     else:
                         self.create_projectile(self.Spielfeld_2,gegner_obj)
-                                       
+                                     
 
 
-                if self.maximale_projektil_anzahl<len(self.projektile):
-                    self.projektile.pop(0)
-                    self.projektile.pop(0)
-                    self.projektile.pop(0)
+
         else:
             self.count+=1
         
@@ -209,6 +207,10 @@ class steuerung():
 
         self.test_for_collision()
         self.update_screen_1()
+        if self.count == 15 and self.maximale_projektil_anzahl<len(self.projektile):
+            self.projektile.pop(0)
+            self.projektile.pop(0)
+            self.projektile.pop(0)
     def lan_mehrspieler(self):
         '''
         Führt die Aktionen des LAN Mehrspielers aus
@@ -308,6 +310,13 @@ class steuerung():
     def update_screen_4(self):
         self.gui_1.spiel_fenster.blit(self.background, (0,0))
         self.gui_1.spiel_fenster.blit(self.leaderboard_background, (0.2*self.spielfeld_1.spielfeld_width, 0.1*self.spielfeld_1.spielfeld_height))
+        y=0.4*self.Spielfeld_1.Spielfeld_height
+        x=0.9*self.Spielfeld_1.Spielfeld_width
+        k=1
+        for spieler in self.leaderboard_1.spieler:
+            self.Gui_1.display_text(x, y, f"{k}. {spieler} {self.leaderboard_1.punktzahl[self.leaderboard_1.spieler.index(spieler)]}", pygame.Color(255, 255, 255, a=255), self.text_size)
+            y+=0.05*self.Spielfeld_1.Spielfeld_height
+            k+=1
     def move_projectile(self): 
         '''Bewegt Projektile & ihre Polygone um einen Richtungsvektor und setzt ihre Position zurück, wenn sie außerhalb des Spielfelds sind. Beschleunigt den Richtungsvektor um einen Faktor'''
         for projectile in self.projektile:
@@ -389,24 +398,27 @@ class steuerung():
 
 
                 if gegner.side == 1:
-                    if self.spieler_2_collision_polygon(self.gegner_polygon[self.gegner.index(gegner)]):
+                    if self.spieler_2_collision_polygon.collision(self.gegner_polygon[self.gegner.index(gegner)]):
                         self.spieler_2.leben -= 1
 
                 for projektile in self.projektile:
-                    if projektile.side == gegner.side and self.gegner_polygon[self.gegner.index(gegner)].collision(self.projektil_polygon[self.projektil_polygone.index(projektil)]):
-                        if projektile.side == 0:
-                            self.spieler_1.score += 1
-                            self.spieler_1.punkte += 1
+                    try:
+                        if projektile.side == gegner.side and self.gegner_polygon[self.gegner.index(gegner)].collision(self.projektil_polygone[self.projektil_polygone.index(projektile)]):
+                            if projektile.side == 0:
+                                self.spieler_1.score += 1
+                                self.spieler_1.punkte += 1
 
-                        if projektile.side == 1:
-                            self.spieler_2.score += 1
-                            self.spieler_2.punkte += 1
-
+                            if projektile.side == 1:
+                                self.spieler_2.score += 1
+                                self.spieler_2.punkte += 1
+                    except:
+                        pass
+                    '''
                         self.gegner_polygon.pop(self.gegner.index(gegner))
                         self.gegner.pop(self.gegner.index(gegner))
-                        self.projektil_polygon.pop(self.projektile.index(projektile))
+                        self.projektil_polygone.pop(self.projektile.index(projektile))
                         self.projektile.pop(self.projektile.index(projektile))        
-
+                    '''
 
 
             except:
