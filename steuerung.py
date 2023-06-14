@@ -207,10 +207,14 @@ class steuerung():
 
         self.test_for_collision()
         self.update_screen_1()
-        if self.count == 15 and self.maximale_projektil_anzahl<len(self.projektile):
-            self.projektile.pop(0)
-            self.projektile.pop(0)
-            self.projektile.pop(0)
+        if self.count == 15 and self.maximale_projektil_anzahl<len(self.projektile): #entfernt je ein Projektil jedes Schützen nach einer bestimmten Frameanzahl
+            projektil_schon_entfernt_von_schuetze=[]
+            projektil_schon_entfernt=False
+            for projektil in self.projektile:
+                for schuetze in projektil_schon_entfernt_von_schuetze:
+                    if projektil_schon_entfernt==False and projektil.schuetze==schuetze and not schuetze in projektil_schon_entfernt_von_schuetze:
+                        self.projektil_polygone.pop(self.projektile.index(projektil))
+                        self.projektile.pop(self.projektile.index(projektil))
     def lan_mehrspieler(self):
         '''
         Führt die Aktionen des LAN Mehrspielers aus
@@ -389,9 +393,9 @@ class steuerung():
                     self.projektil_polygone.pop(self.projektile.index(projectile))
                     self.projektile.pop(self.projektile.index(projectile))                   
     def test_for_collision (self) -> bool:
-        '''In Arbeit. Prüft bsiher auf Kollisionen mit Asteroiden und reagiert auf Kollisionen'''
+        '''In Arbeit. Prüft bisher auf Kollisionen mit Asteroiden und reagiert auf Kollisionen'''
         for gegner in self.gegner:
-            try:
+            #try:
                 if gegner.side == 0:
                     if self.spieler_1_collision_polygon.collision(self.gegner_polygon[self.gegner.index(gegner)]):
                         self.spieler_1.leben -= 1
@@ -402,17 +406,17 @@ class steuerung():
                         self.spieler_2.leben -= 1
 
                 for projektile in self.projektile:
-                    try:
-                        if projektile.side == gegner.side and self.gegner_polygon[self.gegner.index(gegner)].collision(self.projektil_polygone[self.projektil_polygone.index(projektile)]):
-                            if projektile.side == 0:
-                                self.spieler_1.score += 1
-                                self.spieler_1.punkte += 1
+                    #try:
+                    if projektile.side == gegner.side and self.gegner_polygon[self.gegner.index(gegner)].collision(self.projektil_polygone[self.projektil_polygone.index(projektile)]):
+                        if projektile.side == 0:
+                            self.spieler_1.score += 1
+                            self.spieler_1.punkte += 1
 
-                            if projektile.side == 1:
-                                self.spieler_2.score += 1
-                                self.spieler_2.punkte += 1
-                    except:
-                        pass
+                        if projektile.side == 1:
+                            self.spieler_2.score += 1
+                            self.spieler_2.punkte += 1
+                    #except:
+                        #pass
                     '''
                         self.gegner_polygon.pop(self.gegner.index(gegner))
                         self.gegner.pop(self.gegner.index(gegner))
@@ -421,8 +425,8 @@ class steuerung():
                     '''
 
 
-            except:
-                pass
+            #except:
+                #pass
         
         for asteroid in self.asteroiden:
             try:
