@@ -210,7 +210,43 @@ class steuerung():
         self.test_for_collision()
         self.update_screen_1()
     def lan_mehrspieler(self):
-        '''In Arbeit'''
+        '''
+        Führt die Aktionen des LAN Mehrspielers aus
+
+        Wenn spieler 1 keine Lebenspunkte mehr hat, wird der Spielmodus auf 4 gesetzt.
+        Wenn spieler 2 keine Lebenspunkte mehr hat, wird der Spielmodus auf 4 gesetzt.
+
+        Wenn das Spiel gerade gestartet wurde, wird der Startzustand zurückgesetzt.
+
+        Falls die Anzahl der Asteroiden kleiner ist als das doppelte der maximalen Anzahl an Asteroiden,
+        werden neue Asteroiden auf beiden Spielfeldern erzeugt.
+
+        Wenn der Zähler den Wert 15 erreicht, werden Projektile für spieler 1 und spieler 2 erzeugt.
+        Der Zähler wird zurückgesetzt und geprüft, ob die maximale Anzahl an Projektilen überschritten wurde.
+        In diesem Fall werden die ältesten Projektile entfernt.
+
+        Andernfalls wird der Zähler inkrementiert.
+
+        Die Projektile werden bewegt.
+        Die Tastenreaktionen von Taste_1 werden ausgelöst.
+
+        Die Asteroiden, spieler 1 und spieler 2 werden bewegt.
+
+        Die Kollisionspolygone von spieler 1 und spieler 2 werden bewegt.
+
+        Es wird auf Kollisionen getestet.
+
+        Die Positionen der Bilder wird aktualisiert.
+
+
+        Spieler 2 wird mitgegeben:
+        *Positionen von Asteroiden, Gegnern, Spielern, Projektilen
+        *HP der Asteroiden, Gegnern und der Spieler
+        *Punkte der Spieler
+        
+        Spieler 2 gibt an Spieler 1:
+        *Buttoninputs S2
+        '''
         pass
     def optionen(self):
         '''In Arbeit'''
