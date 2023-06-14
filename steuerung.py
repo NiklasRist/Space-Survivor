@@ -238,6 +238,9 @@ class steuerung():
 
         Die Positionen der Bilder wird aktualisiert.
 
+        Spieler 1 (S1) ist der Host, das heißt, alles wird bei Spieler 1 berechnet. Spieler 2 (S2) repliziert mit den Daten, die S1 mitgiebt die Anzeige.
+        Die einzigen Daten, die S2 an S1 überträgt, sind die Buttoninputs.
+        
 
         Spieler 2 wird mitgegeben:
         *Positionen von Asteroiden, Gegnern, Spielern, Projektilen
