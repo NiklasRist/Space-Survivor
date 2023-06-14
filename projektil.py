@@ -4,7 +4,7 @@ class projektil:
     def __init__(self, x, y, feld_obj, schuetze_obj, richtungsvektor) -> None:
         self.x=x
         self.y=y
-        self.size=int(0.0125*feld_obj.Spielfeld_width)
+        self.size=int(0.0125*feld_obj.spielfeld_width)
         self.mittelpunkt=[self.x+0.5*self.size, self.y+0.5*self.size]
         self.side=feld_obj.side
         self.image=pygame.image.load(".\images\projectile_normal.png")

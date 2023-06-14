@@ -1,3 +1,3 @@
-from steuerung import Steuerung
+from steuerung import steuerung
 print("“The scariest moment is always just before you start.”― Stephen King")
-execute=Steuerung()
+execute=steuerung()

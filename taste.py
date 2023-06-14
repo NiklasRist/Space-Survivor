@@ -1,6 +1,6 @@
 import pygame
-from spieler import Spieler
-from spielfeld import Feld
+from spieler import spieler
+from spielfeld import feld
 import sys
 import math
  
@@ -103,21 +103,21 @@ class verwalter:
 
 
         
-        if spieler_object_2.x > feld_obj.Spielfeld_width- spieler_object_2.size:
-            spieler_object_2.x = feld_obj.Spielfeld_width-spieler_object_2.size
+        if spieler_object_2.x > feld_obj.spielfeld_width- spieler_object_2.size:
+            spieler_object_2.x = feld_obj.spielfeld_width-spieler_object_2.size
         if spieler_object_2.x < feld_obj.x:
             spieler_object_2.x =feld_obj.x
-        if spieler_object_2.y > feld_obj.Spielfeld_height-spieler_object_2.size:
-            spieler_object_2.y = feld_obj.Spielfeld_height-spieler_object_2.size
+        if spieler_object_2.y > feld_obj.spielfeld_height-spieler_object_2.size:
+            spieler_object_2.y = feld_obj.spielfeld_height-spieler_object_2.size
         if spieler_object_2.y < feld_obj.y:
             spieler_object_2.y =feld_obj.y  
             
-        if spieler_object.x > feld_obj_2.x + feld_obj_2.Spielfeld_width-spieler_object.size:
-            spieler_object.x = feld_obj_2.x + feld_obj_2.Spielfeld_width-spieler_object.size
+        if spieler_object.x > feld_obj_2.x + feld_obj_2.spielfeld_width-spieler_object.size:
+            spieler_object.x = feld_obj_2.x + feld_obj_2.spielfeld_width-spieler_object.size
         if spieler_object.x < feld_obj_2.x:
             spieler_object.x = feld_obj_2.x
-        if spieler_object.y > feld_obj_2.Spielfeld_height-spieler_object.size:
-            spieler_object.y = feld_obj_2.Spielfeld_height-spieler_object.size
+        if spieler_object.y > feld_obj_2.spielfeld_height-spieler_object.size:
+            spieler_object.y = feld_obj_2.spielfeld_height-spieler_object.size
         if spieler_object.y < feld_obj_2.y:
             spieler_object.y =feld_obj_2.y   
         

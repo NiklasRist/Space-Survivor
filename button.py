@@ -1,7 +1,7 @@
 import sys
 import pygame
 
-class Button():
+class button():
 
     def __init__(self, x, y, width, height, unpressed_img, pressed_img, label):
         self.rect = pygame.Rect(x, y, width, height)

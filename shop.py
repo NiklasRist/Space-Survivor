@@ -1,24 +1,24 @@
-from spieler import Spieler
-from gegner_spawnen import GegnerSpawnen
-event1 = GegnerSpawnen()
+from spieler import spieler
+from gegner_spawnen import gegner_spawnen
+event1 = gegner_spawnen()
 event2 = event1
 event3 = event1
-Event = [event1, event2, event3]
+event = [event1, event2, event3]
 
-class Shop():
+class shop():
     
     def __init__(self):
         pass
     
-    def pruefenObGenugPunkte(self, spieler, eventNummer, SpielerObjekt):
-        genugPunkte = Spieler.spielerPunkte >= Event[eventNummer].getKosten()
-        if genugPunkte:
-            self.eventAusführen(spieler, eventNummer, SpielerObjekt)
-            Spieler.spielerPunkte = Spieler.spielerPunkte - Event[eventNummer].getKosten()
+    def pruefen_ob_genug_punkte(self, spieler, event_nummer, spieler_objekt):
+        genug_punkte = spieler.spieler_punkte >= event[event_nummer].get_kosten()
+        if genug_punkte:
+            self.event_ausführen(spieler, event_nummer, spieler_objekt)
+            spieler.spieler_punkte = spieler.spieler_punkte - event[event_nummer].get_kosten()
             return "Event gekauft!"
             
         else:
             return "Nicht genügend Punkte!"
     
-    def eventAusführen(self, spieler, eventNummer, SpielerObjekt):
-        Event[eventNummer].ausfuehren()
+    def event_ausführen(self, spieler, event_nummer, spieler_objekt):
+        event[event_nummer].ausfuehren()

@@ -6,9 +6,9 @@ class leaderboard:
 		self.spieler = []
 		self.punktzahl = []
 	
-	def addToBoard(self, pSpieler, pPunktzahl):
-		self.spieler.append(pSpieler)
-		self.punktzahl.append(pPunktzahl)
+	def addToBoard(self, p_spieler, p_punktzahl):
+		self.spieler.append(p_spieler)
+		self.punktzahl.append(p_punktzahl)
   
 	def sortBoardByScoreDesc(self):
 		for i in range(len(self.punktzahl)):
@@ -20,7 +20,7 @@ class leaderboard:
 		while len(self.punktzahl)>10:
 			self.punktzahl, self.spieler=self.punktzahl[1:], self.spieler[1:]
 
-	def updateBoard(self, pSpieler, pPunktzahl):
-		self.addToBoard(pSpieler, pPunktzahl)
+	def updateBoard(self, p_spieler, p_punktzahl):
+		self.addToBoard(p_spieler, p_punktzahl)
 		self.sortBoardByScoreDesc()
 		self.deleteUnnecessaryEntries()

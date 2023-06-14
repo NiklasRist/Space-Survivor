@@ -1,21 +1,21 @@
 import sys
 import pygame
-from spieler import Spieler
-from spielfeld import Feld
+from spieler import spieler
+from spielfeld import feld
 from taste import verwalter
 
 
 
 pygame.init()
-class Gui:
+class gui:
   
   
   def __init__(self, feld_obj):
-    Gui.lost_font_text = pygame.font.SysFont('arial',200)
-    Gui.lifeFont = pygame.font.SysFont('Verdana',400)
-    Gui.spiel_fenster = pygame.display.set_mode([2*feld_obj.Spielfeld_width,feld_obj.Spielfeld_height])
+    gui.lost_font_text = pygame.font.SysFont('arial',200)
+    gui.lifeFont = pygame.font.SysFont('Verdana',400)
+    gui.spiel_fenster = pygame.display.set_mode([2*feld_obj.spielfeld_width,feld_obj.spielfeld_height])
 
-  def create_Fenster(self):
+  def create_fenster(self):
     white = (255,255,255) 
     pygame.display.set_caption("Space survior")
 
