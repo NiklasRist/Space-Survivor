@@ -392,37 +392,46 @@ class steuerung():
                 if projectile.x < self.Spielfeld_2.x or projectile.x > self.Spielfeld_2.x+self.Spielfeld_2.spielfeld_width or projectile.y < self.Spielfeld_2.y or projectile.y > self.Spielfeld_2.y+self.Spielfeld_2.spielfeld_height:
                     self.projektil_polygone.pop(self.projektile.index(projectile))
                     self.projektile.pop(self.projektile.index(projectile))                   
-    def test_for_collision (self) -> bool:
+    def test_for_collision (self):
         '''In Arbeit. Prüft bisher auf Kollisionen mit Asteroiden und reagiert auf Kollisionen'''
         for gegner in self.gegner:
             #try:
                 if gegner.side == 0:
                     if self.spieler_1_collision_polygon.collision(self.gegner_polygon[self.gegner.index(gegner)]):
                         self.spieler_1.leben -= 1
-
+                        '''
+                        self.gegner_polygon.pop(self.gegner.index(gegner))
+                        self.gegner.pop(self.gegner.index(gegner))
+                        '''
 
                 if gegner.side == 1:
                     if self.spieler_2_collision_polygon.collision(self.gegner_polygon[self.gegner.index(gegner)]):
                         self.spieler_2.leben -= 1
-
-                for projektile in self.projektile:
-                    #try:
-                    if projektile.side == gegner.side and self.gegner_polygon[self.gegner.index(gegner)].collision(self.projektil_polygone[self.projektil_polygone.index(projektile)]):
-                        if projektile.side == 0:
-                            self.spieler_1.score += 1
-                            self.spieler_1.punkte += 1
-
-                        if projektile.side == 1:
-                            self.spieler_2.score += 1
-                            self.spieler_2.punkte += 1
-                    #except:
-                        #pass
-                    '''
+                        '''
                         self.gegner_polygon.pop(self.gegner.index(gegner))
                         self.gegner.pop(self.gegner.index(gegner))
-                        self.projektil_polygone.pop(self.projektile.index(projektile))
-                        self.projektile.pop(self.projektile.index(projektile))        
-                    '''
+                        '''
+                if gegner in self.gegner:
+                    for projektile in self.projektile:
+                        #try:
+                        bool_1=projektile.side == gegner.side
+                        bool_2=self.gegner_polygon[self.gegner.index(gegner)].collision(self.projektil_polygone[self.projektile.index(projektile)])
+                        if bool_1 and bool_2:
+                            if projektile.side == 0:
+                                self.spieler_1.score += 1
+                                self.spieler_1.punkte += 1
+
+                            if projektile.side == 1:
+                                self.spieler_2.score += 1
+                                self.spieler_2.punkte += 1
+                        #except:
+                            #pass
+
+                            self.gegner_polygon.pop(self.gegner.index(gegner))
+                            self.gegner.pop(self.gegner.index(gegner))
+                            self.projektil_polygone.pop(self.projektile.index(projektile))
+                            self.projektile.pop(self.projektile.index(projektile))        
+                        
 
 
             #except:

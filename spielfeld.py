@@ -9,9 +9,9 @@ class feld():
     self.spielfeld_height = root.winfo_screenheight()
     self.x=px
     self.y=py
-    self.IMG = pygame.image.load(".\images\stage-back.png")
-    self.IMG = pygame.transform.scale(self.IMG, (self.spielfeld_width, self.spielfeld_height))
-    self.aktuelles_bild=self.IMG
+    self.img = pygame.image.load(".\images\stage-back.png")
+    self.img = pygame.transform.scale(self.img, (self.spielfeld_width, self.spielfeld_height))
+    self.aktuelles_bild=self.img
     self.side=side
     
     #background

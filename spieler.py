@@ -26,19 +26,17 @@ class spieler():
         self.score=0
         self.schaden=1
         self.side=feld_obj.side
-        self.spielerIMG_links = pygame.image.load(".\images\spieler_stark_links.png")
-        self.spielerIMG_links = pygame.transform.scale(self.spielerIMG_links, (self.size, self.size))
-        self.spielerIMG_rechts = pygame.image.load(".\images\spieler_stark_rechts.png")
-        self.spielerIMG_rechts = pygame.transform.scale(self.spielerIMG_rechts, (self.size, self.size))
-        self.spielerIMG_oben = pygame.image.load(".\images\TestImage.png")
-        self.spielerIMG_oben = pygame.transform.scale(self.spielerIMG_oben, (self.size, self.size))
+        self.spieler_img_links = pygame.image.load(".\images\spieler_stark_links.png")
+        self.spieler_img_links = pygame.transform.scale(self.spieler_img_links, (self.size, self.size))
+        self.spieler_img_rechts = pygame.image.load(".\images\spieler_stark_rechts.png")
+        self.spieler_img_rechts = pygame.transform.scale(self.spieler_img_rechts, (self.size, self.size))
         
         
-        self.spielerIMG = pygame.image.load(".\images\spieler_normal.png")
-        self.spielerIMG = pygame.transform.scale(self.spielerIMG, (self.size, self.size))
-        self.aktuelles_bild=self.spielerIMG
+        self.spieler_img = pygame.image.load(".\images\spieler_normal.png")
+        self.spieler_img = pygame.transform.scale(self.spieler_img, (self.size, self.size))
+        self.aktuelles_bild=self.spieler_img
         
-        self.spieler_images = ['self.spielerIMG_links', 'self.spielerIMG' , 'self.Aktuelles_bild']
+        self.spieler_images = ['self.spieler_img_links', 'self.spieler_img' , 'self.Aktuelles_bild']
 
 
     
