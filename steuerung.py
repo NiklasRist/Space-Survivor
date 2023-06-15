@@ -159,7 +159,7 @@ class steuerung():
             self.leaderboard_1.updateBoard(self.spieler_2.name, self.spieler_2.punkte)
             for spieler in self.leaderboard_1.spieler:
                 i=self.leaderboard_1.spieler[spieler]
-                self.speicher_1.update_entry(spieler, self.leaderboard_1.punktzahl[i], i)
+                self.speicher_1.update_entry(spieler, self.leaderboard_1.punktzahl[i], (i+1))
 
         
         if self.spiel_start:
