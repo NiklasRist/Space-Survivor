@@ -1,6 +1,7 @@
 import sys
 import pygame
 import math
+import pygame_gui
 from gegner_spawnen import gegner_spawnen
 from gui import gui
 from spieler import spieler
@@ -23,7 +24,7 @@ class steuerung():
         pygame.init()
         self.clock = pygame.time.Clock()
         self.spielfeld_1 = feld(0,0,0)
-        self.Spielfeld_2 = feld(self.spielfeld_1.spielfeld_width,0,1)
+        self.spielfeld_2 = feld(self.spielfeld_1.spielfeld_width,0,1)
         self.background=pygame.transform.scale(self.spielfeld_1.aktuelles_bild, (self.spielfeld_1.spielfeld_width*2, self.spielfeld_1.spielfeld_height))
         self.leaderboard_background=pygame.transform.scale(pygame.image.load("images\leaderboard_background.png"),(1.6*self.spielfeld_1.spielfeld_width, 0.8*self.spielfeld_1.spielfeld_height))
         self.gui_1 = gui(self.spielfeld_1)
@@ -33,10 +34,10 @@ class steuerung():
         self.spieler_1 = spieler((0.5*self.spielfeld_1.spielfeld_width), (self.spielfeld_1.spielfeld_height*0.5), self.spielfeld_1)
         self.spieler_1_collision_polygon=spieler_polygon()
         self.init_polygon(self.spieler_1, self.spieler_1_collision_polygon)
-        self.spieler_2 = spieler((1.5*self.Spielfeld_2.spielfeld_width), (self.Spielfeld_2.spielfeld_height*0.5), self.Spielfeld_2)
+        self.spieler_2 = spieler((1.5*self.spielfeld_2.spielfeld_width), (self.spielfeld_2.spielfeld_height*0.5), self.spielfeld_2)
         self.spieler_2_collision_polygon=spieler_polygon()
         self.init_polygon(self.spieler_2, self.spieler_2_collision_polygon)
-        self.Taste_1 = verwalter()
+        self.taste_1 = verwalter()
         self.leaderboard_1 = leaderboard()
         self.speicher_1 = speicher()
         self.saved_leaderboard=self.speicher_1.load_entries()
@@ -109,13 +110,13 @@ class steuerung():
         '''In Arbeit'''
         self.update_screen_4()
         '''
-        if self.Taste_1.react_input(self.end, self.spieler_2, self.spieler_1, self.spielfeld_1, self.Spielfeld_2 ):
+        if self.taste_1.react_input(self.end, self.spieler_2, self.spieler_1, self.spielfeld_1, self.spielfeld_2 ):
             self.game_mode=0 
             self.main_loop()
         '''          
     def main_menue(self):
         '''In Arbeit'''
-        self.game_mode=1
+        self.game_mode=self.taste_1.react_input(self.end, self.spieler_1, self.spieler_2, self.spielfeld_1, self.spielfeld_2, self.buttons)
         self.spiel_start=True
         for button in self.buttons:
             button.draw(self.gui_1)
@@ -141,7 +142,7 @@ class steuerung():
         Andernfalls wird der Zähler inkrementiert.
 
         Die Projektile werden bewegt.
-        Die Tastenreaktionen von Taste_1 werden ausgelöst.
+        Die Tastenreaktionen von taste_1 werden ausgelöst.
 
         Die Asteroiden, spieler 1 und spieler 2 werden bewegt.
 
@@ -156,35 +157,38 @@ class steuerung():
             self.game_mode=4
             self.leaderboard_1.updateBoard(self.spieler_1.name, self.spieler_1.punkte)
             self.leaderboard_1.updateBoard(self.spieler_2.name, self.spieler_2.punkte)
+            for spieler in self.leaderboard_1.spieler:
+                i=self.leaderboard_1.spieler[spieler]
+                self.speicher_1.update_entry(spieler, self.leaderboard_1.punktzahl[i], (i+1))
 
         
         if self.spiel_start:
             self.spiel_start=False
         
-        '''#erschafft neue Asteroiden
+        #erschafft neue Asteroiden
         if len(self.asteroiden)<self.maximale_asteroiden_anzahl*2:
             self.create_asteroiden(self.spielfeld_1)
-            self.create_asteroiden(self.Spielfeld_2)
+            self.create_asteroiden(self.spielfeld_2)
         '''
         if len(self.gegner)<10:
             
             self.gegner.append(gegner(self.spielfeld_1))
             self.gegner_polygon.append(enemy_polygon())
             self.init_polygon(self.gegner[-1], self.gegner_polygon[-1])
-            self.gegner.append(gegner(self.Spielfeld_2))
+            self.gegner.append(gegner(self.spielfeld_2))
             self.gegner_polygon.append(enemy_polygon())
             self.init_polygon(self.gegner[-1], self.gegner_polygon[-1])
-
+        '''
         if self.count==15:
                 self.create_projectile(self.spielfeld_1, self.spieler_1)
-                self.create_projectile(self.Spielfeld_2, self.spieler_2)
+                self.create_projectile(self.spielfeld_2, self.spieler_2)
                 self.count=0
                 
                 for gegner_obj in self.gegner:
                     if gegner_obj.side == 0:
                         self.create_projectile(self.spielfeld_1,gegner_obj) 
                     else:
-                        self.create_projectile(self.Spielfeld_2,gegner_obj)
+                        self.create_projectile(self.spielfeld_2,gegner_obj)
                                      
 
 
@@ -197,7 +201,7 @@ class steuerung():
 
         
         self.move_projectile()
-        self.Taste_1.react_input(self.end, self.spieler_2, self.spieler_1, self.spielfeld_1, self.Spielfeld_2, self.buttons)
+        self.taste_1.react_input(self.end, self.spieler_2, self.spieler_1, self.spielfeld_1, self.spielfeld_2, self.buttons)
         self.move_asteroid(self.spieler_1, self.spieler_2) 
         self.move_polygon(self.spieler_1, self.spieler_1_collision_polygon)
         self.move_polygon(self.spieler_2, self.spieler_2_collision_polygon)
@@ -234,7 +238,7 @@ class steuerung():
         Andernfalls wird der Zähler inkrementiert.
 
         Die Projektile werden bewegt.
-        Die Tastenreaktionen von Taste_1 werden ausgelöst.
+        Die Tastenreaktionen von taste_1 werden ausgelöst.
 
         Die Asteroiden, spieler 1 und spieler 2 werden bewegt.
 
@@ -289,7 +293,7 @@ class steuerung():
         '''
         #erstellt beide Spielfelder
         self.gui_1.display(self.spielfeld_1)
-        self.gui_1.display(self.Spielfeld_2)
+        self.gui_1.display(self.spielfeld_2)
         #erstellt beide Spieler
         self.gui_1.display(self.spieler_1)
         self.gui_1.display(self.spieler_2)
@@ -321,6 +325,56 @@ class steuerung():
             self.Gui_1.display_text(x, y, f"{k}. {spieler} {self.leaderboard_1.punktzahl[self.leaderboard_1.spieler.index(spieler)]}", pygame.Color(255, 255, 255, a=255), self.text_size)
             y+=0.05*self.Spielfeld_1.Spielfeld_height
             k+=1
+    
+    
+    feld_steuer = pygame_gui.UIManager((self.spielfeld_width,self.spielfeld_height))
+    spieler1_name_input = pygame_gui.elements.UITextEntryLine(relative_rects= pygame.Rect((400,300),(800,100)),manager = feld_steuer,object_id="#Spieler_1_Name:" )
+    spieler2_name_input = pygame_gui.elements.UITextEntryLine(relative_rects= pygame.Rect((800,600),(400,200)),manager = feld_steuer,object_id="#Spieler_2_Name:" )
+
+    def namen_anzeigen(namen):
+        while True:    
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+
+            neue_text = pygame.font.Sysfont("Arial",100).render(True, "black")
+            #die position von dem Text nachdem man sie getippt hat und angezeigt werden muss
+            neue_text_rect_1 = neue_text.get_rect(center=(self.spielfeld_width/2 , self.spielfeld_height/2))
+            neue_text_rect_2 = neue_text.get_rect(center=(self.spielfeld_width/3 , self.spielfeld_height/3))
+            screen.blit(neue_text,neue_text_rect,neue_text_rect_2)
+
+            
+
+            screen.fill("white")
+            pygame.display.update()    
+
+
+
+    def spieler_namen():
+        while True:    
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+
+                
+                if event.type == pygame_gui.UI_TEXT_ENTRY_Finished and event.ui_object_id == "#Spieler_1_Name:":
+                    namen_anzeigen(event.text)
+
+
+                if event.type == pygame_gui.UI_TEXT_ENTRY_Finished and event.ui_object_id == "#Spieler_2_Name:":
+                    namen_anzeigen(event.text)
+                feld_steuer.process_events(event)
+            screen.fill(white)
+            pygame.display.update()    
+
+
+
+
+    
+    
+    
     def move_projectile(self): 
         '''Bewegt Projektile & ihre Polygone um einen Richtungsvektor und setzt ihre Position zurück, wenn sie außerhalb des Spielfelds sind. Beschleunigt den Richtungsvektor um einen Faktor'''
         for projectile in self.projektile:
@@ -388,8 +442,8 @@ class steuerung():
                 if projectile.x < self.spielfeld_1.x or projectile.x > self.spielfeld_1.x+self.spielfeld_1.spielfeld_width-0.0125*self.spielfeld_1.spielfeld_width or projectile.y < self.spielfeld_1.y or projectile.y > self.spielfeld_1.y+self.spielfeld_1.spielfeld_height:
                     self.projektil_polygone.pop(self.projektile.index(projectile))
                     self.projektile.pop(self.projektile.index(projectile))
-            if projectile.side == self.Spielfeld_2.side:
-                if projectile.x < self.Spielfeld_2.x or projectile.x > self.Spielfeld_2.x+self.Spielfeld_2.spielfeld_width or projectile.y < self.Spielfeld_2.y or projectile.y > self.Spielfeld_2.y+self.Spielfeld_2.spielfeld_height:
+            if projectile.side == self.spielfeld_2.side:
+                if projectile.x < self.spielfeld_2.x or projectile.x > self.spielfeld_2.x+self.spielfeld_2.spielfeld_width or projectile.y < self.spielfeld_2.y or projectile.y > self.spielfeld_2.y+self.spielfeld_2.spielfeld_height:
                     self.projektil_polygone.pop(self.projektile.index(projectile))
                     self.projektile.pop(self.projektile.index(projectile))                   
     def test_for_collision (self):
