@@ -33,14 +33,13 @@ class verwalter:
 
     def react_input(self, end, spieler_object, spieler_object_2, feld_obj, feld_obj_2, buttons):
         
-      
+        
         for event in pygame.event.get():
             game_mode=self.handle_mouse_button_events(event, buttons)
             if event.type == pygame.QUIT:
                 end = True
                 pygame.quit()
-                sys.exit(0)
-                
+                sys.exit(0)                
             if event.type == pygame.KEYDOWN:
                 
                 if event.__dict__["key"] == pygame.K_RIGHT: #keycode von K_RIGHT
@@ -67,13 +66,7 @@ class verwalter:
                     self.y_spieler_2 -= 10
 
                 if event.__dict__["key"] == pygame.K_0:
-                    return True
-                if type(game_mode) is not None:
-                    return game_mode
-                else:
-                    return 0
-
-                    
+                    return True                    
             if event.type == pygame.KEYUP:
                 
                 if (event.__dict__["key"] ==  pygame.K_RIGHT or  event.__dict__["key"] == pygame.K_LEFT):
@@ -90,7 +83,10 @@ class verwalter:
                 if (event.__dict__["key"] ==  pygame.K_s or  event.__dict__["key"] == pygame.K_w):
                     spieler_object_2.aktuelles_bild = spieler_object_2.spieler_img
                     self.y_spieler_2 = 0
-                 
+            if type(game_mode) is not None:
+                    return game_mode
+            else:
+                    return 0    
 
 
 

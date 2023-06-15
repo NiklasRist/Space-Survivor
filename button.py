@@ -13,15 +13,17 @@ class button():
     def check_collision(self, mouse_pos):
         if self.rect.collidepoint(mouse_pos):
             self.img = self.pressed_img
-            print(f"Button '{self.label}' clicked!")
-            return self.perform_action()
+            #print(f"Button '{self.label}' clicked!")
+            game_mode=self.perform_action()
+            print(game_mode)
+            return game_mode
         else:
             self.img = self.unpressed_img
             return None
 
     def perform_action(self):
         if self.label == 'menue_button':
-            return 0
+            return 4
         elif self.label == 'play_local_button':
             return 1
         elif self.label == 'play_lan_button':

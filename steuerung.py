@@ -318,19 +318,19 @@ class steuerung():
     def update_screen_4(self):
         self.gui_1.spiel_fenster.blit(self.background, (0,0))
         self.gui_1.spiel_fenster.blit(self.leaderboard_background, (0.2*self.spielfeld_1.spielfeld_width, 0.1*self.spielfeld_1.spielfeld_height))
-        y=0.4*self.Spielfeld_1.Spielfeld_height
-        x=0.9*self.Spielfeld_1.Spielfeld_width
+        y=0.4*self.spielfeld_1.spielfeld_height
+        x=0.9*self.spielfeld_1.spielfeld_width
         k=1
         for spieler in self.leaderboard_1.spieler:
-            self.Gui_1.display_text(x, y, f"{k}. {spieler} {self.leaderboard_1.punktzahl[self.leaderboard_1.spieler.index(spieler)]}", pygame.Color(255, 255, 255, a=255), self.text_size)
-            y+=0.05*self.Spielfeld_1.Spielfeld_height
+            self.gui_1.display_text(x, y, f"{k}. {spieler} {self.leaderboard_1.punktzahl[self.leaderboard_1.spieler.index(spieler)]}", pygame.Color(255, 255, 255, a=255), self.text_size)
+            y+=0.05*self.spielfeld_1.spielfeld_height
             k+=1
     
-    
+    '''
     feld_steuer = pygame_gui.UIManager((self.spielfeld_width,self.spielfeld_height))
     spieler1_name_input = pygame_gui.elements.UITextEntryLine(relative_rects= pygame.Rect((400,300),(800,100)),manager = feld_steuer,object_id="#Spieler_1_Name:" )
     spieler2_name_input = pygame_gui.elements.UITextEntryLine(relative_rects= pygame.Rect((800,600),(400,200)),manager = feld_steuer,object_id="#Spieler_2_Name:" )
-
+    '''
     def namen_anzeigen(namen):
         while True:    
             for event in pygame.event.get():
