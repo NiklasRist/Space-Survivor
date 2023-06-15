@@ -11,25 +11,23 @@ class button():
         self.label = label
 
     def check_collision(self, mouse_pos):
-        if self.rect.collidepoint(mouse_pos):
-            self.img = self.pressed_img
-            #print(f"Button '{self.label}' clicked!")
+        if self.rect.x<=mouse_pos[0]<=self.rect.width and self.rect.y<=mouse_pos[1]<=self.rect.height:
+            print(f"Button '{self.label}' clicked!")
             game_mode=self.perform_action()
-            print(game_mode)
             return game_mode
         else:
-            self.img = self.unpressed_img
             return None
 
     def perform_action(self):
         if self.label == 'menue_button':
             return 4
-        elif self.label == 'play_local_button':
+        if self.label == 'play_local_button':
             return 1
-        elif self.label == 'play_lan_button':
+        if self.label == 'play_lan_button':
             return 2
-        elif self.label == 'score_button':
+        if self.label == 'score_button':
             return 3
 
     def draw(self, screen):
         screen.spiel_fenster.blit(self.img, self.rect)
+        

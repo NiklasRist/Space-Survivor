@@ -20,16 +20,28 @@ class verwalter:
         self.y_2 = 0
         
     def handle_mouse_button_events(self, event, buttons):  
+            game_mode=0
+                
             if event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_pos = pygame.mouse.get_pos()
                 for button in buttons:
-                    game_mode = button.check_collision(mouse_pos)
-                    return game_mode
-                
+                    if button.rect.left<=mouse_pos[0]<=button.rect.right and button.rect.top<=mouse_pos[1]<=button.rect.bottom:
+                        if button.label == 'menue_button':
+                            return 4
+                        if button.label == 'play_local_button':
+                            return 1
+                        if button.label == 'play_lan_button':
+                            return 2
+                        if button.label == 'score_button':
+                            return 3
+                        button.img = button.pressed_img   
+                        return game_mode   
             if event.type == pygame.MOUSEBUTTONUP:
                 mouse_pos = pygame.mouse.get_pos()
                 for button in buttons:
-                    button.check_collision(mouse_pos)        
+                    button.img = button.unpressed_img
+
+
 
     def react_input(self, end, spieler_object, spieler_object_2, feld_obj, feld_obj_2, buttons):
         
@@ -83,10 +95,10 @@ class verwalter:
                 if (event.__dict__["key"] ==  pygame.K_s or  event.__dict__["key"] == pygame.K_w):
                     spieler_object_2.aktuelles_bild = spieler_object_2.spieler_img
                     self.y_spieler_2 = 0
-            if type(game_mode) is not None:
+            if game_mode!=0 and isinstance(game_mode, int):
+                    print(game_mode)
                     return game_mode
-            else:
-                    return 0    
+  
 
 
 

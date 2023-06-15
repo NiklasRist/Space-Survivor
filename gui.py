@@ -20,7 +20,7 @@ class gui:
     pygame.display.set_caption("Space survior")
 
   def display_text(self, px, py, text, color, size):
-    font = pygame.font.SysFont(None, size)
+    font = pygame.font.SysFont("Hallo", size)
     img = font.render(text, True, color)
     self.spiel_fenster.blit(img, (px, py))
     

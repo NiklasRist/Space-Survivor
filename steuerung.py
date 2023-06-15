@@ -57,23 +57,23 @@ class steuerung():
         self.count=0
         self.text_size=int(34*(self.spielfeld_1.spielfeld_width/800))
         
-        self.menue_image = pygame.image.load(r'.\images\buttons\b_menue.png').convert_alpha()
-        self.menue_p_image = pygame.image.load(r'.\images\buttons\b_menue_pressed.png').convert_alpha()
+        self.menue_image = pygame.transform.scale(pygame.image.load(r'.\images\buttons\b_menue.png').convert_alpha(),(0.16*self.spielfeld_1.spielfeld_width,0.04*self.spielfeld_1.spielfeld_height))
+        self.menue_p_image = pygame.transform.scale(pygame.image.load(r'.\images\buttons\b_menue_pressed.png').convert_alpha(),(0.16*self.spielfeld_1.spielfeld_width,0.04*self.spielfeld_1.spielfeld_height))
 
-        self.play_lan_image = pygame.image.load(r'.\images\buttons\b_play_lan.png').convert_alpha()
-        self.play_lan_p_image = pygame.image.load(r'.\images\buttons\b_play_lan_pressed.png').convert_alpha()
+        self.play_lan_image = pygame.transform.scale(pygame.image.load(r'.\images\buttons\b_play_lan.png').convert_alpha(),(0.16*self.spielfeld_1.spielfeld_width,0.04*self.spielfeld_1.spielfeld_height))
+        self.play_lan_p_image = pygame.transform.scale(pygame.image.load(r'.\images\buttons\b_play_lan_pressed.png').convert_alpha(),(0.16*self.spielfeld_1.spielfeld_width,0.04*self.spielfeld_1.spielfeld_height))
 
-        self.play_local_image = pygame.image.load(r'.\images\buttons\b_play_local.png').convert_alpha()
-        self.play_local_p_image = pygame.image.load(r'.\images\buttons\b_play_local_pressed.png').convert_alpha()
+        self.play_local_image = pygame.transform.scale(pygame.image.load(r'.\images\buttons\b_play_local.png').convert_alpha(),(0.16*self.spielfeld_1.spielfeld_width,0.04*self.spielfeld_1.spielfeld_height))
+        self.play_local_p_image = pygame.transform.scale(pygame.image.load(r'.\images\buttons\b_play_local_pressed.png').convert_alpha(),(0.16*self.spielfeld_1.spielfeld_width,0.04*self.spielfeld_1.spielfeld_height))
 
-        self.score_image = pygame.image.load(r'.\images\buttons\b_score.png').convert_alpha()
-        self.score_p_image = pygame.image.load(r'.\images\buttons\b_score_pressed.png').convert_alpha()
+        self.score_image = pygame.transform.scale(pygame.image.load(r'.\images\buttons\b_score.png').convert_alpha(),(0.16*self.spielfeld_1.spielfeld_width,0.04*self.spielfeld_1.spielfeld_height))
+        self.score_p_image = pygame.transform.scale(pygame.image.load(r'.\images\buttons\b_score_pressed.png').convert_alpha(),(0.16*self.spielfeld_1.spielfeld_width,0.04*self.spielfeld_1.spielfeld_height))
 
         self.buttons = [
-            button(100, 200, self.spielfeld_1.spielfeld_width, self.spielfeld_1.spielfeld_height, self.menue_image, self.menue_p_image, 'menue_button'),
-            button(200, 200, self.spielfeld_1.spielfeld_width, self.spielfeld_1.spielfeld_height, self.play_lan_image, self.play_lan_p_image, 'play_lan_button'),
-            button(100, 400, self.spielfeld_1.spielfeld_width, self.spielfeld_1.spielfeld_height, self.play_local_image, self.play_local_p_image, 'play_local_button'),
-            button(200, 400, self.spielfeld_1.spielfeld_width, self.spielfeld_1.spielfeld_height, self.score_image, self.score_p_image, 'score_button')
+            button((self.spielfeld_1.spielfeld_width-0.16*self.spielfeld_1.spielfeld_width), 200, 0.16*self.spielfeld_1.spielfeld_width, 0.02*self.spielfeld_1.spielfeld_height, self.menue_image, self.menue_p_image, 'menue_button'),
+            button((self.spielfeld_1.spielfeld_width-0.16*self.spielfeld_1.spielfeld_width), 400, 0.16*self.spielfeld_1.spielfeld_width, 0.02*self.spielfeld_1.spielfeld_height, self.play_lan_image, self.play_lan_p_image, 'play_lan_button'),
+            button((self.spielfeld_1.spielfeld_width-0.16*self.spielfeld_1.spielfeld_width), 600, 0.16*self.spielfeld_1.spielfeld_width, 0.02*self.spielfeld_1.spielfeld_height, self.play_local_image, self.play_local_p_image, 'play_local_button'),
+            button((self.spielfeld_1.spielfeld_width-0.16*self.spielfeld_1.spielfeld_width), 800, 0.16*self.spielfeld_1.spielfeld_width, 0.02*self.spielfeld_1.spielfeld_height, self.score_image, self.score_p_image, 'score_button')
         ]
         self.main_loop()
         
