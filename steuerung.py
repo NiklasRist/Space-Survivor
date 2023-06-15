@@ -115,8 +115,7 @@ class steuerung():
         '''          
     def main_menue(self):
         '''In Arbeit'''
-        self.Taste_1.react_input(self.end, self.spieler_1, self.spieler_2, self.spielfeld_1, self.Spielfeld_2, self.buttons)
-        #self.game_mode=1
+        self.game_mode=self.Taste_1.react_input(self.end, self.spieler_1, self.spieler_2, self.spielfeld_1, self.Spielfeld_2, self.buttons)
         self.spiel_start=True
         for button in self.buttons:
             button.draw(self.gui_1)

@@ -14,9 +14,10 @@ class button():
         if self.rect.collidepoint(mouse_pos):
             self.img = self.pressed_img
             print(f"Button '{self.label}' clicked!")
-            self.perform_action()
+            return self.perform_action()
         else:
             self.img = self.unpressed_img
+            return None
 
     def perform_action(self):
         if self.label == 'menue_button':

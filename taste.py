@@ -35,7 +35,7 @@ class verwalter:
         
       
         for event in pygame.event.get():
-            self.handle_mouse_button_events(event, buttons)
+            game_mode=self.handle_mouse_button_events(event, buttons)
             if event.type == pygame.QUIT:
                 end = True
                 pygame.quit()
@@ -68,6 +68,10 @@ class verwalter:
 
                 if event.__dict__["key"] == pygame.K_0:
                     return True
+                if type(game_mode) is not None:
+                    return game_mode
+                else:
+                    return 0
 
                     
             if event.type == pygame.KEYUP:
