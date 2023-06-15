@@ -156,6 +156,9 @@ class steuerung():
             self.game_mode=4
             self.leaderboard_1.updateBoard(self.spieler_1.name, self.spieler_1.punkte)
             self.leaderboard_1.updateBoard(self.spieler_2.name, self.spieler_2.punkte)
+            for spieler in self.leaderboard_1.spieler:
+                i=self.leaderboard_1.spieler[spieler]
+                self.speicher_1.update_entry(spieler, self.leaderboard_1.punktzahl[i], i)
 
         
         if self.spiel_start:
