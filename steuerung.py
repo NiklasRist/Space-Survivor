@@ -1,6 +1,7 @@
 import sys
 import pygame
 import math
+import pygame_gui
 from gegner_spawnen import gegner_spawnen
 from gui import gui
 from spieler import spieler
@@ -324,6 +325,56 @@ class steuerung():
             self.Gui_1.display_text(x, y, f"{k}. {spieler} {self.leaderboard_1.punktzahl[self.leaderboard_1.spieler.index(spieler)]}", pygame.Color(255, 255, 255, a=255), self.text_size)
             y+=0.05*self.Spielfeld_1.Spielfeld_height
             k+=1
+    
+    
+    feld_steuer = pygame_gui.UIManager((self.spielfeld_width,self.spielfeld_height))
+    spieler1_name_input = pygame_gui.elements.UITextEntryLine(relative_rects= pygame.Rect((400,300),(800,100)),manager = feld_steuer,object_id="#Spieler_1_Name:" )
+    spieler2_name_input = pygame_gui.elements.UITextEntryLine(relative_rects= pygame.Rect((800,600),(400,200)),manager = feld_steuer,object_id="#Spieler_2_Name:" )
+
+    def namen_anzeigen(namen):
+        while True:    
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+
+            neue_text = pygame.font.Sysfont("Arial",100).render(True, "black")
+            #die position von dem Text nachdem man sie getippt hat und angezeigt werden muss
+            neue_text_rect_1 = neue_text.get_rect(center=(self.spielfeld_width/2 , self.spielfeld_height/2))
+            neue_text_rect_2 = neue_text.get_rect(center=(self.spielfeld_width/3 , self.spielfeld_height/3))
+            screen.blit(neue_text,neue_text_rect,neue_text_rect_2)
+
+            
+
+            screen.fill("white")
+            pygame.display.update()    
+
+
+
+    def spieler_namen():
+        while True:    
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+
+                
+                if event.type == pygame_gui.UI_TEXT_ENTRY_Finished and event.ui_object_id == "#Spieler_1_Name:":
+                    namen_anzeigen(event.text)
+
+
+                if event.type == pygame_gui.UI_TEXT_ENTRY_Finished and event.ui_object_id == "#Spieler_2_Name:":
+                    namen_anzeigen(event.text)
+                feld_steuer.process_events(event)
+            screen.fill(white)
+            pygame.display.update()    
+
+
+
+
+    
+    
+    
     def move_projectile(self): 
         '''Bewegt Projektile & ihre Polygone um einen Richtungsvektor und setzt ihre Position zurück, wenn sie außerhalb des Spielfelds sind. Beschleunigt den Richtungsvektor um einen Faktor'''
         for projectile in self.projektile:
