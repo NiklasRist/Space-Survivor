@@ -109,11 +109,12 @@ class steuerung():
     def game_over_screen(self):
         '''In Arbeit'''
         self.update_screen_4()
-        '''
-        if self.taste_1.react_input(self.end, self.spieler_2, self.spieler_1, self.spielfeld_1, self.spielfeld_2 ):
-            self.game_mode=0 
+        
+        #bei null: zurück zu main menu
+        if isinstance(self.taste_1.react_input(self.end, self.spieler_2, self.spieler_1, self.spielfeld_1, self.spielfeld_2, self.buttons ), bool):
+            self.__init__()
             self.main_loop()
-        '''          
+                
     def main_menue(self):
         '''In Arbeit'''
         self.game_mode=self.taste_1.react_input(self.end, self.spieler_1, self.spieler_2, self.spielfeld_1, self.spielfeld_2, self.buttons)
@@ -158,7 +159,7 @@ class steuerung():
             self.leaderboard_1.updateBoard(self.spieler_1.name, self.spieler_1.punkte)
             self.leaderboard_1.updateBoard(self.spieler_2.name, self.spieler_2.punkte)
             for spieler in self.leaderboard_1.spieler:
-                i=self.leaderboard_1.spieler[spieler]
+                i=self.leaderboard_1.spieler.index(spieler)
                 self.speicher_1.update_entry(spieler, self.leaderboard_1.punktzahl[i], (i+1))
 
         
@@ -169,6 +170,7 @@ class steuerung():
         if len(self.asteroiden)<self.maximale_asteroiden_anzahl*2:
             self.create_asteroiden(self.spielfeld_1)
             self.create_asteroiden(self.spielfeld_2)
+        
         '''
         if len(self.gegner)<10:
             
@@ -326,11 +328,11 @@ class steuerung():
             y+=0.05*self.spielfeld_1.spielfeld_height
             k+=1
     
-    '''
+    
     feld_steuer = pygame_gui.UIManager((self.spielfeld_width,self.spielfeld_height))
     spieler1_name_input = pygame_gui.elements.UITextEntryLine(relative_rects= pygame.Rect((400,300),(800,100)),manager = feld_steuer,object_id="#Spieler_1_Name:" )
     spieler2_name_input = pygame_gui.elements.UITextEntryLine(relative_rects= pygame.Rect((800,600),(400,200)),manager = feld_steuer,object_id="#Spieler_2_Name:" )
-    '''
+    
     def namen_anzeigen(namen):
         while True:    
             for event in pygame.event.get():
