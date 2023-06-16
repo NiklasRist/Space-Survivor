@@ -18,6 +18,18 @@ class verwalter:
         self.y_spieler_2 = 0
         self.y_1 = 0
         self.y_2 = 0
+
+        self.spieler_1_rechts = pygame.K_RIGHT
+        self.spieler_1_links = pygame.K_LEFT
+        self.spieler_1_oben= pygame.K_UP
+        self.spieler_1_unten = pygame.K_DOWN
+
+
+        self.spieler_2_rechts = pygame.K_d
+        self.spieler_2_links = pygame.K_a
+        self.spieler_2_oben = pygame.K_w
+        self.spieler_2_unten = pygame.K_s
+
         
     def handle_mouse_button_events(self, event, buttons):  
             game_mode=0
@@ -54,16 +66,16 @@ class verwalter:
                 sys.exit(0)                
             if event.type == pygame.KEYDOWN:
                 
-                if event.__dict__["key"] == pygame.K_RIGHT: #keycode von K_RIGHT
+                if event.__dict__["key"] == self.spieler_1_rechts: #keycode von K_RIGHT
                     self.x_spieler_1 += 10
                     spieler_object.aktuelles_bild = spieler_object.spieler_img_rechts
-                if event.__dict__["key"] == pygame.K_LEFT: #keycode von K_LEFT
+                if event.__dict__["key"] == self.spieler_1_links: #keycode von K_LEFT
                     self.x_spieler_1 -= 10
                     spieler_object.aktuelles_bild = spieler_object.spieler_img_links 
-                if event.__dict__["key"] == pygame.K_d: #keycode von K_d
+                if event.__dict__["key"] == self.spieler_2_rechts: #keycode von K_d
                     self.x_spieler_2 += 10
                     spieler_object_2.aktuelles_bild = spieler_object_2.spieler_img_rechts
-                if event.__dict__["key"] == pygame.K_a: #keycode von K_a
+                if event.__dict__["key"] == self.spieler_2_links: #keycode von K_a
                     self.x_spieler_2 -= 10
                     spieler_object_2.aktuelles_bild = spieler_object_2.spieler_img_links
                 
@@ -82,31 +94,31 @@ class verwalter:
                 if event.__dict__["key"] == pygame.K_KP3: #keycode von K_KP3
 
 
-                if event.__dict__["key"] == pygame.K_DOWN: #keycode von K_DOWN
+                if event.__dict__["key"] == self.spieler_1_unten: #keycode von K_DOWN
                     self.y_spieler_1 += 10                   
-                if event.__dict__["key"] == pygame.K_UP: #keycode von K_UP
+                if event.__dict__["key"] == self.spieler_1_oben: #keycode von K_UP
                     self.y_spieler_1 -= 10                   
-                if event.__dict__["key"] == pygame.K_s: #keycode von K_s
+                if event.__dict__["key"] == self.spieler_2_unten: #keycode von K_s
                     self.y_spieler_2 += 10
-                if event.__dict__["key"] == pygame.K_w: #keycode von K_w
+                if event.__dict__["key"] == self.spieler_2_oben: #keycode von K_w
                     self.y_spieler_2 -= 10
 
                 if event.__dict__["key"] == pygame.K_0:
                     return True                    
             if event.type == pygame.KEYUP:
                 
-                if (event.__dict__["key"] ==  pygame.K_RIGHT or  event.__dict__["key"] == pygame.K_LEFT):
+                if (event.__dict__["key"] == self.spieler_1_rechts or  event.__dict__["key"] == self.spieler_1_links):
                     spieler_object.aktuelles_bild = spieler_object.spieler_img
                     self.x_spieler_1 = 0
-                if (event.__dict__["key"] ==  pygame.K_a or  event.__dict__["key"] == pygame.K_d):
+                if (event.__dict__["key"] ==  self.spieler_2_links or  event.__dict__["key"] == self.spieler_2_rechts):
                     spieler_object_2.aktuelles_bild = spieler_object_2.spieler_img
                     self.x_spieler_2 = 0
 
             
-                if (event.__dict__["key"] ==  pygame.K_UP or  event.__dict__["key"] == pygame.K_DOWN):
+                if (event.__dict__["key"] ==  self.spieler_1_oben or  event.__dict__["key"] == self.spieler_1_unten):
                     self.y_spieler_1 = 0
                     spieler_object.aktuelles_bild = spieler_object.spieler_img
-                if (event.__dict__["key"] ==  pygame.K_s or  event.__dict__["key"] == pygame.K_w):
+                if (event.__dict__["key"] ==  self.spieler_2_unten or  event.__dict__["key"] == self.spieler_2_oben):
                     spieler_object_2.aktuelles_bild = spieler_object_2.spieler_img
                     self.y_spieler_2 = 0    
             
