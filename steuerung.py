@@ -2,7 +2,6 @@ import sys
 import pygame
 import math
 import pygame_gui
-from gegner_spawnen import gegner_spawnen
 from gui import gui
 from spieler import spieler
 from shop import shop
@@ -29,7 +28,6 @@ class steuerung():
         self.leaderboard_background=pygame.transform.scale(pygame.image.load("images\leaderboard_background.png"),(1.6*self.spielfeld_1.spielfeld_width, 0.8*self.spielfeld_1.spielfeld_height))
         self.gui_1 = gui(self.spielfeld_1)
         self.shop_1 = shop()
-        self.gegnerspawn_1 = gegner_spawnen()
         self.event_1 = event()
         self.spieler_1 = spieler((0.5*self.spielfeld_1.spielfeld_width), (self.spielfeld_1.spielfeld_height*0.5), self.spielfeld_1)
         self.spieler_1_collision_polygon=spieler_polygon()
@@ -70,9 +68,9 @@ class steuerung():
         self.score_p_image = pygame.transform.scale(pygame.image.load(r'.\images\buttons\b_score_pressed.png').convert_alpha(),(0.16*self.spielfeld_1.spielfeld_width,0.04*self.spielfeld_1.spielfeld_height))
 
 
-        self.feld_steuer = pygame_gui.UIManager((self.spielfeld_width,self.spielfeld_height))
-        self.spieler1_name_input = pygame_gui.elements.UITextEntryLine(relative_rects= pygame.Rect((400,300),(800,100)),manager = feld_steuer,object_id="#Spieler_1_Name:" )
-        self.spieler2_name_input = pygame_gui.elements.UITextEntryLine(relative_rects= pygame.Rect((800,600),(400,200)),manager = feld_steuer,object_id="#Spieler_2_Name:" )
+        self.feld_steuer = pygame_gui.UIManager((int(self.spielfeld_1.spielfeld_width),self.spielfeld_1.spielfeld_height))
+        self.spieler1_name_input = pygame_gui.elements.UITextEntryLine(relative_rect= pygame.Rect((400,300),(800,100)),manager = self.feld_steuer,object_id="#Spieler_1_Name:" )
+        self.spieler2_name_input = pygame_gui.elements.UITextEntryLine(relative_rect= pygame.Rect((800,600),(400,200)),manager = self.feld_steuer,object_id="#Spieler_2_Name:" )
 
         self.name_hintergrund = pygame.image.load(r'.\images\leaderboard_background.png')
 
@@ -109,7 +107,7 @@ class steuerung():
                 #self.game_mode=1
             elif self.game_mode==5:
                 self.spieler_namen()
-                self.namen_anzeigen()
+                self.namen_anzeigen("String")
             else:
                 self.game_mode=0
             
@@ -121,13 +119,13 @@ class steuerung():
         self.update_screen_4()
         
         #bei null: zurück zu main menu
-        if isinstance(self.taste_1.react_input(self.end, self.spieler_2, self.spieler_1, self.spielfeld_1, self.spielfeld_2, self.buttons ), bool):
+        if isinstance(self.taste_1.react_input(self.end, self.spieler_2, self.spieler_1, self.spielfeld_2, self.spielfeld_1, self.buttons ), bool):
             self.__init__()
             self.main_loop()
                 
     def main_menue(self):
         '''In Arbeit'''
-        self.game_mode=self.taste_1.react_input(self.end, self.spieler_1, self.spieler_2, self.spielfeld_1, self.spielfeld_2, self.buttons)
+        self.game_mode=self.taste_1.react_input(self.end, self.spieler_1, self.spieler_2, self.spielfeld_2, self.spielfeld_1, self.buttons)
         self.spiel_start=True
         for button in self.buttons:
             button.draw(self.gui_1)
@@ -166,12 +164,16 @@ class steuerung():
 
         if self.spieler_1.leben<=0 or self.spieler_2.leben<=0:
             self.game_mode=4
-            self.leaderboard_1.updateBoard(self.spieler_1.name, self.spieler_1.punkte)
-            self.leaderboard_1.updateBoard(self.spieler_2.name, self.spieler_2.punkte)
-            for spieler in self.leaderboard_1.spieler:
-                i=self.leaderboard_1.spieler.index(spieler)
-                self.speicher_1.update_entry(spieler, self.leaderboard_1.punktzahl[i], (i+1))
-
+            if len(self.leaderboard_1.spieler)<=10:
+                self.leaderboard_1.updateBoard(self.spieler_1.name, self.spieler_1.score)
+                self.leaderboard_1.updateBoard(self.spieler_2.name, self.spieler_2.score) 
+                for i in range(len(self.leaderboard_1.spieler)):
+                    self.speicher_1.save_one_entry_in_leaderboard(self.leaderboard_1.spieler[i], self.leaderboard_1.punktzahl[i])
+            else:
+                self.leaderboard_1.updateBoard(self.spieler_1.name, self.spieler_1.score)
+                self.leaderboard_1.updateBoard(self.spieler_2.name, self.spieler_2.score)
+                for i in range(len(self.leaderboard_1.spieler)):
+                    self.speicher_1.save_one_entry_in_leaderboard(self.leaderboard_1.spieler[i], self.leaderboard_1.punktzahl[i])
         
         if self.spiel_start:
             self.spiel_start=False
@@ -211,8 +213,6 @@ class steuerung():
 
 
 
-        self.spieler_namen()
-        self.namen_anzeigen()
 
         self.move_projectile()
         self.taste_1.react_input(self.end, self.spieler_2, self.spieler_1, self.spielfeld_1, self.spielfeld_2, self.buttons)
@@ -278,7 +278,7 @@ class steuerung():
     def optionen(self):
         '''In Arbeit'''
         pass          
-    def create_asteroiden(self, feld_obj):
+    def create_asteroiden(self, feld_obj_2):
         """
         Erzeugt einen neuen Asteroiden auf dem angegebenen Spielfeld.
 
@@ -288,13 +288,13 @@ class steuerung():
         Der neue Asteroid wird im GUI-Objekt angezeigt.
         """
 
-        self.asteroiden.append(asteroid(feld_obj))
+        self.asteroiden.append(asteroid(feld_obj_2))
         self.asteroiden_polygon.append(asteroid_polygon())
         self.init_polygon(self.asteroiden[-1],self.asteroiden_polygon[-1])
         self.gui_1.display(self.asteroiden[len(self.asteroiden)-1])
-    def create_projectile(self, feld_obj, schuetze_obj): 
+    def create_projectile(self, feld_obj_2, schuetze_obj): 
         '''Erstellt ein Projektil mit zugehörigem Polygon (gleicher index)'''
-        self.projektile.append(projektil(schuetze_obj.mittelpunkt[0], schuetze_obj.mittelpunkt[1], feld_obj, schuetze_obj, [-1*schuetze_obj.aktueller_richtungsvektor[0], -1*schuetze_obj.aktueller_richtungsvektor[1]]))
+        self.projektile.append(projektil(schuetze_obj.mittelpunkt[0], schuetze_obj.mittelpunkt[1], feld_obj_2, schuetze_obj, [-1*schuetze_obj.aktueller_richtungsvektor[0], -1*schuetze_obj.aktueller_richtungsvektor[1]]))
         self.projektil_polygone.append(projektil_polygon())
         self.init_polygon(self.projektile[-1], self.projektil_polygone[-1])
         self.gui_1.display(self.projektile[len(self.projektile)-1])    
@@ -334,15 +334,15 @@ class steuerung():
         self.gui_1.spiel_fenster.blit(self.leaderboard_background, (0.2*self.spielfeld_1.spielfeld_width, 0.1*self.spielfeld_1.spielfeld_height))
         y=0.4*self.spielfeld_1.spielfeld_height
         x=0.9*self.spielfeld_1.spielfeld_width
-        k=1
-        for spieler in self.leaderboard_1.spieler:
-            self.gui_1.display_text(x, y, f"{k}. {spieler} {self.leaderboard_1.punktzahl[self.leaderboard_1.spieler.index(spieler)]}", pygame.Color(255, 255, 255, a=255), self.text_size)
+        
+        for i in range(len(self.leaderboard_1.spieler)):
+            self.gui_1.display_text(x, y, f"{i+1}. {self.leaderboard_1.spieler[i]} {self.leaderboard_1.punktzahl[i]}", pygame.Color(255, 255, 255, a=255), self.text_size)
             y+=0.05*self.spielfeld_1.spielfeld_height
-            k+=1
+            
     
     
     
-    def namen_anzeigen(namen,self):
+    def namen_anzeigen(self, namen):
         
         self.neue_text = pygame.font.Sysfont("Arial",100).render(True, self.name_hintergrund)
         #die position von dem Text nachdem man sie getippt hat und angezeigt werden muss
@@ -353,9 +353,9 @@ class steuerung():
             
 
 
-    def spieler_namen():
+    def spieler_namen(self):
 
-        Scree.fill(white)       
+        self.gui_1.fill("white")       
         if event.type == pygame_gui.UI_TEXT_ENTRY_Finished and event.ui_object_id == "#Spieler_1_Name:":
             namen_anzeigen(event.text)
 

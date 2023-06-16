@@ -55,7 +55,7 @@ class verwalter:
 
 
 
-    def react_input(self, end, spieler_object, spieler_object_2, feld_obj, feld_obj_2, buttons):
+    def react_input(self, end, spieler_object, spieler_object_2, feld_obj_2, feld_obj, buttons):
         
         
         for event in pygame.event.get():
@@ -83,16 +83,16 @@ class verwalter:
                 if event.__dict__["key"] == pygame.K_1: #keycode von K_1
                     print(shop.pruefen_ob_genug_punkte(spieler_object, event_nummer = 1))
                 if event.__dict__["key"] == pygame.K_2: #keycode von K_2
-
+                    pass
                 if event.__dict__["key"] == pygame.K_3: #keycode von K_3
-
+                    pass
                 #shop S2
                 if event.__dict__["key"] == pygame.K_KP1: #keycode von K_KP1
-
+                    pass
                 if event.__dict__["key"] == pygame.K_KP2: #keycode von K_KP2
-
+                    pass
                 if event.__dict__["key"] == pygame.K_KP3: #keycode von K_KP3
-
+                    pass
 
                 if event.__dict__["key"] == self.spieler_1_unten: #keycode von K_DOWN
                     self.y_spieler_1 += 10                   
@@ -142,24 +142,43 @@ class verwalter:
 
 
         
-        if spieler_object_2.x > feld_obj.spielfeld_width- spieler_object_2.size:
-            spieler_object_2.x = feld_obj.spielfeld_width-spieler_object_2.size
-        if spieler_object_2.x < feld_obj.x:
-            spieler_object_2.x =feld_obj.x
-        if spieler_object_2.y > feld_obj.spielfeld_height-spieler_object_2.size:
-            spieler_object_2.y = feld_obj.spielfeld_height-spieler_object_2.size
-        if spieler_object_2.y < feld_obj.y:
-            spieler_object_2.y =feld_obj.y  
+        if spieler_object_2.x > feld_obj_2.spielfeld_width + feld_obj_2.x - int(0.05*feld_obj_2.spielfeld_width):
+            spieler_object_2.x = feld_obj_2.spielfeld_width + feld_obj_2.x -int(0.05*feld_obj_2.spielfeld_width)
+        if spieler_object_2.x < feld_obj_2.x:
+            spieler_object_2.x =feld_obj_2.x
+        if spieler_object_2.y > feld_obj_2.spielfeld_height-int(0.05*feld_obj_2.spielfeld_width):
+            spieler_object_2.y = feld_obj_2.spielfeld_height-int(0.05*feld_obj_2.spielfeld_width)
+        if spieler_object_2.y < feld_obj_2.y:
+            spieler_object_2.y =feld_obj_2.y  
             
-        if spieler_object.x > feld_obj_2.x + feld_obj_2.spielfeld_width-spieler_object.size:
-            spieler_object.x = feld_obj_2.x + feld_obj_2.spielfeld_width-spieler_object.size
+        if spieler_object.x > feld_obj.x + feld_obj.spielfeld_width-int(0.05*feld_obj_2.spielfeld_width):
+            spieler_object.x = feld_obj.x + feld_obj.spielfeld_width-int(0.05*feld_obj_2.spielfeld_width)
+        if spieler_object.x < feld_obj.x: #stinks
+            spieler_object.x = feld_obj.x
+        if spieler_object.y > feld_obj.spielfeld_height-int(0.05*feld_obj_2.spielfeld_width):
+            spieler_object.y = feld_obj.spielfeld_height-int(0.05*feld_obj_2.spielfeld_width)
+        if spieler_object.y < feld_obj.y:
+            spieler_object.y =feld_obj.y  
+        ''' 
+            
+        if spieler_object.x > feld_obj_2.spielfeld_width - spieler_object.size: 
+            spieler_object.x = feld_obj_2.spielfeld_width - spieler_object.size     
         if spieler_object.x < feld_obj_2.x:
-            spieler_object.x = feld_obj_2.x
-        if spieler_object.y > feld_obj_2.spielfeld_height-spieler_object.size:
-            spieler_object.y = feld_obj_2.spielfeld_height-spieler_object.size
-        if spieler_object.y < feld_obj_2.y:
-            spieler_object.y =feld_obj_2.y   
-        
+            spieler_object.x = feld_obj_2.x 
+        if spieler_object.y > feld_obj_2.spielfeld_height - spieler_object.size:
+            spieler_object.y = feld_obj_2.spielfeld_height - spieler_object.size
+        if spieler_object.y < feld_obj_2.y: 
+            spieler_object.y = feld_obj_2.y
+            
+        if spieler_object_2.x > feld_obj.spielfeld_width + feld_obj.x - spieler_object_2.size: 
+            spieler_object_2.x = feld_obj.spielfeld_width + feld_obj.x - spieler_object_2.size     
+        if spieler_object_2.x < feld_obj.x:
+            spieler_object_2.x = feld_obj.x 
+        if spieler_object_2.y > feld_obj.spielfeld_height - spieler_object_2.size:
+            spieler_object_2.y = feld_obj.spielfeld_height - spieler_object_2.size
+        if spieler_object_2.y < feld_obj.y: 
+            spieler_object_2.y = feld_obj.y
+        '''
         spieler_object.mittelpunkt= [spieler_object.x+0.5*spieler_object.size, spieler_object.y+0.625*spieler_object.size]   
         spieler_object_2.mittelpunkt= [spieler_object_2.x+0.5*spieler_object_2.size, spieler_object_2.y+0.625*spieler_object_2.size]                          
             

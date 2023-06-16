@@ -23,11 +23,11 @@ class speicher:
     def save_one_entry_in_leaderboard(self, p_spieler, p_punktzahl): 
         speicher.cursor.execute(speicher.sql_insert_var, (p_spieler, p_punktzahl))#, speicher.row_id))
         speicher.connection.commit()
-        #speicher.row_id+=1
+        
         
     def update_entry(self, p_spieler, p_punktzahl, p_zeile):
         speicher.cursor.execute(speicher.sql_update_one_entry,(p_spieler, p_punktzahl, p_zeile))
-        
+        speicher.connection.commit()
     def update_entries(self):
         pass
 

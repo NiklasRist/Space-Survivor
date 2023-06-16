@@ -1,6 +1,6 @@
 from spieler import spieler
-from gegner_spawnen import gegner_spawnen
-event1 = gegner_spawnen()
+
+event1 = None
 event2 = event1
 event3 = event1
 event = [event1, event2, event3]
