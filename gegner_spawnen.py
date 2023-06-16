@@ -7,5 +7,5 @@ class gegner_spawnen(event):
     def get_kosten(self):
         return 50
 
-    def ausfuehren(self):
+    def ausfuehren(self, spieler):
         pass

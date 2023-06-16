@@ -5,7 +5,7 @@ class event:
     def get_kosten(self):
         pass
     
-    def ausfuehren(self):
+    def ausfuehren(self, spieler):
         pass
 
 class event_1(event):

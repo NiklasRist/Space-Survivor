@@ -3,7 +3,7 @@ from spieler import spieler
 from spielfeld import feld
 import sys
 import math
- 
+from shop import shop
 
 
 pygame.init()
@@ -67,7 +67,21 @@ class verwalter:
                     self.x_spieler_2 -= 10
                     spieler_object_2.aktuelles_bild = spieler_object_2.spieler_img_links
                 
-                
+                #shop S1
+                if event.__dict__["key"] == pygame.K_1: #keycode von K_1
+                    print(shop.pruefen_ob_genug_punkte(spieler_object, event_nummer = 1))
+                if event.__dict__["key"] == pygame.K_2: #keycode von K_2
+
+                if event.__dict__["key"] == pygame.K_3: #keycode von K_3
+
+                #shop S2
+                if event.__dict__["key"] == pygame.K_KP1: #keycode von K_KP1
+
+                if event.__dict__["key"] == pygame.K_KP2: #keycode von K_KP2
+
+                if event.__dict__["key"] == pygame.K_KP3: #keycode von K_KP3
+
+
                 if event.__dict__["key"] == pygame.K_DOWN: #keycode von K_DOWN
                     self.y_spieler_1 += 10                   
                 if event.__dict__["key"] == pygame.K_UP: #keycode von K_UP
@@ -94,7 +108,8 @@ class verwalter:
                     spieler_object.aktuelles_bild = spieler_object.spieler_img
                 if (event.__dict__["key"] ==  pygame.K_s or  event.__dict__["key"] == pygame.K_w):
                     spieler_object_2.aktuelles_bild = spieler_object_2.spieler_img
-                    self.y_spieler_2 = 0
+                    self.y_spieler_2 = 0    
+            
             if game_mode!=0 and isinstance(game_mode, int):
                     print(game_mode)
                     return game_mode
