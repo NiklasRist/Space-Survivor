@@ -108,7 +108,8 @@ class steuerung():
                 self.game_over_screen()
                 #self.game_mode=1
             elif self.game_mode==5:
-                pass
+                self.spieler_namen()
+                self.namen_anzeigen()
             else:
                 self.game_mode=0
             
@@ -210,7 +211,9 @@ class steuerung():
 
 
 
-        
+        self.spieler_namen()
+        self.namen_anzeigen()
+
         self.move_projectile()
         self.taste_1.react_input(self.end, self.spieler_2, self.spieler_1, self.spielfeld_1, self.spielfeld_2, self.buttons)
         self.move_asteroid(self.spieler_1, self.spieler_2) 
