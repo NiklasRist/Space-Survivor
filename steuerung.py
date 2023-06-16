@@ -69,6 +69,13 @@ class steuerung():
         self.score_image = pygame.transform.scale(pygame.image.load(r'.\images\buttons\b_score.png').convert_alpha(),(0.16*self.spielfeld_1.spielfeld_width,0.04*self.spielfeld_1.spielfeld_height))
         self.score_p_image = pygame.transform.scale(pygame.image.load(r'.\images\buttons\b_score_pressed.png').convert_alpha(),(0.16*self.spielfeld_1.spielfeld_width,0.04*self.spielfeld_1.spielfeld_height))
 
+
+        self.feld_steuer = pygame_gui.UIManager((self.spielfeld_width,self.spielfeld_height))
+        self.spieler1_name_input = pygame_gui.elements.UITextEntryLine(relative_rects= pygame.Rect((400,300),(800,100)),manager = feld_steuer,object_id="#Spieler_1_Name:" )
+        self.spieler2_name_input = pygame_gui.elements.UITextEntryLine(relative_rects= pygame.Rect((800,600),(400,200)),manager = feld_steuer,object_id="#Spieler_2_Name:" )
+
+        self.name_hintergrund = pygame.image.load(r'.\images\leaderboard_background.png')
+
         self.buttons = [
             button((self.spielfeld_1.spielfeld_width-0.16*self.spielfeld_1.spielfeld_width), 0.125*self.spielfeld_1.spielfeld_height, 0.16*self.spielfeld_1.spielfeld_width, 0.02*self.spielfeld_1.spielfeld_height, self.menue_image, self.menue_p_image, 'menue_button'),
             button((self.spielfeld_1.spielfeld_width-0.16*self.spielfeld_1.spielfeld_width), 0.25*self.spielfeld_1.spielfeld_height, 0.16*self.spielfeld_1.spielfeld_width, 0.02*self.spielfeld_1.spielfeld_height, self.play_lan_image, self.play_lan_p_image, 'play_lan_button'),
@@ -329,50 +336,29 @@ class steuerung():
             k+=1
     
     
-    feld_steuer = pygame_gui.UIManager((self.spielfeld_width,self.spielfeld_height))
-    spieler1_name_input = pygame_gui.elements.UITextEntryLine(relative_rects= pygame.Rect((400,300),(800,100)),manager = feld_steuer,object_id="#Spieler_1_Name:" )
-    spieler2_name_input = pygame_gui.elements.UITextEntryLine(relative_rects= pygame.Rect((800,600),(400,200)),manager = feld_steuer,object_id="#Spieler_2_Name:" )
     
-    def namen_anzeigen(namen):
-        while True:    
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    pygame.quit()
-                    sys.exit()
-
-            neue_text = pygame.font.Sysfont("Arial",100).render(True, "black")
-            #die position von dem Text nachdem man sie getippt hat und angezeigt werden muss
-            neue_text_rect_1 = neue_text.get_rect(center=(self.spielfeld_width/2 , self.spielfeld_height/2))
-            neue_text_rect_2 = neue_text.get_rect(center=(self.spielfeld_width/3 , self.spielfeld_height/3))
-            screen.blit(neue_text,neue_text_rect,neue_text_rect_2)
+    def namen_anzeigen(namen,self):
+        
+        self.neue_text = pygame.font.Sysfont("Arial",100).render(True, self.name_hintergrund)
+        #die position von dem Text nachdem man sie getippt hat und angezeigt werden muss
+        self.neue_text_rect_1 = neue_text.get_rect(center=(self.spielfeld_width/2 , self.spielfeld_height/2))
+        self.neue_text_rect_2 = neue_text.get_rect(center=(self.spielfeld_width/3 , self.spielfeld_height/3))
+        screen.blit(self.neue_text,self.neue_text_rect,self.neue_text_rect_2)
 
             
 
-            screen.fill("white")
-            pygame.display.update()    
-
-
 
     def spieler_namen():
-        while True:    
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    pygame.quit()
-                    sys.exit()
 
-                
-                if event.type == pygame_gui.UI_TEXT_ENTRY_Finished and event.ui_object_id == "#Spieler_1_Name:":
-                    namen_anzeigen(event.text)
+        Scree.fill(white)       
+        if event.type == pygame_gui.UI_TEXT_ENTRY_Finished and event.ui_object_id == "#Spieler_1_Name:":
+            namen_anzeigen(event.text)
 
 
-                if event.type == pygame_gui.UI_TEXT_ENTRY_Finished and event.ui_object_id == "#Spieler_2_Name:":
-                    namen_anzeigen(event.text)
-                feld_steuer.process_events(event)
-            screen.fill(white)
-            pygame.display.update()    
-
-
-
+        if event.type == pygame_gui.UI_TEXT_ENTRY_Finished and event.ui_object_id == "#Spieler_2_Name:":
+            namen_anzeigen(event.text)
+            feld_steuer.process_events(event)
+          
 
     
     
