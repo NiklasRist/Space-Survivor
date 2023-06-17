@@ -76,6 +76,15 @@ class steuerung():
 
         self.name_hintergrund = pygame.image.load(r'.\images\leaderboard_background.png')
 
+        self.font = pygame.font.Font(None, 32)
+        self.name_hintergrund = pygame.image.load(r'.\images\leaderboard_background.png')
+        self.aktive_input= None
+        self.white =  (255, 255, 255)
+        self.black = (0, 0, 0)
+        self.spieler_name_1 = ""
+        self.spieler_name_2 = ""
+
+
         self.buttons = [
             button((self.spielfeld_1.spielfeld_width-0.16*self.spielfeld_1.spielfeld_width), 0.125*self.spielfeld_1.spielfeld_height, 0.16*self.spielfeld_1.spielfeld_width, 0.02*self.spielfeld_1.spielfeld_height, self.menue_image, self.menue_p_image, 'menue_button'),
             button((self.spielfeld_1.spielfeld_width-0.16*self.spielfeld_1.spielfeld_width), 0.25*self.spielfeld_1.spielfeld_height, 0.16*self.spielfeld_1.spielfeld_width, 0.02*self.spielfeld_1.spielfeld_height, self.play_lan_image, self.play_lan_p_image, 'play_lan_button'),
@@ -109,7 +118,7 @@ class steuerung():
                 #self.game_mode=1
             elif self.game_mode==5:
                 self.spieler_namen()
-                self.namen_anzeigen("String")
+                self.namen_anzeigen()
             else:
                 self.game_mode=0
             
@@ -347,28 +356,45 @@ class steuerung():
             
     
     
-    
-    def namen_anzeigen(self, namen):
+    def namen_anzeigen(self):
         
-        self.neue_text = pygame.font.SysFont("Arial",100).render(True, self.name_hintergrund)
-        #die position von dem Text nachdem man sie getippt hat und angezeigt werden muss
-        self.neue_text_rect_1 = neue_text.get_rect(center=(self.spielfeld_width/2 , self.spielfeld_height/2))
-        self.neue_text_rect_2 = neue_text.get_rect(center=(self.spielfeld_width/3 , self.spielfeld_height/3))
-        screen.blit(self.neue_text,self.neue_text_rect,self.neue_text_rect_2)
-
-            
-
-
+        self.text_surface1 = self.font.render(self.spieler_name_1, True, self.black)
+        self.text_surface2 = self.font.render(self.spieler_name_2 , True, self.black)
+       
+        pygame.draw.rect(self.gui_1.spiel_fenster,self.black, self.neue_text_rect_1, 1)
+        pygame.draw.rect(self.gui_1.spiel_fenster,self.black, self.neue_text_rect_2, 1)
+        self.gui_1.spiel_fenster.blit(self.text_surface1,self.neue_text_rect_1)
+        self.gui_1.spiel_fenster.blit(self.text_surface2,self.neue_text_rect_2)
     def spieler_namen(self):
-
-        self.gui_1.fill("white")       
-        if event.type == pygame_gui.UI_TEXT_ENTRY_Finished and event.ui_object_id == "#Spieler_1_Name:":
-            namen_anzeigen(event.text)
-
-
-        if event.type == pygame_gui.UI_TEXT_ENTRY_Finished and event.ui_object_id == "#Spieler_2_Name:":
-            namen_anzeigen(event.text)
-            feld_steuer.process_events(event)
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if self.neue_text_rect_1.collidepoint(event.pos):
+                    self.aktive_input = self.neue_text_rect_1
+                elif self.neue_text_rect_2.collidepoint(event.pos):
+                    self.aktive_input =  self.neue_text_rect_2
+                else:
+                    self.aktive_input = None
+            if event.type == pygame.KEYDOWN:
+                if self.aktive_input:
+                    if event.key == pygame.K_RETURN:
+                        self.game_mode = 1        
+                    if event.key == pygame.K_BACKSPACE:
+                        if self.aktive_input == self.neue_text_rect_1:
+                            self.spieler_name_1 = self.spieler_name_1[:-1]
+                        elif self.aktive_input == self.neue_text_rect_2:
+                            self.spieler_name_2 = self.spieler_name_2[:-1]
+                    else:
+                        if self.aktive_input == self.neue_text_rect_1:
+                            self.spieler_name_1 += event.unicode
+                        elif self.aktive_input == self.neue_text_rect_2:
+                            self.spieler_name_2 += event.unicode
+        
+        self.gui_1.fill(self.white)
+        self.neue_text_rect_1 = pygame.Rect(300,200,200,40)
+        self.neue_text_rect_2 = pygame.Rect(300,300,200,40) 
           
 
     
