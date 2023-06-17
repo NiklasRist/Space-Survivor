@@ -45,7 +45,7 @@ class verwalter:
                         if button.label == 'play_lan_button':
                             return 2
                         if button.label == 'score_button':
-                            return 3
+                            return 4
                         button.img = button.pressed_img   
                         return game_mode   
             if event.type == pygame.MOUSEBUTTONUP:

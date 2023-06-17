@@ -15,6 +15,7 @@ from projektil import projektil
 from kollisionspolygone import spieler_polygon, asteroid_polygon, projektil_polygon, enemy_polygon
 from gegner import gegner
 from button import button
+import os
 
 
 
@@ -38,6 +39,7 @@ class steuerung():
         self.taste_1 = verwalter()
         self.leaderboard_1 = leaderboard()
         self.speicher_1 = speicher()
+        self.speicher_1.create_table()
         self.saved_leaderboard=self.speicher_1.load_entries()
         for entry in self.saved_leaderboard:
             self.leaderboard_1.addToBoard(entry[0], entry[1])
@@ -165,15 +167,19 @@ class steuerung():
         if self.spieler_1.leben<=0 or self.spieler_2.leben<=0:
             self.game_mode=4
             if len(self.leaderboard_1.spieler)<=10:
-                self.leaderboard_1.updateBoard(self.spieler_1.name, self.spieler_1.score)
-                self.leaderboard_1.updateBoard(self.spieler_2.name, self.spieler_2.score) 
+                self.leaderboard_1.updateBoard(self.spieler_1.name, self.spieler_1.score, self.speicher_1)
+                self.leaderboard_1.updateBoard(self.spieler_2.name, self.spieler_2.score, self.speicher_1) 
                 for i in range(len(self.leaderboard_1.spieler)):
-                    self.speicher_1.save_one_entry_in_leaderboard(self.leaderboard_1.spieler[i], self.leaderboard_1.punktzahl[i])
+                    if (self.leaderboard_1.spieler[i], self.leaderboard_1.punktzahl[i]) not in self.saved_leaderboard:
+                        self.speicher_1.save_one_entry_in_leaderboard(self.leaderboard_1.spieler[i], self.leaderboard_1.punktzahl[i])
+                        self.speicher_1.sort_and_limit_table()
             else:
-                self.leaderboard_1.updateBoard(self.spieler_1.name, self.spieler_1.score)
-                self.leaderboard_1.updateBoard(self.spieler_2.name, self.spieler_2.score)
+                self.leaderboard_1.updateBoard(self.spieler_1.name, self.spieler_1.score, self.speicher_1)
+                self.leaderboard_1.updateBoard(self.spieler_2.name, self.spieler_2.score, self.speicher_1)
                 for i in range(len(self.leaderboard_1.spieler)):
-                    self.speicher_1.save_one_entry_in_leaderboard(self.leaderboard_1.spieler[i], self.leaderboard_1.punktzahl[i])
+                    if (self.leaderboard_1.spieler[i], self.leaderboard_1.punktzahl[i]) not in self.saved_leaderboard:
+                        self.speicher_1.save_one_entry_in_leaderboard(self.leaderboard_1.spieler[i], self.leaderboard_1.punktzahl[i])
+                        self.speicher_1.sort_and_limit_table()
         
         if self.spiel_start:
             self.spiel_start=False
@@ -344,7 +350,7 @@ class steuerung():
     
     def namen_anzeigen(self, namen):
         
-        self.neue_text = pygame.font.Sysfont("Arial",100).render(True, self.name_hintergrund)
+        self.neue_text = pygame.font.SysFont("Arial",100).render(True, self.name_hintergrund)
         #die position von dem Text nachdem man sie getippt hat und angezeigt werden muss
         self.neue_text_rect_1 = neue_text.get_rect(center=(self.spielfeld_width/2 , self.spielfeld_height/2))
         self.neue_text_rect_2 = neue_text.get_rect(center=(self.spielfeld_width/3 , self.spielfeld_height/3))
