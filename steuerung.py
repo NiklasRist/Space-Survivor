@@ -81,8 +81,8 @@ class steuerung():
         self.aktive_input= None
         self.white =  (255, 255, 255)
         self.black = (0, 0, 0)
-        self.gray = (200,200,200)
-        self.hell_gray = (127,255,212)
+        self.gray = (224,238,238)
+        self.hell_gray = (193,205,205)
         self.spieler_name_1 = ""
         self.spieler_name_2 = ""
         self.button_farbe = self.gray

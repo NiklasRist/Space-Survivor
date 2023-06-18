@@ -1,5 +1,6 @@
 import pygame
 import sys
+import time
 
 # Initialisierung von Pygame
 pygame.init()
@@ -35,6 +36,20 @@ button_color = gray
 text1 = ""
 text2 = ""
 
+# Auto
+car_image = pygame.image.load("car.png")
+car_rect = car_image.get_rect()
+car_rect.center = (400, 300)
+car_visible = False
+
+# Loch
+hole_image = pygame.image.load("hole.png")
+hole_rect = hole_image.get_rect()
+hole_rect.center = (400, 300)
+hole_visible = False
+
+start_time = None
+
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -48,6 +63,8 @@ while True:
             elif button_rect.collidepoint(event.pos):
                 # Hier kannst du den Code hinzufügen, um den Benutzer auf eine andere Seite weiterzuleiten
                 print("Weiterleitung auf andere Seite mit den Namen:", text1, text2)
+                car_visible = True
+                start_time = time.time()
         elif event.type == pygame.MOUSEMOTION:
             if button_rect.collidepoint(event.pos):
                 button_color = highlight_gray
@@ -80,8 +97,4 @@ while True:
     # Text für die Eingabefelder anzeigen
     text_surface1 = font.render(text1, True, black)
     text_surface2 = font.render(text2, True, black)
-    window.blit(text_surface1, (input_rect1.x + 5, input_rect1.y + 5))
-    window.blit(text_surface2, (input_rect2.x + 5, input_rect2.y + 5))
-
-    # Aktualisierung des Fensters
-    pygame.display.flip()
+   
