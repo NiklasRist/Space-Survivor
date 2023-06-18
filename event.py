@@ -20,13 +20,14 @@ class schwartzesloch(event):
     "Shwarzes loch wird erscheinen und das Raum Schiff zu sich anziehen"
     def __init__(self,side):
         self.side = side
-        self.x = 100
-        self.y = 200
 
-    def loch_erstellung(self):
+
         loch_image = pygame.image.load(r'.\images\eclipse-2.png')
         loch_rect = loch_image.get_rect()
         loch_rect.center = (400, 200)
+        
+        loch_rect.x = 100
+        loch_rect.y = 200
 
     def loch_event(self):
         global loch_erschinung
@@ -77,34 +78,23 @@ class schwartzesloch(event):
                 spieler_polygon_2.move_polygon([x_change, y_change]) 
 
 
-
-
-
-
-
-
-
-
     #if der spieler den event aktiviert:
     # loch_event        
 
 
-class event_2(event):
-    "h"
-
-
 class verwirrung(event):
     "die richtungen werden vertaucht"
-    def key_änderung(steuerung_obj):
-        steuerung_obj.spieler_1_rechts = pygame.K_LEFT
-        steuerung_obj.spieler_1_links = pygame.K_RIGHT
-        steuerung_obj.spieler_1_oben = pygame.K_DOWN
-        steuerung_obj.spieler_1_unten = pygame.K_UP
-
-        steuerung_obj.spieler_2_rechts = pygame.K_a
-        steuerung_obj.spieler_2_links = pygame.K_d
-        steuerung_obj.spieler_2_oben = pygame.K_s
-        steuerung_obj.spieler_2_unten = pygame.K_w 
+    def key_änderung(steuerung_obj,spieler_obj):
+        if spieler_obj.side ==0 :
+            steuerung_obj.spieler_1_rechts = pygame.K_LEFT
+            steuerung_obj.spieler_1_links = pygame.K_RIGHT
+            steuerung_obj.spieler_1_oben = pygame.K_DOWN
+            steuerung_obj.spieler_1_unten = pygame.K_UP
+        if spieler_obj.side == 1:         
+            steuerung_obj.spieler_2_rechts = pygame.K_a
+            steuerung_obj.spieler_2_links = pygame.K_d
+            steuerung_obj.spieler_2_oben = pygame.K_s
+            steuerung_obj.spieler_2_unten = pygame.K_w 
 
 
 class event_4(event):

@@ -6,7 +6,8 @@ from gui import gui
 from spieler import spieler
 from shop import shop
 from asteroid import asteroid
-from event import event
+from event import verwirrung
+from event import schwartzesloch
 from spielfeld import feld
 from taste import verwalter
 from leaderboard import leaderboard
@@ -29,7 +30,6 @@ class steuerung():
         self.leaderboard_background=pygame.transform.scale(pygame.image.load("images\leaderboard_background.png"),(1.6*self.spielfeld_1.spielfeld_width, 0.8*self.spielfeld_1.spielfeld_height))
         self.gui_1 = gui(self.spielfeld_1)
         self.shop_1 = shop()
-        self.event_1 = event()
         self.spieler_1 = spieler((0.5*self.spielfeld_1.spielfeld_width), (self.spielfeld_1.spielfeld_height*0.5), self.spielfeld_1)
         self.spieler_1_collision_polygon=spieler_polygon()
         self.init_polygon(self.spieler_1, self.spieler_1_collision_polygon)
@@ -56,6 +56,13 @@ class steuerung():
         self.maximale_projektil_anzahl=30
         self.count=0
         self.text_size=int(34*(self.spielfeld_1.spielfeld_width/800))
+        self.verwirrung_1 = verwirrung() #nr1
+        self.verwirrung_2 = verwirrung() #nr2
+        self.schwartzesloch_side_1 = schwartzesloch(side=0)#nr3
+        self.schwartzesloch_side_2 = schwartzesloch(side=1)#nr4
+
+
+
         
         self.menue_image = pygame.transform.scale(pygame.image.load(r'.\images\buttons\b_menue.png').convert_alpha(),(0.16*self.spielfeld_1.spielfeld_width,0.04*self.spielfeld_1.spielfeld_height))
         self.menue_p_image = pygame.transform.scale(pygame.image.load(r'.\images\buttons\b_menue_pressed.png').convert_alpha(),(0.16*self.spielfeld_1.spielfeld_width,0.04*self.spielfeld_1.spielfeld_height))
@@ -76,6 +83,7 @@ class steuerung():
 
         self.name_hintergrund = pygame.image.load(r'.\images\leaderboard_background.png')
 
+        self.event= [False,False,False,False,False,False,False,False]
         self.font = pygame.font.Font(None, 32)
         self.name_hintergrund = pygame.image.load(r'.\images\leaderboard_background.png')
         self.aktive_input= None
@@ -174,6 +182,7 @@ class steuerung():
 
         Die Positionen der Bilder wird aktualisiert.
         '''
+        self.aktive_event()
 
         if self.spieler_1.leben<=0 or self.spieler_2.leben<=0:
             self.game_mode=4
@@ -402,7 +411,16 @@ class steuerung():
 
 
           
+    def aktive_event(self):
+        if self.event[0] ==  True:
+            self.verwirrung_1.key_änderung(self.spieler_1)
+        if self.event[1] ==  True:
+            self.verwirrung_2.key_änderung(self.spieler_2)    
+        if self.event[2] == True:
+    
 
+
+    
     
     
     
