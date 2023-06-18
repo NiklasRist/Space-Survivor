@@ -26,7 +26,7 @@ class steuerung():
         self.spielfeld_1 = feld(0,0,0)
         self.spielfeld_2 = feld(self.spielfeld_1.spielfeld_width,0,1)
         self.background=pygame.transform.scale(self.spielfeld_1.aktuelles_bild, (self.spielfeld_1.spielfeld_width*2, self.spielfeld_1.spielfeld_height))
-        self.leaderboard_background=pygame.transform.scale(pygame.image.load("images\leaderboard_background.png"),(1.6*self.spielfeld_1.spielfeld_width, 0.8*self.spielfeld_1.spielfeld_height))
+        self.leaderboard_background=pygame.transform.scale(pygame.image.load(r'.\images\leaderboard_background.png'),(1.6*self.spielfeld_1.spielfeld_width, 0.8*self.spielfeld_1.spielfeld_height))
         self.gui_1 = gui(self.spielfeld_1)
         self.shop_1 = shop()
         self.event_1 = event()
@@ -81,8 +81,11 @@ class steuerung():
         self.aktive_input= None
         self.white =  (255, 255, 255)
         self.black = (0, 0, 0)
+        self.gray = (200,200,200)
+        self.hell_gray = (127,255,212)
         self.spieler_name_1 = ""
         self.spieler_name_2 = ""
+        self.button_farbe = self.gray
 
 
         self.buttons = [
@@ -363,8 +366,13 @@ class steuerung():
        
         pygame.draw.rect(self.gui_1.spiel_fenster,self.black, self.neue_text_rect_1, 1)
         pygame.draw.rect(self.gui_1.spiel_fenster,self.black, self.neue_text_rect_2, 1)
+        pygame.draw.rect(self.gui_1.spiel_fenster,self.button_farbe, self.button_rect)
+
         self.gui_1.spiel_fenster.blit(self.text_surface1,self.neue_text_rect_1)
         self.gui_1.spiel_fenster.blit(self.text_surface2,self.neue_text_rect_2)
+        self.gui_1.spiel_fenster.blit(self.button_text,(self.button_rect.x + 20, self.button_rect.y + 10))
+    
+    
     def spieler_namen(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -375,12 +383,15 @@ class steuerung():
                     self.aktive_input = self.neue_text_rect_1
                 elif self.neue_text_rect_2.collidepoint(event.pos):
                     self.aktive_input =  self.neue_text_rect_2
-                else:
-                    self.aktive_input = None
+                elif self.button_rect.collidepoint(event.pos):
+                    self.game_mode = 1
+
+            if self.button_rect.left<=pygame.mouse.get_pos()[0]<=self.button_rect.right and self.button_rect.top<=pygame.mouse.get_pos()[1]<=self.button_rect.bottom:
+                self.button_farbe = self.hell_gray
+            else:
+                self.button_farbe = self.gray        
             if event.type == pygame.KEYDOWN:
-                if self.aktive_input:
-                    if event.key == pygame.K_RETURN:
-                        self.game_mode = 1        
+                if self.aktive_input:      
                     if event.key == pygame.K_BACKSPACE:
                         if self.aktive_input == self.neue_text_rect_1:
                             self.spieler_name_1 = self.spieler_name_1[:-1]
@@ -394,10 +405,15 @@ class steuerung():
         
         self.gui_1.fill(self.white)
         self.neue_text_rect_1 = pygame.Rect(300,200,200,40)
-        self.neue_text_rect_2 = pygame.Rect(300,300,200,40) 
+        self.neue_text_rect_2 = pygame.Rect(300,300,200,40)
+        self.button_rect = pygame.Rect(350,400,100,40)
+        self.button_text = self.font.render("Enter" ,True , self.black) 
           
 
-    
+
+
+
+
     
     
     def move_projectile(self): 

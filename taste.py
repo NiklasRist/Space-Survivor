@@ -41,7 +41,7 @@ class verwalter:
                         if button.label == 'menue_button':
                             return 4
                         if button.label == 'play_local_button':
-                            return 1
+                            return 5
                         if button.label == 'play_lan_button':
                             return 2
                         if button.label == 'score_button':
@@ -81,7 +81,7 @@ class verwalter:
                 
                 #shop S1
                 if event.__dict__["key"] == pygame.K_1: #keycode von K_1
-                    print(shop.pruefen_ob_genug_punkte(spieler_object, event_nummer = 1))
+                    print(shop.pruefen_ob_genug_punkte(spieler_object, event_nummer = 1)) # type: ignore
                 if event.__dict__["key"] == pygame.K_2: #keycode von K_2
                     pass
                 if event.__dict__["key"] == pygame.K_3: #keycode von K_3
