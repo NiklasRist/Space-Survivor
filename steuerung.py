@@ -26,7 +26,7 @@ class steuerung():
         self.spielfeld_1 = feld(0,0,0)
         self.spielfeld_2 = feld(self.spielfeld_1.spielfeld_width,0,1)
         self.background=pygame.transform.scale(self.spielfeld_1.aktuelles_bild, (self.spielfeld_1.spielfeld_width*2, self.spielfeld_1.spielfeld_height))
-        self.leaderboard_background=pygame.transform.scale(pygame.image.load(r'.\images\leaderboard_background.png'),(1.6*self.spielfeld_1.spielfeld_width, 0.8*self.spielfeld_1.spielfeld_height))
+        self.leaderboard_background=pygame.transform.scale(pygame.image.load("images\leaderboard_background.png"),(1.6*self.spielfeld_1.spielfeld_width, 0.8*self.spielfeld_1.spielfeld_height))
         self.gui_1 = gui(self.spielfeld_1)
         self.shop_1 = shop()
         self.event_1 = event()
@@ -85,7 +85,6 @@ class steuerung():
         self.hell_gray = (193,205,205)
         self.spieler_name_1 = ""
         self.spieler_name_2 = ""
-        self.button_farbe = self.gray
 
 
         self.buttons = [
@@ -184,73 +183,75 @@ class steuerung():
                 for i in range(len(self.leaderboard_1.spieler)):
                     if (self.leaderboard_1.spieler[i], self.leaderboard_1.punktzahl[i]) not in self.saved_leaderboard:
                         self.speicher_1.save_one_entry_in_leaderboard(self.leaderboard_1.spieler[i], self.leaderboard_1.punktzahl[i])
-                        self.speicher_1.sort_and_limit_table()
             else:
                 self.leaderboard_1.updateBoard(self.spieler_1.name, self.spieler_1.score, self.speicher_1)
                 self.leaderboard_1.updateBoard(self.spieler_2.name, self.spieler_2.score, self.speicher_1)
                 for i in range(len(self.leaderboard_1.spieler)):
                     if (self.leaderboard_1.spieler[i], self.leaderboard_1.punktzahl[i]) not in self.saved_leaderboard:
                         self.speicher_1.save_one_entry_in_leaderboard(self.leaderboard_1.spieler[i], self.leaderboard_1.punktzahl[i])
-                        self.speicher_1.sort_and_limit_table()
-        
-        if self.spiel_start:
-            self.spiel_start=False
-        
-        #erschafft neue Asteroiden
-        if len(self.asteroiden)<self.maximale_asteroiden_anzahl*2:
-            self.create_asteroiden(self.spielfeld_1)
-            self.create_asteroiden(self.spielfeld_2)
-        
-        '''
-        if len(self.gegner)<10:
-            
-            self.gegner.append(gegner(self.spielfeld_1))
-            self.gegner_polygon.append(enemy_polygon())
-            self.init_polygon(self.gegner[-1], self.gegner_polygon[-1])
-            self.gegner.append(gegner(self.spielfeld_2))
-            self.gegner_polygon.append(enemy_polygon())
-            self.init_polygon(self.gegner[-1], self.gegner_polygon[-1])
-        '''
-        if self.count==15:
-                self.create_projectile(self.spielfeld_1, self.spieler_1)
-                self.create_projectile(self.spielfeld_2, self.spieler_2)
-                self.count=0
-                
-                for gegner_obj in self.gegner:
-                    if gegner_obj.side == 0:
-                        self.create_projectile(self.spielfeld_1,gegner_obj) 
-                    else:
-                        self.create_projectile(self.spielfeld_2,gegner_obj)
-                                     
-
-
-
+                self.speicher_1.sort_and_limit_table()
         else:
-            self.count+=1
-        
+            if self.spiel_start:
+                self.spieler_name_2=self.spieler_name_2[:-1]
+                self.spieler_1.name=self.spieler_name_1
+                self.spieler_2.name=self.spieler_name_2
+                self.spiel_start=False
+            
+            #erschafft neue Asteroiden
+            if len(self.asteroiden)<self.maximale_asteroiden_anzahl*2:
+                self.create_asteroiden(self.spielfeld_1)
+                self.create_asteroiden(self.spielfeld_2)
+            
+            '''
+            if len(self.gegner)<10:
+                
+                self.gegner.append(gegner(self.spielfeld_1))
+                self.gegner_polygon.append(enemy_polygon())
+                self.init_polygon(self.gegner[-1], self.gegner_polygon[-1])
+                self.gegner.append(gegner(self.spielfeld_2))
+                self.gegner_polygon.append(enemy_polygon())
+                self.init_polygon(self.gegner[-1], self.gegner_polygon[-1])
+            '''
+            if self.count==15:
+                    self.create_projectile(self.spielfeld_1, self.spieler_1)
+                    self.create_projectile(self.spielfeld_2, self.spieler_2)
+                    self.count=0
+                    
+                    for gegner_obj in self.gegner:
+                        if gegner_obj.side == 0:
+                            self.create_projectile(self.spielfeld_1,gegner_obj) 
+                        else:
+                            self.create_projectile(self.spielfeld_2,gegner_obj)
+                                        
+
+
+
+            else:
+                self.count+=1
+            
 
 
 
 
-        self.move_projectile()
-        self.taste_1.react_input(self.end, self.spieler_2, self.spieler_1, self.spielfeld_1, self.spielfeld_2, self.buttons)
-        self.move_asteroid(self.spieler_1, self.spieler_2) 
-        self.move_polygon(self.spieler_1, self.spieler_1_collision_polygon)
-        self.move_polygon(self.spieler_2, self.spieler_2_collision_polygon)
-        self.move_gegner(self.spieler_1,self.spieler_2)
+            self.move_projectile()
+            self.taste_1.react_input(self.end, self.spieler_2, self.spieler_1, self.spielfeld_1, self.spielfeld_2, self.buttons)
+            self.move_asteroid(self.spieler_1, self.spieler_2) 
+            self.move_polygon(self.spieler_1, self.spieler_1_collision_polygon)
+            self.move_polygon(self.spieler_2, self.spieler_2_collision_polygon)
+            self.move_gegner(self.spieler_1,self.spieler_2)
 
 
 
-        self.test_for_collision()
-        self.update_screen_1()
-        if self.count == 15 and self.maximale_projektil_anzahl<len(self.projektile): #entfernt je ein Projektil jedes Schützen nach einer bestimmten Frameanzahl
-            projektil_schon_entfernt_von_schuetze=[]
-            projektil_schon_entfernt=False
-            for projektil in self.projektile:
-                for schuetze in projektil_schon_entfernt_von_schuetze:
-                    if projektil_schon_entfernt==False and projektil.schuetze==schuetze and not schuetze in projektil_schon_entfernt_von_schuetze:
-                        self.projektil_polygone.pop(self.projektile.index(projektil))
-                        self.projektile.pop(self.projektile.index(projektil))
+            self.test_for_collision()
+            self.update_screen_1()
+            if self.count == 15 and self.maximale_projektil_anzahl<len(self.projektile): #entfernt je ein Projektil jedes Schützen nach einer bestimmten Frameanzahl
+                projektil_schon_entfernt_von_schuetze=[]
+                projektil_schon_entfernt=False
+                for projektil in self.projektile:
+                    for schuetze in projektil_schon_entfernt_von_schuetze:
+                        if projektil_schon_entfernt==False and projektil.schuetze==schuetze and not schuetze in projektil_schon_entfernt_von_schuetze:
+                            self.projektil_polygone.pop(self.projektile.index(projektil))
+                            self.projektile.pop(self.projektile.index(projektil))
     def lan_mehrspieler(self):
         '''
         Führt die Aktionen des LAN Mehrspielers aus
@@ -366,13 +367,8 @@ class steuerung():
        
         pygame.draw.rect(self.gui_1.spiel_fenster,self.black, self.neue_text_rect_1, 1)
         pygame.draw.rect(self.gui_1.spiel_fenster,self.black, self.neue_text_rect_2, 1)
-        pygame.draw.rect(self.gui_1.spiel_fenster,self.button_farbe, self.button_rect)
-
         self.gui_1.spiel_fenster.blit(self.text_surface1,self.neue_text_rect_1)
         self.gui_1.spiel_fenster.blit(self.text_surface2,self.neue_text_rect_2)
-        self.gui_1.spiel_fenster.blit(self.button_text,(self.button_rect.x + 20, self.button_rect.y + 10))
-    
-    
     def spieler_namen(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -383,15 +379,12 @@ class steuerung():
                     self.aktive_input = self.neue_text_rect_1
                 elif self.neue_text_rect_2.collidepoint(event.pos):
                     self.aktive_input =  self.neue_text_rect_2
-                elif self.button_rect.collidepoint(event.pos):
-                    self.game_mode = 1
-
-            if self.button_rect.left<=pygame.mouse.get_pos()[0]<=self.button_rect.right and self.button_rect.top<=pygame.mouse.get_pos()[1]<=self.button_rect.bottom:
-                self.button_farbe = self.hell_gray
-            else:
-                self.button_farbe = self.gray        
+                else:
+                    self.aktive_input = None
             if event.type == pygame.KEYDOWN:
-                if self.aktive_input:      
+                if self.aktive_input:
+                    if event.key == pygame.K_RETURN:
+                        self.game_mode = 1        
                     if event.key == pygame.K_BACKSPACE:
                         if self.aktive_input == self.neue_text_rect_1:
                             self.spieler_name_1 = self.spieler_name_1[:-1]
@@ -405,15 +398,12 @@ class steuerung():
         
         self.gui_1.fill(self.white)
         self.neue_text_rect_1 = pygame.Rect(300,200,200,40)
-        self.neue_text_rect_2 = pygame.Rect(300,300,200,40)
-        self.button_rect = pygame.Rect(350,400,100,40)
-        self.button_text = self.font.render("Enter" ,True , self.black) 
+        self.neue_text_rect_2 = pygame.Rect(300,300,200,40) 
+
+
           
 
-
-
-
-
+    
     
     
     def move_projectile(self): 
