@@ -17,11 +17,16 @@ from kollisionspolygone import spieler_polygon, asteroid_polygon, projektil_poly
 from gegner import gegner
 from button import button
 import os
+from lan_communication import lan_communication as l_c
 
 
 
 class steuerung():
     def __init__(self):
+        self.l_c=l_c()
+        self.server_erstellt=False
+        self.client_erstellt=False
+        self.i_am_server=False
         pygame.init()
         self.clock = pygame.time.Clock()
         self.spielfeld_1 = feld(0,0,0)
@@ -302,7 +307,14 @@ class steuerung():
         Spieler 2 gibt an Spieler 1:
         *Buttoninputs S2
         '''
-        pass
+        if self.i_am_server:
+            if not self.server_erstellt:
+                self.l_c.setup_connection_as_server()
+        else:
+            if not self.client_erstellt:
+                self.l_c.setup_connection_as_client()
+            
+        
     def optionen(self):
         '''In Arbeit'''
         pass          
