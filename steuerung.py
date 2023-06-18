@@ -310,10 +310,11 @@ class steuerung():
         if self.i_am_server:
             if not self.server_erstellt:
                 self.l_c.setup_connection_as_server()
+                print(self.l_c.get_data())
         else:
             if not self.client_erstellt:
                 self.l_c.setup_connection_as_client()
-            
+                self.l_c.send_data_as_client("Hallo, die Verbindung funktioniert! 😀")
         
     def optionen(self):
         '''In Arbeit'''
