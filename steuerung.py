@@ -6,7 +6,8 @@ from gui import gui
 from spieler import spieler
 from shop import shop
 from asteroid import asteroid
-from event import event
+from event import verwirrung
+from event import schwartzesloch
 from spielfeld import feld
 from taste import verwalter
 from leaderboard import leaderboard
@@ -16,17 +17,12 @@ from kollisionspolygone import spieler_polygon, asteroid_polygon, projektil_poly
 from gegner import gegner
 from button import button
 import os
-from lan_communication import lan_communication as l_c
 
 
 
 class steuerung():
     def __init__(self):
         pygame.init()
-        self.l_c=l_c()
-        self.server_erstellt=False
-        self.client_erstellt=False
-        self.i_am_server=False
         self.clock = pygame.time.Clock()
         self.spielfeld_1 = feld(0,0,0)
         self.spielfeld_2 = feld(self.spielfeld_1.spielfeld_width,0,1)
@@ -34,7 +30,6 @@ class steuerung():
         self.leaderboard_background=pygame.transform.scale(pygame.image.load("images\leaderboard_background.png"),(1.6*self.spielfeld_1.spielfeld_width, 0.8*self.spielfeld_1.spielfeld_height))
         self.gui_1 = gui(self.spielfeld_1)
         self.shop_1 = shop()
-        self.event_1 = event()
         self.spieler_1 = spieler((0.5*self.spielfeld_1.spielfeld_width), (self.spielfeld_1.spielfeld_height*0.5), self.spielfeld_1)
         self.spieler_1_collision_polygon=spieler_polygon()
         self.init_polygon(self.spieler_1, self.spieler_1_collision_polygon)
@@ -61,6 +56,13 @@ class steuerung():
         self.maximale_projektil_anzahl=30
         self.count=0
         self.text_size=int(34*(self.spielfeld_1.spielfeld_width/800))
+        self.verwirrung_1 = verwirrung() #nr1
+        self.verwirrung_2 = verwirrung() #nr2
+        self.schwartzesloch_side_1 = schwartzesloch(side=0)#nr3
+        self.schwartzesloch_side_2 = schwartzesloch(side=1)#nr4
+
+
+
         
         self.menue_image = pygame.transform.scale(pygame.image.load(r'.\images\buttons\b_menue.png').convert_alpha(),(0.16*self.spielfeld_1.spielfeld_width,0.04*self.spielfeld_1.spielfeld_height))
         self.menue_p_image = pygame.transform.scale(pygame.image.load(r'.\images\buttons\b_menue_pressed.png').convert_alpha(),(0.16*self.spielfeld_1.spielfeld_width,0.04*self.spielfeld_1.spielfeld_height))
@@ -81,11 +83,14 @@ class steuerung():
 
         self.name_hintergrund = pygame.image.load(r'.\images\leaderboard_background.png')
 
+        self.event= [False,False,False,False,False,False,False,False]
         self.font = pygame.font.Font(None, 32)
         self.name_hintergrund = pygame.image.load(r'.\images\leaderboard_background.png')
         self.aktive_input= None
         self.white =  (255, 255, 255)
         self.black = (0, 0, 0)
+        self.gray = (224,238,238)
+        self.hell_gray = (193,205,205)
         self.spieler_name_1 = ""
         self.spieler_name_2 = ""
 
@@ -177,6 +182,7 @@ class steuerung():
 
         Die Positionen der Bilder wird aktualisiert.
         '''
+        self.aktive_event()
 
         if self.spieler_1.leben<=0 or self.spieler_2.leben<=0:
             self.game_mode=4
@@ -186,73 +192,75 @@ class steuerung():
                 for i in range(len(self.leaderboard_1.spieler)):
                     if (self.leaderboard_1.spieler[i], self.leaderboard_1.punktzahl[i]) not in self.saved_leaderboard:
                         self.speicher_1.save_one_entry_in_leaderboard(self.leaderboard_1.spieler[i], self.leaderboard_1.punktzahl[i])
-                        self.speicher_1.sort_and_limit_table()
             else:
                 self.leaderboard_1.updateBoard(self.spieler_1.name, self.spieler_1.score, self.speicher_1)
                 self.leaderboard_1.updateBoard(self.spieler_2.name, self.spieler_2.score, self.speicher_1)
                 for i in range(len(self.leaderboard_1.spieler)):
                     if (self.leaderboard_1.spieler[i], self.leaderboard_1.punktzahl[i]) not in self.saved_leaderboard:
                         self.speicher_1.save_one_entry_in_leaderboard(self.leaderboard_1.spieler[i], self.leaderboard_1.punktzahl[i])
-                        self.speicher_1.sort_and_limit_table()
-        
-        if self.spiel_start:
-            self.spiel_start=False
-        
-        #erschafft neue Asteroiden
-        if len(self.asteroiden)<self.maximale_asteroiden_anzahl*2:
-            self.create_asteroiden(self.spielfeld_1)
-            self.create_asteroiden(self.spielfeld_2)
-        
-        '''
-        if len(self.gegner)<10:
-            
-            self.gegner.append(gegner(self.spielfeld_1))
-            self.gegner_polygon.append(enemy_polygon())
-            self.init_polygon(self.gegner[-1], self.gegner_polygon[-1])
-            self.gegner.append(gegner(self.spielfeld_2))
-            self.gegner_polygon.append(enemy_polygon())
-            self.init_polygon(self.gegner[-1], self.gegner_polygon[-1])
-        '''
-        if self.count==15:
-                self.create_projectile(self.spielfeld_1, self.spieler_1)
-                self.create_projectile(self.spielfeld_2, self.spieler_2)
-                self.count=0
-                
-                for gegner_obj in self.gegner:
-                    if gegner_obj.side == 0:
-                        self.create_projectile(self.spielfeld_1,gegner_obj) 
-                    else:
-                        self.create_projectile(self.spielfeld_2,gegner_obj)
-                                     
-
-
-
+                self.speicher_1.sort_and_limit_table()
         else:
-            self.count+=1
-        
+            if self.spiel_start:
+                self.spieler_name_2=self.spieler_name_2[:-1]
+                self.spieler_1.name=self.spieler_name_1
+                self.spieler_2.name=self.spieler_name_2
+                self.spiel_start=False
+            
+            #erschafft neue Asteroiden
+            if len(self.asteroiden)<self.maximale_asteroiden_anzahl*2:
+                self.create_asteroiden(self.spielfeld_1)
+                self.create_asteroiden(self.spielfeld_2)
+            
+            '''
+            if len(self.gegner)<10:
+                
+                self.gegner.append(gegner(self.spielfeld_1))
+                self.gegner_polygon.append(enemy_polygon())
+                self.init_polygon(self.gegner[-1], self.gegner_polygon[-1])
+                self.gegner.append(gegner(self.spielfeld_2))
+                self.gegner_polygon.append(enemy_polygon())
+                self.init_polygon(self.gegner[-1], self.gegner_polygon[-1])
+            '''
+            if self.count==15:
+                    self.create_projectile(self.spielfeld_1, self.spieler_1)
+                    self.create_projectile(self.spielfeld_2, self.spieler_2)
+                    self.count=0
+                    
+                    for gegner_obj in self.gegner:
+                        if gegner_obj.side == 0:
+                            self.create_projectile(self.spielfeld_1,gegner_obj) 
+                        else:
+                            self.create_projectile(self.spielfeld_2,gegner_obj)
+                                        
+
+
+
+            else:
+                self.count+=1
+            
 
 
 
 
-        self.move_projectile()
-        self.taste_1.react_input(self.end, self.spieler_2, self.spieler_1, self.spielfeld_1, self.spielfeld_2, self.buttons)
-        self.move_asteroid(self.spieler_1, self.spieler_2) 
-        self.move_polygon(self.spieler_1, self.spieler_1_collision_polygon)
-        self.move_polygon(self.spieler_2, self.spieler_2_collision_polygon)
-        self.move_gegner(self.spieler_1,self.spieler_2)
+            self.move_projectile()
+            self.taste_1.react_input(self.end, self.spieler_2, self.spieler_1, self.spielfeld_1, self.spielfeld_2, self.buttons)
+            self.move_asteroid(self.spieler_1, self.spieler_2) 
+            self.move_polygon(self.spieler_1, self.spieler_1_collision_polygon)
+            self.move_polygon(self.spieler_2, self.spieler_2_collision_polygon)
+            self.move_gegner(self.spieler_1,self.spieler_2)
 
 
 
-        self.test_for_collision()
-        self.update_screen_1()
-        if self.count == 15 and self.maximale_projektil_anzahl<len(self.projektile): #entfernt je ein Projektil jedes Schützen nach einer bestimmten Frameanzahl
-            projektil_schon_entfernt_von_schuetze=[]
-            projektil_schon_entfernt=False
-            for projektil in self.projektile:
-                for schuetze in projektil_schon_entfernt_von_schuetze:
-                    if projektil_schon_entfernt==False and projektil.schuetze==schuetze and not schuetze in projektil_schon_entfernt_von_schuetze:
-                        self.projektil_polygone.pop(self.projektile.index(projektil))
-                        self.projektile.pop(self.projektile.index(projektil))
+            self.test_for_collision()
+            self.update_screen_1()
+            if self.count == 15 and self.maximale_projektil_anzahl<len(self.projektile): #entfernt je ein Projektil jedes Schützen nach einer bestimmten Frameanzahl
+                projektil_schon_entfernt_von_schuetze=[]
+                projektil_schon_entfernt=False
+                for projektil in self.projektile:
+                    for schuetze in projektil_schon_entfernt_von_schuetze:
+                        if projektil_schon_entfernt==False and projektil.schuetze==schuetze and not schuetze in projektil_schon_entfernt_von_schuetze:
+                            self.projektil_polygone.pop(self.projektile.index(projektil))
+                            self.projektile.pop(self.projektile.index(projektil))
     def lan_mehrspieler(self):
         '''
         Führt die Aktionen des LAN Mehrspielers aus
@@ -294,14 +302,6 @@ class steuerung():
         Spieler 2 gibt an Spieler 1:
         *Buttoninputs S2
         '''
-        if self.i_am_server:
-            if not self.server_erstellt:
-                self.l_c.setup_connection_as_server()
-        else:
-            if not self.client_erstellt:
-                self.l_c.setup_connection_as_client()
-            
-        
         pass
     def optionen(self):
         '''In Arbeit'''
@@ -408,8 +408,19 @@ class steuerung():
         self.gui_1.fill(self.white)
         self.neue_text_rect_1 = pygame.Rect(300,200,200,40)
         self.neue_text_rect_2 = pygame.Rect(300,300,200,40) 
-          
 
+
+          
+    def aktive_event(self):
+        if self.event[0] ==  True:
+            self.verwirrung_1.key_änderung(self.spieler_1)
+        if self.event[1] ==  True:
+            self.verwirrung_2.key_änderung(self.spieler_2)    
+        if self.event[2] == True:
+    
+
+
+    
     
     
     
