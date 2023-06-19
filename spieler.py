@@ -1,9 +1,9 @@
 import pygame
-from spielfeld import Feld
+from spielfeld import feld
 
 pygame.init()
 
-class Spieler:
+class spieler:
     '''
     Die Spielerklasse.
 
