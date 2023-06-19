@@ -148,13 +148,13 @@ class steuerung():
         self.update_screen_4()
         
         #bei null: zurück zu main menu
-        if isinstance(self.taste_1.react_input(self.end, self.spieler_2, self.spieler_1, self.spielfeld_2, self.spielfeld_1, self.buttons ), bool):
+        if isinstance(self.taste_1.react_input(self.end, self.spieler_2, self.spieler_1, self.spielfeld_2, self.spielfeld_1, self.buttons, shop ), bool):
             self.__init__()
             self.main_loop()
                 
     def main_menue(self):
         '''In Arbeit'''
-        self.game_mode=self.taste_1.react_input(self.end, self.spieler_1, self.spieler_2, self.spielfeld_2, self.spielfeld_1, self.buttons)
+        self.game_mode=self.taste_1.react_input(self.end, self.spieler_1, self.spieler_2, self.spielfeld_2, self.spielfeld_1, self.buttons, shop)
         self.spiel_start=True
         for button in self.buttons:
             button.draw(self.gui_1)
@@ -251,7 +251,7 @@ class steuerung():
 
 
             self.move_projectile()
-            self.taste_1.react_input(self.end, self.spieler_2, self.spieler_1, self.spielfeld_1, self.spielfeld_2, self.buttons)
+            self.taste_1.react_input(self.end, self.spieler_2, self.spieler_1, self.spielfeld_1, self.spielfeld_2, self.buttons, shop)
             self.move_asteroid(self.spieler_1, self.spieler_2) 
             self.move_polygon(self.spieler_1, self.spieler_1_collision_polygon)
             self.move_polygon(self.spieler_2, self.spieler_2_collision_polygon)

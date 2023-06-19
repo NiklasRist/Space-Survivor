@@ -3,8 +3,6 @@ from spieler import spieler
 from spielfeld import feld
 import sys
 import math
-from shop import shop
-
 
 pygame.init()
 class verwalter:
@@ -67,7 +65,7 @@ class verwalter:
 
 
 
-    def react_input(self, end, spieler_object, spieler_object_2, feld_obj_2, feld_obj, buttons):
+    def react_input(self, end, spieler_object, spieler_object_2, feld_obj_2, feld_obj, buttons, shop):
         
         
         for event in pygame.event.get():
@@ -95,16 +93,13 @@ class verwalter:
                 if event.__dict__["key"] == pygame.K_1: #keycode von K_1
                     print(shop.pruefen_ob_genug_punkte(spieler_object, event_nummer = 1)) # type: ignore
                 if event.__dict__["key"] == pygame.K_2: #keycode von K_2
-                    pass
-                if event.__dict__["key"] == pygame.K_3: #keycode von K_3
-                    pass
+                    print(shop.pruefen_ob_genug_punkte(spieler_object, event_nummer = 3)) # type: ignore
+
                 #shop S2
                 if event.__dict__["key"] == pygame.K_KP1: #keycode von K_KP1
-                    pass
+                    print(shop.pruefen_ob_genug_punkte(spieler_object_2, event_nummer = 2)) # type: ignore
                 if event.__dict__["key"] == pygame.K_KP2: #keycode von K_KP2
-                    pass
-                if event.__dict__["key"] == pygame.K_KP3: #keycode von K_KP3
-                    pass
+                    print(shop.pruefen_ob_genug_punkte(spieler_object_2, event_nummer = 4)) # type: ignore
 
                 if event.__dict__["key"] == self.spieler_1_unten: #keycode von K_DOWN
                     self.y_spieler_1 += 10                   
