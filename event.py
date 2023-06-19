@@ -1,5 +1,5 @@
 import pygame
-from taste import verwalter
+
 import time
 import math
 class event:

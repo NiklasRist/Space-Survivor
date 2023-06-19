@@ -10,7 +10,7 @@ class shop():
     """
     def __init__(self):
         self.verwirrung_obj=verwirrung()    #kosten=10
-        self.schwartzesloch_obj=schwartzesloch() #kosten=10
+        self.schwartzesloch_obj=schwartzesloch(1) #kosten=10
     
     def pruefen_ob_genug_punkte(self, spieler, event_nummer):
         """

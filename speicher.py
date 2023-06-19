@@ -111,4 +111,28 @@ class speicher:
         sorted_entries = self.cursor.fetchall()
 
         # Temporäre Tabelle erstellen, um die sortierte Reihenfolge beizubehalten
-       
+        self.cursor.execute("DROP TABLE IF EXISTS temp_sorted_table") 
+        self.cursor.execute("CREATE TABLE temp_sorted_table AS SELECT * FROM leaderboard WHERE 0")
+
+        # Sortierte Einträge in die temporäre Tabelle einfügen
+        for entry in sorted_entries:
+            self.cursor.execute("INSERT INTO temp_sorted_table VALUES (?, ?, ?)", entry)
+        
+        # Alte Tabelle löschen
+        self.cursor.execute("DROP TABLE leaderboard")
+
+        # Temporäre Tabelle in die ursprüngliche Tabelle umbenennen
+        self.cursor.execute("ALTER TABLE temp_sorted_table RENAME TO leaderboard")
+        self.connection.commit()
+
+        self.cursor.execute("SELECT * FROM leaderboard ORDER BY Punktzahl ASC")
+        self.connection.commit()
+
+        # Einträge über 10 löschen, um die Tabelle auf 10 Einträge zu begrenzen
+        self.cursor.execute("SELECT COUNT(*) FROM leaderboard")
+        count = self.cursor.fetchone()[0]
+        while count > 10:
+            self.cursor.execute("DELETE FROM leaderboard WHERE rowid = (SELECT MIN(rowid) FROM leaderboard)")
+            self.connection.commit()
+            self.cursor.execute("SELECT COUNT(*) FROM leaderboard")
+            count = self.cursor.fetchone()[0]
