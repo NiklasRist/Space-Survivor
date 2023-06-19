@@ -3,12 +3,12 @@ from spieler import spieler
 from spielfeld import feld
 import sys
 import math
-from shop import shop
-
 
 pygame.init()
 class verwalter:
-    
+    """
+    Manages input and events in the game.
+    """
     def __init__(self):
         self.x_spieler_1 = 0
         self.x_spieler_2 = 0
@@ -32,30 +32,40 @@ class verwalter:
 
         
     def handle_mouse_button_events(self, event, buttons):  
-            game_mode=0
-                
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                mouse_pos = pygame.mouse.get_pos()
-                for button in buttons:
-                    if button.rect.left<=mouse_pos[0]<=button.rect.right and button.rect.top<=mouse_pos[1]<=button.rect.bottom:
-                        if button.label == 'menue_button':
-                            return 4
-                        if button.label == 'play_local_button':
-                            return 5
-                        if button.label == 'play_lan_button':
-                            return 2
-                        if button.label == 'score_button':
-                            return 4
-                        button.img = button.pressed_img   
-                        return game_mode   
-            if event.type == pygame.MOUSEBUTTONUP:
-                mouse_pos = pygame.mouse.get_pos()
-                for button in buttons:
-                    button.img = button.unpressed_img
+        """
+        Handles mouse button events. Changes gamemode and images.
+
+        Args:
+            event (pygame.event.Event): The event object.
+            buttons (list): List of button objects.
+
+        Returns:
+            int: The game mode if a button is clicked, otherwise 0.
+        """
+        game_mode=0
+            
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            mouse_pos = pygame.mouse.get_pos()
+            for button in buttons:
+                if button.rect.left<=mouse_pos[0]<=button.rect.right and button.rect.top<=mouse_pos[1]<=button.rect.bottom:
+                    if button.label == 'menue_button':
+                        return 4
+                    if button.label == 'play_local_button':
+                        return 5
+                    if button.label == 'play_lan_button':
+                        return 2
+                    if button.label == 'score_button':
+                        return 4
+                    button.img = button.pressed_img   
+                    return game_mode   
+        if event.type == pygame.MOUSEBUTTONUP:
+            mouse_pos = pygame.mouse.get_pos()
+            for button in buttons:
+                button.img = button.unpressed_img
 
 
 
-    def react_input(self, end, spieler_object, spieler_object_2, feld_obj_2, feld_obj, buttons):
+    def react_input(self, end, spieler_object, spieler_object_2, feld_obj_2, feld_obj, buttons, shop):
         
         
         for event in pygame.event.get():
@@ -83,16 +93,13 @@ class verwalter:
                 if event.__dict__["key"] == pygame.K_1: #keycode von K_1
                     print(shop.pruefen_ob_genug_punkte(spieler_object, event_nummer = 1)) # type: ignore
                 if event.__dict__["key"] == pygame.K_2: #keycode von K_2
-                    pass
-                if event.__dict__["key"] == pygame.K_3: #keycode von K_3
-                    pass
+                    print(shop.pruefen_ob_genug_punkte(spieler_object, event_nummer = 3)) # type: ignore
+
                 #shop S2
                 if event.__dict__["key"] == pygame.K_KP1: #keycode von K_KP1
-                    pass
+                    print(shop.pruefen_ob_genug_punkte(spieler_object_2, event_nummer = 2)) # type: ignore
                 if event.__dict__["key"] == pygame.K_KP2: #keycode von K_KP2
-                    pass
-                if event.__dict__["key"] == pygame.K_KP3: #keycode von K_KP3
-                    pass
+                    print(shop.pruefen_ob_genug_punkte(spieler_object_2, event_nummer = 4)) # type: ignore
 
                 if event.__dict__["key"] == self.spieler_1_unten: #keycode von K_DOWN
                     self.y_spieler_1 += 10                   
@@ -153,32 +160,13 @@ class verwalter:
             
         if spieler_object.x > feld_obj.x + feld_obj.spielfeld_width-int(0.05*feld_obj_2.spielfeld_width):
             spieler_object.x = feld_obj.x + feld_obj.spielfeld_width-int(0.05*feld_obj_2.spielfeld_width)
-        if spieler_object.x < feld_obj.x: #stinks
+        if spieler_object.x < feld_obj.x: 
             spieler_object.x = feld_obj.x
         if spieler_object.y > feld_obj.spielfeld_height-int(0.05*feld_obj_2.spielfeld_width):
             spieler_object.y = feld_obj.spielfeld_height-int(0.05*feld_obj_2.spielfeld_width)
         if spieler_object.y < feld_obj.y:
             spieler_object.y =feld_obj.y  
-        ''' 
-            
-        if spieler_object.x > feld_obj_2.spielfeld_width - spieler_object.size: 
-            spieler_object.x = feld_obj_2.spielfeld_width - spieler_object.size     
-        if spieler_object.x < feld_obj_2.x:
-            spieler_object.x = feld_obj_2.x 
-        if spieler_object.y > feld_obj_2.spielfeld_height - spieler_object.size:
-            spieler_object.y = feld_obj_2.spielfeld_height - spieler_object.size
-        if spieler_object.y < feld_obj_2.y: 
-            spieler_object.y = feld_obj_2.y
-            
-        if spieler_object_2.x > feld_obj.spielfeld_width + feld_obj.x - spieler_object_2.size: 
-            spieler_object_2.x = feld_obj.spielfeld_width + feld_obj.x - spieler_object_2.size     
-        if spieler_object_2.x < feld_obj.x:
-            spieler_object_2.x = feld_obj.x 
-        if spieler_object_2.y > feld_obj.spielfeld_height - spieler_object_2.size:
-            spieler_object_2.y = feld_obj.spielfeld_height - spieler_object_2.size
-        if spieler_object_2.y < feld_obj.y: 
-            spieler_object_2.y = feld_obj.y
-        '''
+
         spieler_object.mittelpunkt= [spieler_object.x+0.5*spieler_object.size, spieler_object.y+0.625*spieler_object.size]   
         spieler_object_2.mittelpunkt= [spieler_object_2.x+0.5*spieler_object_2.size, spieler_object_2.y+0.625*spieler_object_2.size]                          
             

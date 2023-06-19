@@ -1,7 +1,19 @@
 import pygame
 class projektil:
-    '''In der Klasse Projektil sind die Attribute die für die Projektilobjekte benötigt werden.'''
+    """
+    Represents a projectile in the game.
+    """
     def __init__(self, x, y, feld_obj_2, schuetze_obj, richtungsvektor) -> None:
+        """
+        Initializes a new instance of the Projektil class.
+
+        Args:
+            x (int): The x-coordinate of the projectile.
+            y (int): The y-coordinate of the projectile.
+            feld_obj_2 (Feld): The field object representing the game field.
+            schuetze_obj (Schuetze): The shooter object associated with the projectile.
+            richtungsvektor (Tuple[int, int]): The direction vector of the projectile.
+        """
         self.x=x
         self.y=y
         self.size=int(0.0125*feld_obj_2.spielfeld_width)

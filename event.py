@@ -1,13 +1,13 @@
 import pygame
-from taste import verwalter
+
 import time
 import math
 class event:
     def __init__(self):
-        pass
+        self.kosten=0
     
     def get_kosten(self):
-        pass
+        return self.kosten
     
     def ausfuehren(self, spieler):
         pass
@@ -17,10 +17,10 @@ loch_erschinung = False
 loch_erschinung_start = None
 loch_erscheinung_dauer = 5
 class schwartzesloch(event):
-    "Shwarzes loch wird erscheinen und das Raum Schiff zu sich anziehen"
+    '''Schwarzes Loch wird erscheinen und das Raum Schiff zu sich ziehen'''
     def __init__(self,side):
         self.side = side
-
+        self.kosten=10
 
         loch_image = pygame.image.load(r'.\images\eclipse-2.png')
         loch_rect = loch_image.get_rect()
@@ -83,8 +83,10 @@ class schwartzesloch(event):
 
 
 class verwirrung(event):
-    "die richtungen werden vertaucht"
-    def key_änderung(steuerung_obj,spieler_obj):
+    '''die Keys werden vertauscht'''
+    def __init__(self):
+        self.kosten=10
+    def key_änderung(self,steuerung_obj,spieler_obj):
         if spieler_obj.side ==0 :
             steuerung_obj.spieler_1_rechts = pygame.K_LEFT
             steuerung_obj.spieler_1_links = pygame.K_RIGHT
