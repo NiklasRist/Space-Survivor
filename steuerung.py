@@ -98,16 +98,17 @@ class steuerung():
         self.black = (0, 0, 0)
         self.gray = (224,238,238)
         self.hell_gray = (193,205,205)
+        self.lighter_black=(15,15,15)
         self.spieler_name_1 = ""
         self.spieler_name_2 = ""
-        self.button_farbe = self.gray
+        self.button_farbe = self.black
 
 
         self.buttons = [
-            button((self.spielfeld_1.spielfeld_width-0.16*self.spielfeld_1.spielfeld_width), 0.125*self.spielfeld_1.spielfeld_height, 0.16*self.spielfeld_1.spielfeld_width, 0.02*self.spielfeld_1.spielfeld_height, self.menue_image, self.menue_p_image, 'menue_button'),
-            button((self.spielfeld_1.spielfeld_width-0.16*self.spielfeld_1.spielfeld_width), 0.25*self.spielfeld_1.spielfeld_height, 0.16*self.spielfeld_1.spielfeld_width, 0.02*self.spielfeld_1.spielfeld_height, self.play_lan_image, self.play_lan_p_image, 'play_lan_button'),
-            button((self.spielfeld_1.spielfeld_width-0.16*self.spielfeld_1.spielfeld_width), 0.375*self.spielfeld_1.spielfeld_height, 0.16*self.spielfeld_1.spielfeld_width, 0.02*self.spielfeld_1.spielfeld_height, self.play_local_image, self.play_local_p_image, 'play_local_button'),
-            button((self.spielfeld_1.spielfeld_width-0.16*self.spielfeld_1.spielfeld_width), 0.5*self.spielfeld_1.spielfeld_height, 0.16*self.spielfeld_1.spielfeld_width, 0.02*self.spielfeld_1.spielfeld_height, self.score_image, self.score_p_image, 'score_button')
+            button((self.spielfeld_1.spielfeld_width-0.16*self.spielfeld_1.spielfeld_width), 0.25*self.spielfeld_1.spielfeld_height, 0.16*self.spielfeld_1.spielfeld_width, 0.02*self.spielfeld_1.spielfeld_height, self.menue_image, self.menue_p_image, 'menue_button'),
+            button((self.spielfeld_1.spielfeld_width-0.16*self.spielfeld_1.spielfeld_width), 0.375*self.spielfeld_1.spielfeld_height, 0.16*self.spielfeld_1.spielfeld_width, 0.02*self.spielfeld_1.spielfeld_height, self.play_lan_image, self.play_lan_p_image, 'play_lan_button'),
+            button((self.spielfeld_1.spielfeld_width-0.16*self.spielfeld_1.spielfeld_width), 0.5*self.spielfeld_1.spielfeld_height, 0.16*self.spielfeld_1.spielfeld_width, 0.02*self.spielfeld_1.spielfeld_height, self.play_local_image, self.play_local_p_image, 'play_local_button'),
+            button((self.spielfeld_1.spielfeld_width-0.16*self.spielfeld_1.spielfeld_width), 0.625*self.spielfeld_1.spielfeld_height, 0.16*self.spielfeld_1.spielfeld_width, 0.02*self.spielfeld_1.spielfeld_height, self.score_image, self.score_p_image, 'score_button')
         ]
         self.neue_text_rect_1 = pygame.Rect(self.spielfeld_1.spielfeld_width*0.5,0.4*self.spielfeld_1.spielfeld_height, self.spielfeld_1.spielfeld_width ,0.05*self.spielfeld_1.spielfeld_height)
         self.neue_text_rect_2 = pygame.Rect(self.spielfeld_1.spielfeld_width*0.5,0.5*self.spielfeld_1.spielfeld_height, self.spielfeld_1.spielfeld_width ,0.05*self.spielfeld_1.spielfeld_height)
@@ -394,7 +395,7 @@ class steuerung():
             
     
     
-       def namen_anzeigen(self):
+    def namen_anzeigen(self):
         self.gui_1.spiel_fenster.blit(self.background, (0,0))
         self.text_surface1 = self.font.render(self.spieler_name_1, True, self.white)
         self.text_surface2 = self.font.render(self.spieler_name_2 , True, self.white)
