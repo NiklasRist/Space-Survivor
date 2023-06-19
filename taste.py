@@ -49,7 +49,7 @@ class verwalter:
             for button in buttons:
                 if button.rect.left<=mouse_pos[0]<=button.rect.right and button.rect.top<=mouse_pos[1]<=button.rect.bottom:
                     if button.label == 'menue_button':
-                        return 0
+                        return 4
                     if button.label == 'play_local_button':
                         return 5
                     if button.label == 'play_lan_button':
@@ -65,7 +65,7 @@ class verwalter:
 
 
 
-    def react_input(self, end, spieler_object, spieler_object_2, feld_obj_2, feld_obj, buttons, shop):
+    def react_input(self, end, spieler_object, spieler_object_2, feld_obj_2, feld_obj, buttons, shop, steuerung_obj):
         
         
         for event in pygame.event.get():
@@ -91,15 +91,15 @@ class verwalter:
                 
                 #shop S1
                 if event.__dict__["key"] == pygame.K_1: #keycode von K_1
-                    print(shop.pruefen_ob_genug_punkte(spieler_object, event_nummer = 1)) 
+                    print(shop.pruefen_ob_genug_punkte(spieler_object, 1, steuerung_obj)) 
                 if event.__dict__["key"] == pygame.K_2: #keycode von K_2
-                    print(shop.pruefen_ob_genug_punkte(spieler_object, event_nummer = 2)) 
+                    print(shop.pruefen_ob_genug_punkte(spieler_object, 3, steuerung_obj)) 
 
                 #shop S2
                 if event.__dict__["key"] == pygame.K_KP1: #keycode von K_KP1
-                    print(shop.pruefen_ob_genug_punkte(spieler_object_2, event_nummer = 2)) 
+                    print(shop.pruefen_ob_genug_punkte(spieler_object_2, 2, steuerung_obj)) 
                 if event.__dict__["key"] == pygame.K_KP2: #keycode von K_KP2
-                    print(shop.pruefen_ob_genug_punkte(spieler_object_2, event_nummer = 4)) 
+                    print(shop.pruefen_ob_genug_punkte(spieler_object_2, 4, steuerung_obj)) 
 
                 if event.__dict__["key"] == self.spieler_1_unten: #keycode von K_DOWN
                     self.y_spieler_1 += 10                   
@@ -129,7 +129,7 @@ class verwalter:
                     spieler_object_2.aktuelles_bild = spieler_object_2.spieler_img
                     self.y_spieler_2 = 0    
             
-            if isinstance(game_mode, int):
+            if game_mode!=0 and isinstance(game_mode, int):
                     print(game_mode)
                     return game_mode
   
