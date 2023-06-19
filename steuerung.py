@@ -86,9 +86,11 @@ class steuerung():
         self.spieler1_name_input = pygame_gui.elements.UITextEntryLine(relative_rect= pygame.Rect((400,300),(800,100)),manager = self.feld_steuer,object_id="#Spieler_1_Name:" )
         self.spieler2_name_input = pygame_gui.elements.UITextEntryLine(relative_rect= pygame.Rect((800,600),(400,200)),manager = self.feld_steuer,object_id="#Spieler_2_Name:" )
 
+        
+
         self.name_hintergrund = pygame.image.load(r'.\images\leaderboard_background.png')
 
-        self.event= [False,False,False,False,False,False,False,False]
+        self.event= [False,False,False,False]
         self.font = pygame.font.Font(None, 32)
         self.name_hintergrund = pygame.image.load(r'.\images\leaderboard_background.png')
         self.aktive_input= None
@@ -98,6 +100,7 @@ class steuerung():
         self.hell_gray = (193,205,205)
         self.spieler_name_1 = ""
         self.spieler_name_2 = ""
+        self.button_farbe = self.gray
 
 
         self.buttons = [
@@ -389,8 +392,10 @@ class steuerung():
        
         pygame.draw.rect(self.gui_1.spiel_fenster,self.black, self.neue_text_rect_1, 1)
         pygame.draw.rect(self.gui_1.spiel_fenster,self.black, self.neue_text_rect_2, 1)
+        pygame.draw.rect(self.gui_1.spiel_fenster,self.button_farbe, self.button_rect)
         self.gui_1.spiel_fenster.blit(self.text_surface1,self.neue_text_rect_1)
         self.gui_1.spiel_fenster.blit(self.text_surface2,self.neue_text_rect_2)
+        self.gui_1.spiel_fenster.blit(self.button_text,(self.button_rect.x + 20, self.button_rect.y + 10))
     def spieler_namen(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -401,8 +406,14 @@ class steuerung():
                     self.aktive_input = self.neue_text_rect_1
                 elif self.neue_text_rect_2.collidepoint(event.pos):
                     self.aktive_input =  self.neue_text_rect_2
-                else:
-                    self.aktive_input = None
+                elif self.button_rect.collidepoint(event.pos):
+                    self.game_mode = 1
+
+            if self.button_rect.left<=pygame.mouse.get_pos()[0]<=self.button_rect.right and self.button_rect.top<=pygame.mouse.get_pos()[1]<=self.button_rect.bottom:
+                self.button_farbe = self.hell_gray
+            else:
+                self.button_farbe = self.gray 
+
             if event.type == pygame.KEYDOWN:
                 if self.aktive_input:
                     if event.key == pygame.K_RETURN:
@@ -421,7 +432,9 @@ class steuerung():
         self.gui_1.fill(self.white)
         self.neue_text_rect_1 = pygame.Rect(300,200,200,40)
         self.neue_text_rect_2 = pygame.Rect(300,300,200,40) 
-
+        self.button_rect = pygame.Rect(350,400,100,40)
+        self.button_text = self.font.render("Enter" ,True , self.black)
+        
 
           
     def aktive_event(self):
@@ -430,6 +443,7 @@ class steuerung():
         if self.event[1] ==  True:
             self.verwirrung_2.key_änderung(self.spieler_2)    
         if self.event[2] == True:
+            pass
     
 
 
