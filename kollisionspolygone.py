@@ -39,6 +39,20 @@ class polygon:
     
     def give_schnittpunkt(self, polygon_side, polygon_object) -> list: 
         '''
+        Berechnet den Schnittpunkt zweier Liniensegmente.
+
+        Args:
+            polygon_side (int): Die Seitennummer des Kollisionspolygons.
+            polygon_object (Polygon): Das andere Polygon, mit dem der Schnittpunkt berechnet werden soll.
+
+        Returns:
+            list: Eine Liste mit den Koordinaten des Schnittpunkts und einem Flag, das angibt, ob die Linien identisch sind.
+
+        Raises:
+            None
+
+        '''
+        '''
             Jedes Kollisionspolygon hat viele Seiten.
             Die Seitennummerierung beginnt bei den Strecke zwischen den ersten beiden Punkten mit Seite 1.
             Diese Funktion berechnet den Schnittpunkt zweier Liniensegmente:
@@ -69,7 +83,17 @@ class polygon:
         
     def collision_0(self, polygon_object):
         '''
-            Prüft ob der Schnittpunkt eines anderen Polygons auf oder zwischen dem Mittelpunkt oder dem Schnittpunkt dieses Polygons ist.
+        Prüft, ob der Schnittpunkt eines anderen Polygons auf oder zwischen dem Mittelpunkt oder dem Schnittpunkt dieses Polygons liegt.
+
+        Args:
+            polygon_object (Polygon): Das andere Polygon, das auf Kollision überprüft werden soll.
+
+        Returns:
+            bool: True, wenn es eine Kollision gibt, False sonst.
+
+        Raises:
+            None
+
         '''
         schnittpunkt_1=[]
         schnittpunkt_2=[]
@@ -92,8 +116,17 @@ class polygon:
             return True
         return False
     def collision(self, polygon_object):
-        '''
-            Prüft ob das Polygon mit dem anderen Polygon kollidiert
+                '''
+        Prüft, ob das Polygon mit einem anderen Polygon kollidiert.
+
+        Args:
+            polygon_object (Polygon): Das andere Polygon, mit dem die Kollision überprüft werden soll.
+
+        Returns:
+            bool: True, wenn eine Kollision vorliegt, False sonst.
+
+        Raises:
+            None
         '''
         for side in range(self.sides):
             '''
