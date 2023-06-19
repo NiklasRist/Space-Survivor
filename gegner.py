@@ -6,10 +6,17 @@ pygame.init()
 
 
 class gegner():
-    
+    """
+    Represents an enemy in the game.
+    """
 
     def __init__(self, feld_obj_2):
+        """
+        Initializes a new instance of the Gegner class.
 
+        Args:
+            feld_obj_2 (Feld): The field object representing the game field.
+        """
 
         self.leben = 1
         self.size=int(0.05*feld_obj_2.spielfeld_width)
