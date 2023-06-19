@@ -49,7 +49,7 @@ class verwalter:
             for button in buttons:
                 if button.rect.left<=mouse_pos[0]<=button.rect.right and button.rect.top<=mouse_pos[1]<=button.rect.bottom:
                     if button.label == 'menue_button':
-                        return 4
+                        return 0
                     if button.label == 'play_local_button':
                         return 5
                     if button.label == 'play_lan_button':
@@ -129,7 +129,7 @@ class verwalter:
                     spieler_object_2.aktuelles_bild = spieler_object_2.spieler_img
                     self.y_spieler_2 = 0    
             
-            if game_mode!=0 and isinstance(game_mode, int):
+            if isinstance(game_mode, int):
                     print(game_mode)
                     return game_mode
   

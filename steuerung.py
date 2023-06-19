@@ -103,12 +103,13 @@ class steuerung():
         self.spieler_name_2 = ""
         self.button_farbe = self.black
 
+        self.menue_button=button((self.spielfeld_1.spielfeld_width-0.08*self.spielfeld_1.spielfeld_width), 0.83*self.spielfeld_1.spielfeld_height, 0.16*self.spielfeld_1.spielfeld_width, 0.02*self.spielfeld_1.spielfeld_height, self.menue_image, self.menue_p_image, 'menue_button')
+
 
         self.buttons = [
-            button((self.spielfeld_1.spielfeld_width-0.16*self.spielfeld_1.spielfeld_width), 0.25*self.spielfeld_1.spielfeld_height, 0.16*self.spielfeld_1.spielfeld_width, 0.02*self.spielfeld_1.spielfeld_height, self.menue_image, self.menue_p_image, 'menue_button'),
-            button((self.spielfeld_1.spielfeld_width-0.16*self.spielfeld_1.spielfeld_width), 0.375*self.spielfeld_1.spielfeld_height, 0.16*self.spielfeld_1.spielfeld_width, 0.02*self.spielfeld_1.spielfeld_height, self.play_lan_image, self.play_lan_p_image, 'play_lan_button'),
-            button((self.spielfeld_1.spielfeld_width-0.16*self.spielfeld_1.spielfeld_width), 0.5*self.spielfeld_1.spielfeld_height, 0.16*self.spielfeld_1.spielfeld_width, 0.02*self.spielfeld_1.spielfeld_height, self.play_local_image, self.play_local_p_image, 'play_local_button'),
-            button((self.spielfeld_1.spielfeld_width-0.16*self.spielfeld_1.spielfeld_width), 0.625*self.spielfeld_1.spielfeld_height, 0.16*self.spielfeld_1.spielfeld_width, 0.02*self.spielfeld_1.spielfeld_height, self.score_image, self.score_p_image, 'score_button')
+            button((self.spielfeld_1.spielfeld_width-0.15*self.spielfeld_1.spielfeld_width), 0.3*self.spielfeld_1.spielfeld_height, 0.16*self.spielfeld_1.spielfeld_width, 0.02*self.spielfeld_1.spielfeld_height, self.play_lan_image, self.play_lan_p_image, 'play_lan_button'),
+            button((self.spielfeld_1.spielfeld_width-0.15*self.spielfeld_1.spielfeld_width), 0.425*self.spielfeld_1.spielfeld_height, 0.16*self.spielfeld_1.spielfeld_width, 0.02*self.spielfeld_1.spielfeld_height, self.play_local_image, self.play_local_p_image, 'play_local_button'),
+            button((self.spielfeld_1.spielfeld_width-0.15*self.spielfeld_1.spielfeld_width), 0.55*self.spielfeld_1.spielfeld_height, 0.16*self.spielfeld_1.spielfeld_width, 0.02*self.spielfeld_1.spielfeld_height, self.score_image, self.score_p_image, 'score_button')
         ]
         self.neue_text_rect_1 = pygame.Rect(self.spielfeld_1.spielfeld_width*0.5,0.4*self.spielfeld_1.spielfeld_height, self.spielfeld_1.spielfeld_width ,0.05*self.spielfeld_1.spielfeld_height)
         self.neue_text_rect_2 = pygame.Rect(self.spielfeld_1.spielfeld_width*0.5,0.5*self.spielfeld_1.spielfeld_height, self.spielfeld_1.spielfeld_width ,0.05*self.spielfeld_1.spielfeld_height)
@@ -154,6 +155,11 @@ class steuerung():
     def game_over_screen(self):
         '''In Arbeit'''
         self.update_screen_4()
+        zw=self.taste_1.react_input(self.end, self.spieler_1, self.spieler_2, self.spielfeld_2, self.spielfeld_1, [self.menue_button], self.shop_1)
+        if zw==0:
+            self.game_mode=zw
+
+        
         
         #bei null: zurück zu main menu
         if isinstance(self.taste_1.react_input(self.end, self.spieler_2, self.spieler_1, self.spielfeld_2, self.spielfeld_1, self.buttons, self.shop_1 ), bool):
@@ -386,13 +392,13 @@ class steuerung():
     def update_screen_4(self):
         self.gui_1.spiel_fenster.blit(self.background, (0,0))
         self.gui_1.spiel_fenster.blit(self.leaderboard_background, (0.2*self.spielfeld_1.spielfeld_width, 0.1*self.spielfeld_1.spielfeld_height))
-        y=0.4*self.spielfeld_1.spielfeld_height
+        y=0.3*self.spielfeld_1.spielfeld_height
         x=0.9*self.spielfeld_1.spielfeld_width
         self.gui_1.display_text(0.8*self.spielfeld_1.spielfeld_width, 0.15*self.spielfeld_1.spielfeld_height, " Game over! ", pygame.Color(255, 255, 255, a=255), self.text_size*2)
         for i in range(len(self.leaderboard_1.spieler)):
             self.gui_1.display_text(x, y, f"{i+1}. {self.leaderboard_1.spieler[i]} {self.leaderboard_1.punktzahl[i]}", pygame.Color(255, 255, 255, a=255), self.text_size)
             y+=0.05*self.spielfeld_1.spielfeld_height
-            
+        self.menue_button.draw(self.gui_1)
     
     
     def namen_anzeigen(self):
@@ -450,9 +456,9 @@ class steuerung():
           
     def aktive_event(self):
         if self.event[0] ==  True:
-            self.verwirrung_1.key_änderung(self.spieler_1)
+            self.verwirrung_1.key_änderung(self, self.spieler_1)
         if self.event[1] ==  True:
-            self.verwirrung_2.key_änderung(self.spieler_2)    
+            self.verwirrung_2.key_änderung(self, self.spieler_2)   
         if self.event[2] == True:
             pass
     
