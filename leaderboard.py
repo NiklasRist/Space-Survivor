@@ -1,4 +1,4 @@
-class Leaderboard:
+class leaderboard:
     '''
     Eine Klasse, die ein Leaderboard verwaltet.
 

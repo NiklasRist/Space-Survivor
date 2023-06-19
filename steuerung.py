@@ -395,7 +395,7 @@ class steuerung():
         pygame.draw.rect(self.gui_1.spiel_fenster,self.button_farbe, self.button_rect)
         self.gui_1.spiel_fenster.blit(self.text_surface1,self.neue_text_rect_1)
         self.gui_1.spiel_fenster.blit(self.text_surface2,self.neue_text_rect_2)
-        self.gui_1.spiel_fenster.blit(self.button_text,(self.button_rect.x + 20, self.button_rect.y + 10))
+        self.gui_1.spiel_fenster.blit(self.button_text,(self.button_rect.x + 400, self.button_rect.y + 10))
     def spieler_namen(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -430,9 +430,9 @@ class steuerung():
                             self.spieler_name_2 += event.unicode
         
         self.gui_1.fill(self.white)
-        self.neue_text_rect_1 = pygame.Rect(300,200,200,40)
-        self.neue_text_rect_2 = pygame.Rect(300,300,200,40) 
-        self.button_rect = pygame.Rect(350,400,100,40)
+        self.neue_text_rect_1 = pygame.Rect(400,400,800,40)
+        self.neue_text_rect_2 = pygame.Rect(400,500,800,40) 
+        self.button_rect = pygame.Rect(400,600,800,40)
         self.button_text = self.font.render("Enter" ,True , self.black)
         
 

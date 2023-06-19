@@ -1,6 +1,6 @@
 import sqlite3
 
-class Speicher:
+class speicher:
     '''
     Eine Klasse, die die Speicherfunktionen für das Leaderboard implementiert.
 
@@ -57,7 +57,7 @@ class Speicher:
         Raises:
             None
         '''
-        self.cursor.execute(Speicher.sql_create_table)
+        self.cursor.execute(speicher.sql_create_table)
         self.connection.commit()
 
     def save_one_entry_in_leaderboard(self, p_spieler, p_punktzahl):
@@ -74,7 +74,7 @@ class Speicher:
         Raises:
             None
         '''
-        self.cursor.execute(Speicher.sql_insert_var, (p_spieler, p_punktzahl))
+        self.cursor.execute(speicher.sql_insert_var, (p_spieler, p_punktzahl))
         self.connection.commit()
 
     def load_entries(self):
@@ -90,7 +90,7 @@ class Speicher:
         Raises:
             None
         '''
-        self.cursor.execute(Speicher.sql_select_all)
+        self.cursor.execute(speicher.sql_select_all)
         only_for_debugging = self.cursor.fetchall()
         return only_for_debugging
 
