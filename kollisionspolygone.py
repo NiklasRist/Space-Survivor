@@ -2,26 +2,40 @@ import math
 
 class polygon:
     def __init__(self) -> None:
-        self.collision_polygon=[]
-        self.mittelpunkt=[]
-        self.sides=0
+        """
+        Initialisiert eine Instanz der Klasse polygon.
+        """
+        self.collision_polygon = []
+        self.mittelpunkt = []
+        self.sides = 0
+
     def rescale_polygon(self, object_size):
-        '''Passt die Größe des Polygons an die Größe eines Objekts an'''
-        add_all=[0,0]
+        '''
+        Passt die Größe des Polygons an die Größe eines Objekts an.
+
+        Args:
+            object_size: Die Größe des Objekts.
+        '''
+        add_all = [0, 0]
         for eckpunkt in self.collision_polygon:
-            eckpunkt[0]=eckpunkt[0]/48*object_size
-            eckpunkt[1]=eckpunkt[1]/48*object_size
-            add_all[0]+=eckpunkt[0]
-            add_all[1]+=eckpunkt[1]
-        self.mittelpunkt=[int(add_all[0]/self.sides),int(add_all[1]/self.sides)]
-      
+            eckpunkt[0] = eckpunkt[0] / 48 * object_size
+            eckpunkt[1] = eckpunkt[1] / 48 * object_size
+            add_all[0] += eckpunkt[0]
+            add_all[1] += eckpunkt[1]
+        self.mittelpunkt = [int(add_all[0] / self.sides), int(add_all[1] / self.sides)]
+
     def move_polygon(self, vektor):
-        '''Bewegt das Polygon um einen Vektor.'''
-        for eckpunkt in self.collision_polygon: 
-            eckpunkt[0]+=vektor[0]
-            eckpunkt[1]+=vektor[1]  
-        self.mittelpunkt[0]+=vektor[0]
-        self.mittelpunkt[1]+=vektor[1]   
+        '''
+        Bewegt das Polygon um einen Vektor.
+
+        Args:
+            vektor: Der Verschiebungsvektor.
+        '''
+        for eckpunkt in self.collision_polygon:
+            eckpunkt[0] += vektor[0]
+            eckpunkt[1] += vektor[1]
+        self.mittelpunkt[0] += vektor[0]
+        self.mittelpunkt[1] += vektor[1]
     
     def give_schnittpunkt(self, polygon_side, polygon_object) -> list: 
         '''
