@@ -1,37 +1,61 @@
 import socket
+
 class lan_communication:
     def __init__(self) -> None:
-        #Server erstellen
+        """
+        Initialisiert eine Instanz der Klasse lan_communication.
+        """
         self.server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        #Client erstellen
-        self.client_socket= socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.server_ip="255.255.255.255"
-        
+        self.client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.server_ip = "255.255.255.255"
+
     def setup_connection_as_server(self):
-        self.server_socket.bind((self.server_ip, 12345))  # Binden an die lokale Adresse und den Port 12345
-        self.server_socket.listen(1)  # Anzahl der maximalen Verbindungen
-        #Warte auf Verbindung
-        self.client_socket, self.address = self.server_socket.accept()  # Auf eine eingehende Verbindung warten
-        #Verbunden mit: address(client_socket)
+        """
+        Setzt die Verbindung als Server auf.
+        """
+        self.server_socket.bind((self.server_ip, 12345))
+        self.server_socket.listen(1)
+        self.client_socket, self.address = self.server_socket.accept()
 
     def setup_connection_as_client(self):
-        # Verbindung zum Server herstellen über den Port
+        """
+        Setzt die Verbindung als Client auf.
+        """
         self.client_socket.connect((self.server_ip, 12345))
-        
+
     def get_data(self):
+        """
+        Empfängt Daten von der Verbindung.
+        
+        Returns:
+            Die empfangenen Daten als decodierten String.
+        """
         data = self.client_socket.recv(1024)
-        while data == "b''":
-            data = self.client_socket.recv(1024)  # Daten empfangen (maximal 1024 Bytes)
+        while data == b'':
+            data = self.client_socket.recv(1024)
         return data.decode()
 
     def send_data_as_server(self, data):
+        """
+        Sendet Daten als Server über die Verbindung.
+        
+        Args:
+            data: Die zu sendenden Daten als String.
+        """
         self.server_socket.sendall(data.encode())
 
     def send_data_as_client(self, data):
+        """
+        Sendet Daten als Client über die Verbindung.
+        
+        Args:
+            data: Die zu sendenden Daten als String.
+        """
         self.client_socket.sendall(data.encode())
 
     def close_connection(self):
-        self.client_socket.close()  # Verbindung schließen
-        self.server_socket.close()  # Server-Socket schließen
-
-
+        """
+        Schließt die Verbindung.
+        """
+        self.client_socket.close()
+        self.server_socket.close()
