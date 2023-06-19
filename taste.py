@@ -95,13 +95,13 @@ class verwalter:
                 #shop S1
                 if event.__dict__["key"] == pygame.K_1: #keycode von K_1
                     print(shop.pruefen_ob_genug_punkte(spieler_object, 1, steuerung_obj)) 
-                if event.__dict__["key"] == pygame.K_3: #keycode von K_2
+                if event.__dict__["key"] == pygame.K_2: #keycode von K_2
                     print(shop.pruefen_ob_genug_punkte(spieler_object, 3, steuerung_obj)) 
 
                 #shop S2
-                if event.__dict__["key"] == pygame.K_2: #keycode von K_KP1
+                if event.__dict__["key"] == pygame.K_KP1: #keycode von K_KP1
                     print(shop.pruefen_ob_genug_punkte(spieler_object_2, 2, steuerung_obj)) 
-                if event.__dict__["key"] == pygame.K_4: #keycode von K_KP2
+                if event.__dict__["key"] == pygame.K_KP2: #keycode von K_KP2
                     print(shop.pruefen_ob_genug_punkte(spieler_object_2, 4, steuerung_obj)) 
 
                 if event.__dict__["key"] == self.spieler_1_unten: #keycode von K_DOWN 
