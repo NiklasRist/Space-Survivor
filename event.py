@@ -97,5 +97,4 @@ class verwirrung(event):
             steuerung_obj.spieler_2_unten = pygame.K_w 
 
 
-class event_4(event):
-    "ist die "
+
