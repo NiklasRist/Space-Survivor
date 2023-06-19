@@ -49,7 +49,7 @@ class verwalter:
             for button in buttons:
                 if button.rect.left<=mouse_pos[0]<=button.rect.right and button.rect.top<=mouse_pos[1]<=button.rect.bottom:
                     if button.label == 'menue_button':
-                        return 4
+                        return 0
                     if button.label == 'play_local_button':
                         return 5
                     if button.label == 'play_lan_button':
