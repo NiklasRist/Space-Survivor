@@ -1,5 +1,5 @@
 import pygame
-
+import random
 import time
 import math
 class event:
@@ -18,16 +18,19 @@ loch_erschinung_start = None
 loch_erscheinung_dauer = 5
 class schwartzesloch(event):
     '''Schwarzes Loch wird erscheinen und das Raum Schiff zu sich ziehen'''
-    def __init__(self,side):
+    def __init__(self,side, spielfeld_obj):
         self.side = side
         self.kosten=10
 
-        loch_image = pygame.image.load(r'.\images\eclipse-2.png')
-        loch_rect = loch_image.get_rect()
+        self.loch_image = pygame.image.load(r'.\images\eclipse-2.png')
+        loch_rect = self.loch_image.get_rect()
         loch_rect.center = (400, 200)
         
-        loch_rect.x = 100
-        loch_rect.y = 200
+        loch_rect.x = random.randint(0+spielfeld_obj.x, spielfeld_obj.spielfeld_width+spielfeld_obj.x)
+        loch_rect.y = random.randint(0, spielfeld_obj.spielfeld_height)
+        self.x=loch_rect.x
+        self.y=loch_rect.y
+        self.mittelpunkt=loch_rect.center
 
     def loch_event(self):
         global loch_erschinung
@@ -88,15 +91,15 @@ class verwirrung(event):
         self.kosten=10
     def key_änderung(self,steuerung_obj,spieler_obj):
         if spieler_obj.side ==0 :
-            steuerung_obj.spieler_1_rechts = pygame.K_LEFT
-            steuerung_obj.spieler_1_links = pygame.K_RIGHT
-            steuerung_obj.spieler_1_oben = pygame.K_DOWN
-            steuerung_obj.spieler_1_unten = pygame.K_UP
+            steuerung_obj.taste_1.spieler_1_rechts = pygame.K_LEFT
+            steuerung_obj.taste_1.spieler_1_links = pygame.K_RIGHT
+            steuerung_obj.taste_1.spieler_1_oben = pygame.K_DOWN
+            steuerung_obj.taste_1.spieler_1_unten = pygame.K_UP
         if spieler_obj.side == 1:         
-            steuerung_obj.spieler_2_rechts = pygame.K_a
-            steuerung_obj.spieler_2_links = pygame.K_d
-            steuerung_obj.spieler_2_oben = pygame.K_s
-            steuerung_obj.spieler_2_unten = pygame.K_w 
+            steuerung_obj.taste_1.spieler_2_rechts = pygame.K_a
+            steuerung_obj.taste_1.spieler_2_links = pygame.K_d
+            steuerung_obj.taste_1.spieler_2_oben = pygame.K_s
+            steuerung_obj.taste_1.spieler_2_unten = pygame.K_w
 
 
 

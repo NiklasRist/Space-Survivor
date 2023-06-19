@@ -34,7 +34,7 @@ class steuerung():
         self.background=pygame.transform.scale(self.spielfeld_1.aktuelles_bild, (self.spielfeld_1.spielfeld_width*2, self.spielfeld_1.spielfeld_height))
         self.leaderboard_background=pygame.transform.scale(pygame.image.load("images\leaderboard_background.png"),(1.6*self.spielfeld_1.spielfeld_width, 0.8*self.spielfeld_1.spielfeld_height))
         self.gui_1 = gui(self.spielfeld_1)
-        self.shop_1 = shop()
+        self.shop_1 = shop(self.spielfeld_1)
         self.spieler_1 = spieler((0.5*self.spielfeld_1.spielfeld_width), (self.spielfeld_1.spielfeld_height*0.5), self.spielfeld_1)
         self.spieler_1_collision_polygon=spieler_polygon()
         self.init_polygon(self.spieler_1, self.spieler_1_collision_polygon)
@@ -63,8 +63,8 @@ class steuerung():
         self.text_size=int(34*(self.spielfeld_1.spielfeld_width/800))
         self.verwirrung_1 = verwirrung() #nr1
         self.verwirrung_2 = verwirrung() #nr2
-        self.schwartzesloch_side_1 = schwartzesloch(side=0)#nr3
-        self.schwartzesloch_side_2 = schwartzesloch(side=1)#nr4
+        self.schwartzesloch_side_1 = schwartzesloch(0, self.spielfeld_1)#nr3
+        self.schwartzesloch_side_2 = schwartzesloch(1, self.spielfeld_2)#nr4
 
 
 
@@ -154,9 +154,11 @@ class steuerung():
     def game_over_screen(self):
         '''In Arbeit'''
         self.update_screen_4()
-        zw=self.taste_1.react_input(self.end, self.spieler_1, self.spieler_2, self.spielfeld_2, self.spielfeld_1, [self.menue_button], self.shop_1)
+        zw=self.taste_1.react_input(self.end, self.spieler_1, self.spieler_2, self.spielfeld_2, self.spielfeld_1, [self.menue_button], self.shop_1, self)
         if zw==0:
             self.game_mode=zw
+            self.__init__()
+            self.main_loop()
 
         #bei null: zurück zu main menu
         if isinstance(self.taste_1.react_input(self.end, self.spieler_2, self.spieler_1, self.spielfeld_2, self.spielfeld_1, self.buttons, self.shop_1, self), bool):
@@ -261,6 +263,11 @@ class steuerung():
 
 
 
+            self.aktive_event()
+            if self.event[2]:
+                self.schwartzesloch_side_1.move_spieler_zum_loch(self.spieler_1, self.spieler_2, self.spieler_1_collision_polygon, self.spieler_2_collision_polygon)
+            if self.event[3]:
+                self.schwartzesloch_side_2.move_spieler_zum_loch(self.spieler_1, self.spieler_2, self.spieler_1_collision_polygon, self.spieler_2_collision_polygon)
 
             self.move_projectile()
             self.taste_1.react_input(self.end, self.spieler_2, self.spieler_1, self.spielfeld_1, self.spielfeld_2, self.buttons, self.shop_1, self)
@@ -269,7 +276,7 @@ class steuerung():
             self.move_polygon(self.spieler_2, self.spieler_2_collision_polygon)
             self.move_gegner(self.spieler_1,self.spieler_2)
 
-            self.aktive_event()
+            
 
             self.test_for_collision()
             self.update_screen_1()
@@ -385,6 +392,10 @@ class steuerung():
         #stellt Eventpunkte Spieler dar
         self.gui_1.display_text(self.spielfeld_1.spielfeld_width*0.8, 0, f"Punkte: {self.spieler_1.punkte}", pygame.Color(255, 255, 255, a=255), self.text_size)
         self.gui_1.display_text(self.spielfeld_1.spielfeld_width*1.8, 0, f"Punkte: {self.spieler_2.punkte}", pygame.Color(255, 255, 255, a=255), self.text_size)
+        if self.event[2]:
+            self.gui_1.spiel_fenster.blit(self.schwartzesloch_side_1.loch_image, (self.schwartzesloch_side_1.x, self.schwartzesloch_side_1.y))
+        if self.event[3]:
+            self.gui_1.spiel_fenster.blit(self.schwartzesloch_side_2.loch_image, (self.schwartzesloch_side_2.x, self.schwartzesloch_side_2.y))
     def update_screen_4(self):
         self.gui_1.spiel_fenster.blit(self.background, (0,0))
         self.gui_1.spiel_fenster.blit(self.leaderboard_background, (0.2*self.spielfeld_1.spielfeld_width, 0.1*self.spielfeld_1.spielfeld_height))
@@ -453,11 +464,19 @@ class steuerung():
     def aktive_event(self):
         if self.event[0] ==  True:
             self.verwirrung_1.key_änderung(self, self.spieler_1)
-        if self.event[1] ==  True:
-            self.verwirrung_2.key_änderung(self, self.spieler_2)    
-        if self.event[2] == True:
+            self.event[0]=False
+        elif self.event[1] ==  True:
+            self.verwirrung_2.key_änderung(self, self.spieler_2)   
+            self.event[1]=False 
+        elif self.event[2] == True:
             pass
-    
+            #self.schwartzesloch_side_1.move_spieler_zum_loch(self.spieler_1, self.spieler_2, self.spieler_1_collision_polygon, self.spieler_2_collision_polygon)
+            #self.event[2]=False
+        elif self.event[3] == True:
+            #self.schwartzesloch_side_2.move_spieler_zum_loch(self.spieler_1, self.spieler_2, self.spieler_1_collision_polygon, self.spieler_2_collision_polygon)
+            #self.event[3]=False
+            pass
+            
 
 
     

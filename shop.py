@@ -1,9 +1,9 @@
 from event import schwartzesloch, verwirrung
 
 class shop():
-    def __init__(self):
+    def __init__(self, spielfeld_obj):
         self.verwirrung_obj = verwirrung()
-        self.schwartzesloch_obj = schwartzesloch(1)
+        self.schwartzesloch_obj = schwartzesloch(1, spielfeld_obj)
         self.ausgabe = None
 
     def pruefen_ob_genug_punkte(self, spieler, event_nummer, steuerung_obj):
@@ -13,6 +13,7 @@ class shop():
             if genug_punkte:
                 steuerung_obj.event[event_nummer - 1] = True
                 self.ausgabe = "Event gekauft!"
+                spieler.punkte-=self.verwirrung_obj.get_kosten()
                 return self.ausgabe
                 
             else:
@@ -22,6 +23,7 @@ class shop():
             if genug_punkte:
                 steuerung_obj.event[event_nummer - 1] = True
                 self.ausgabe = "Event gekauft!"
+                spieler.punkte-=self.verwirrung_obj.get_kosten()
                 return self.ausgabe
                 
             else:

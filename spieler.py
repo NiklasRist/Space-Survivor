@@ -50,7 +50,7 @@ class spieler:
         self.aktueller_richtungsvektor = [0, 10]
         self.size = int(0.05 * feld_obj_2.spielfeld_width)
         self.mittelpunkt = [int(x + (24 / 48) * self.size), int(y + (30 / 48) * self.size)]
-        self.leben = 3
+        self.leben = 100
         self.punkte = 0
         self.score = 0
         self.schaden = 1

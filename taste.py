@@ -75,11 +75,14 @@ class verwalter:
                 pygame.quit()
                 sys.exit(0)                
             if event.type == pygame.KEYDOWN:
-                
-                if event.__dict__["key"] == self.spieler_1_rechts: #keycode von K_RIGHT
+                if event.__dict__["key"]==pygame.K_ESCAPE:
+                    end = True
+                    pygame.quit()
+                    sys.exit(0) 
+                if event.__dict__["key"] == self.spieler_1_rechts: #keycode von K_RIGHT 
                     self.x_spieler_1 += 10
                     spieler_object.aktuelles_bild = spieler_object.spieler_img_rechts
-                if event.__dict__["key"] == self.spieler_1_links: #keycode von K_LEFT
+                if event.__dict__["key"] == self.spieler_1_links: #keycode von K_LEFT 
                     self.x_spieler_1 -= 10
                     spieler_object.aktuelles_bild = spieler_object.spieler_img_links 
                 if event.__dict__["key"] == self.spieler_2_rechts: #keycode von K_d
@@ -92,18 +95,18 @@ class verwalter:
                 #shop S1
                 if event.__dict__["key"] == pygame.K_1: #keycode von K_1
                     print(shop.pruefen_ob_genug_punkte(spieler_object, 1, steuerung_obj)) 
-                if event.__dict__["key"] == pygame.K_2: #keycode von K_2
+                if event.__dict__["key"] == pygame.K_3: #keycode von K_2
                     print(shop.pruefen_ob_genug_punkte(spieler_object, 3, steuerung_obj)) 
 
                 #shop S2
-                if event.__dict__["key"] == pygame.K_KP1: #keycode von K_KP1
+                if event.__dict__["key"] == pygame.K_2: #keycode von K_KP1
                     print(shop.pruefen_ob_genug_punkte(spieler_object_2, 2, steuerung_obj)) 
-                if event.__dict__["key"] == pygame.K_KP2: #keycode von K_KP2
+                if event.__dict__["key"] == pygame.K_4: #keycode von K_KP2
                     print(shop.pruefen_ob_genug_punkte(spieler_object_2, 4, steuerung_obj)) 
 
-                if event.__dict__["key"] == self.spieler_1_unten: #keycode von K_DOWN
+                if event.__dict__["key"] == self.spieler_1_unten: #keycode von K_DOWN 
                     self.y_spieler_1 += 10                   
-                if event.__dict__["key"] == self.spieler_1_oben: #keycode von K_UP
+                if event.__dict__["key"] == self.spieler_1_oben: #keycode von K_UP 
                     self.y_spieler_1 -= 10                   
                 if event.__dict__["key"] == self.spieler_2_unten: #keycode von K_s
                     self.y_spieler_2 += 10
@@ -129,8 +132,7 @@ class verwalter:
                     spieler_object_2.aktuelles_bild = spieler_object_2.spieler_img
                     self.y_spieler_2 = 0    
             
-            if game_mode!=0 and isinstance(game_mode, int):
-                    print(game_mode)
+            if isinstance(game_mode, int):
                     return game_mode
   
 
