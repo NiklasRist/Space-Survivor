@@ -16,7 +16,7 @@ class shop():
                 return self.ausgabe
                 
             else:
-                return "Nicht genügend Punkte"
+                return "Nicht genügend Punkte!"
         if event_nummer == 3 or event_nummer == 4:
             genug_punkte = spieler.punkte >= self.schwartzesloch_obj.get_kosten()
             if genug_punkte:
