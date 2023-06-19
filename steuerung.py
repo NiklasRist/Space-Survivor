@@ -109,6 +109,13 @@ class steuerung():
             button((self.spielfeld_1.spielfeld_width-0.16*self.spielfeld_1.spielfeld_width), 0.375*self.spielfeld_1.spielfeld_height, 0.16*self.spielfeld_1.spielfeld_width, 0.02*self.spielfeld_1.spielfeld_height, self.play_local_image, self.play_local_p_image, 'play_local_button'),
             button((self.spielfeld_1.spielfeld_width-0.16*self.spielfeld_1.spielfeld_width), 0.5*self.spielfeld_1.spielfeld_height, 0.16*self.spielfeld_1.spielfeld_width, 0.02*self.spielfeld_1.spielfeld_height, self.score_image, self.score_p_image, 'score_button')
         ]
+        self.neue_text_rect_1 = pygame.Rect(self.spielfeld_1.spielfeld_width*0.5,0.4*self.spielfeld_1.spielfeld_height, self.spielfeld_1.spielfeld_width ,0.05*self.spielfeld_1.spielfeld_height)
+        self.neue_text_rect_2 = pygame.Rect(self.spielfeld_1.spielfeld_width*0.5,0.5*self.spielfeld_1.spielfeld_height, self.spielfeld_1.spielfeld_width ,0.05*self.spielfeld_1.spielfeld_height)
+        self.button_rect = pygame.Rect(self.spielfeld_1.spielfeld_width*0.5,0.6*self.spielfeld_1.spielfeld_height, self.spielfeld_1.spielfeld_width ,0.05*self.spielfeld_1.spielfeld_height)
+        self.button_text = self.font.render("Enter" ,True , self.white)
+        self.text_field_tex_pos_1=self.neue_text_rect_1.center
+        self.text_field_tex_pos_2=self.neue_text_rect_2.center
+   
         self.main_loop()
         
     def init_polygon(self, obj, col_pol_obj) -> None:
@@ -156,6 +163,8 @@ class steuerung():
         '''In Arbeit'''
         self.game_mode=self.taste_1.react_input(self.end, self.spieler_1, self.spieler_2, self.spielfeld_2, self.spielfeld_1, self.buttons, self.shop_1)
         self.spiel_start=True
+        self.gui_1.spiel_fenster.blit(self.background, (0,0))
+        self.gui_1.display_text(0.7*self.spielfeld_1.spielfeld_width, 0.15*self.spielfeld_1.spielfeld_height, " Space Survivor ", pygame.Color(255, 255, 255, a=255), self.text_size*2)
         for button in self.buttons:
             button.draw(self.gui_1)
         '''
@@ -378,24 +387,31 @@ class steuerung():
         self.gui_1.spiel_fenster.blit(self.leaderboard_background, (0.2*self.spielfeld_1.spielfeld_width, 0.1*self.spielfeld_1.spielfeld_height))
         y=0.4*self.spielfeld_1.spielfeld_height
         x=0.9*self.spielfeld_1.spielfeld_width
-        
+        self.gui_1.display_text(0.8*self.spielfeld_1.spielfeld_width, 0.15*self.spielfeld_1.spielfeld_height, " Game over! ", pygame.Color(255, 255, 255, a=255), self.text_size*2)
         for i in range(len(self.leaderboard_1.spieler)):
             self.gui_1.display_text(x, y, f"{i+1}. {self.leaderboard_1.spieler[i]} {self.leaderboard_1.punktzahl[i]}", pygame.Color(255, 255, 255, a=255), self.text_size)
             y+=0.05*self.spielfeld_1.spielfeld_height
             
     
     
-    def namen_anzeigen(self):
-        
-        self.text_surface1 = self.font.render(self.spieler_name_1, True, self.black)
-        self.text_surface2 = self.font.render(self.spieler_name_2 , True, self.black)
+       def namen_anzeigen(self):
+        self.gui_1.spiel_fenster.blit(self.background, (0,0))
+        self.text_surface1 = self.font.render(self.spieler_name_1, True, self.white)
+        self.text_surface2 = self.font.render(self.spieler_name_2 , True, self.white)
        
         pygame.draw.rect(self.gui_1.spiel_fenster,self.black, self.neue_text_rect_1, 1)
         pygame.draw.rect(self.gui_1.spiel_fenster,self.black, self.neue_text_rect_2, 1)
         pygame.draw.rect(self.gui_1.spiel_fenster,self.button_farbe, self.button_rect)
-        self.gui_1.spiel_fenster.blit(self.text_surface1,self.neue_text_rect_1)
-        self.gui_1.spiel_fenster.blit(self.text_surface2,self.neue_text_rect_2)
-        self.gui_1.spiel_fenster.blit(self.button_text,(self.button_rect.x + 400, self.button_rect.y + 10))
+        
+        if len(self.spieler_name_1)>0:
+            self.text_field_tex_pos_1=self.neue_text_rect_1.center[0]-self.spielfeld_1.spielfeld_width*0.00634*len(self.spieler_name_1), self.neue_text_rect_1.center[1]
+        if len(self.spieler_name_2)>0:
+            self.text_field_tex_pos_2=self.neue_text_rect_2.center[0]-self.spielfeld_1.spielfeld_width*0.00634*len(self.spieler_name_2), self.neue_text_rect_2.center[1]
+        
+        self.gui_1.display_text(0.7*self.spielfeld_1.spielfeld_width, 0.15*self.spielfeld_1.spielfeld_height, " Bitte Namen Eingeben ", pygame.Color(255, 255, 255, a=255), self.text_size*2)
+        self.gui_1.spiel_fenster.blit(self.text_surface1,self.text_field_tex_pos_1)
+        self.gui_1.spiel_fenster.blit(self.text_surface2,self.text_field_tex_pos_2)
+        self.gui_1.spiel_fenster.blit(self.button_text,(self.button_rect.center[0], self.button_rect.center[1]-0.0125*self.spielfeld_1.spielfeld_height))
     def spieler_namen(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -410,9 +426,9 @@ class steuerung():
                     self.game_mode = 1
 
             if self.button_rect.left<=pygame.mouse.get_pos()[0]<=self.button_rect.right and self.button_rect.top<=pygame.mouse.get_pos()[1]<=self.button_rect.bottom:
-                self.button_farbe = self.hell_gray
+                self.button_farbe = self.lighter_black
             else:
-                self.button_farbe = self.gray 
+                self.button_farbe = self.black
 
             if event.type == pygame.KEYDOWN:
                 if self.aktive_input:
@@ -428,12 +444,6 @@ class steuerung():
                             self.spieler_name_1 += event.unicode
                         elif self.aktive_input == self.neue_text_rect_2:
                             self.spieler_name_2 += event.unicode
-        
-        self.gui_1.fill(self.white)
-        self.neue_text_rect_1 = pygame.Rect(400,400,800,40)
-        self.neue_text_rect_2 = pygame.Rect(400,500,800,40) 
-        self.button_rect = pygame.Rect(400,600,800,40)
-        self.button_text = self.font.render("Enter" ,True , self.black)
         
 
           
