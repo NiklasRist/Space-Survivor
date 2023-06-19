@@ -30,7 +30,7 @@ class verwalter:
         self.spieler_2_oben = pygame.K_w
         self.spieler_2_unten = pygame.K_s
 
-        
+        self.event_nummer = 0
     def handle_mouse_button_events(self, event, buttons):  
         """
         Handles mouse button events. Changes gamemode and images.
@@ -91,15 +91,15 @@ class verwalter:
                 
                 #shop S1
                 if event.__dict__["key"] == pygame.K_1: #keycode von K_1
-                    print(shop.pruefen_ob_genug_punkte(spieler_object, event_nummer = 1)) # type: ignore
+                    print(shop.pruefen_ob_genug_punkte(spieler_object, event_nummer = 1)) 
                 if event.__dict__["key"] == pygame.K_2: #keycode von K_2
-                    print(shop.pruefen_ob_genug_punkte(spieler_object, event_nummer = 3)) # type: ignore
+                    print(shop.pruefen_ob_genug_punkte(spieler_object, event_nummer = 2)) 
 
                 #shop S2
                 if event.__dict__["key"] == pygame.K_KP1: #keycode von K_KP1
-                    print(shop.pruefen_ob_genug_punkte(spieler_object_2, event_nummer = 2)) # type: ignore
+                    print(shop.pruefen_ob_genug_punkte(spieler_object_2, event_nummer = 2)) 
                 if event.__dict__["key"] == pygame.K_KP2: #keycode von K_KP2
-                    print(shop.pruefen_ob_genug_punkte(spieler_object_2, event_nummer = 4)) # type: ignore
+                    print(shop.pruefen_ob_genug_punkte(spieler_object_2, event_nummer = 4)) 
 
                 if event.__dict__["key"] == self.spieler_1_unten: #keycode von K_DOWN
                     self.y_spieler_1 += 10                   
