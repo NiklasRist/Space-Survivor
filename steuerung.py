@@ -63,8 +63,8 @@ class steuerung():
         self.text_size=int(34*(self.spielfeld_1.spielfeld_width/800))
         self.verwirrung_1 = verwirrung() #nr1
         self.verwirrung_2 = verwirrung() #nr2
-        self.schwartzesloch_side_1 = schwartzesloch(0, self.spielfeld_1)#nr3
-        self.schwartzesloch_side_2 = schwartzesloch(1, self.spielfeld_2)#nr4
+        self.schwartzesloch_side_1 = schwartzesloch(0, self.spielfeld_2)#nr3
+        self.schwartzesloch_side_2 = schwartzesloch(1, self.spielfeld_1)#nr4
 
 
 

@@ -20,7 +20,7 @@ class schwartzesloch(event):
     '''Schwarzes Loch wird erscheinen und das Raum Schiff zu sich ziehen'''
     def __init__(self,side, spielfeld_obj):
         self.side = side
-        self.kosten=10
+        self.kosten= 20
 
         self.loch_image = pygame.image.load(r'.\images\eclipse-2.png')
         loch_rect = self.loch_image.get_rect()
@@ -60,7 +60,7 @@ class schwartzesloch(event):
         '''Bewegt die Asteroiden und ihre Polygone um einen Einheitsvektor auf den Spieler zu.'''
         #Abstandsberechnung Gegner Spieler (Vektorrechnung)
         
-        if self.side == 0:
+        if self.side == 1:
             x,y = self.berechne_vektor(spieler_obj, self)
             abstand=self.berechne_abstand(x,y)
             if abstand>=1:
@@ -70,7 +70,7 @@ class schwartzesloch(event):
                 spieler_obj.mittelpunkt= spieler_polygon.mittelpunkt
                 spieler_polygon.move_polygon([x_change, y_change]) 
 
-        if self.side==1:
+        if self.side==0:
             x,y = self.berechne_vektor(spieler_obj_2, self)
             abstand=self.berechne_abstand(x,y)
             if abstand>=1:
